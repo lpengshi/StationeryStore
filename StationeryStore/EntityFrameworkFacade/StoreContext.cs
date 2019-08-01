@@ -9,8 +9,8 @@ namespace StationeryStore.EntityFrameworkFacade
     {
         public StoreContext() : base("name=StoreConnectionString")
         {
-            Database.SetInitializer<StoreContext>(new DropCreateDatabaseIfModelChanges<StoreContext>());
-            //Database.SetInitializer<StoreContext>(new DropCreateDatabaseAlways<StoreContext>());
+            //Database.SetInitializer<StoreContext>(new DropCreateDatabaseIfModelChanges<StoreContext>());
+            Database.SetInitializer<StoreContext>(new DropCreateDatabaseAlways<StoreContext>());
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
