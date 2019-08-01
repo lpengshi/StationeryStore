@@ -38,7 +38,6 @@ namespace StationeryStore.Controllers
 
         public ActionResult ViewSupplierDetails(string supplierCode, int page)
         {
-
             ///MAKE VIEW
             List<SupplierDetailsEF> allDetailsList = purchaseService.FindSupplierItems(supplierCode);
 
