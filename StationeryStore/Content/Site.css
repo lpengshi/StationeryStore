@@ -20,7 +20,7 @@ a.topnavlink:hover {
 
 .addItem {
     display:inline-block;
-    font-weight:bold;
+    font-weight:normal;
     margin: 0 10px;
     padding: 0 5px;
 }
@@ -38,6 +38,7 @@ button.decision {
     color: white;
     margin: 0 0 0 10px;
     padding: 2px 10px;
+    font-weight:bold;
 }
 
 .checkItem {
@@ -341,4 +342,9 @@ textarea {
     resize: none;
     width: 500px;
     height: 100px;
+}
+
+detailstext{
+    text-align:left;
+    vertical-align: central;
 }

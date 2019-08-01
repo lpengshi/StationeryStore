@@ -1,7 +1,59 @@
-﻿
+﻿@using StationeryStore.Models
+@model StationeryStore.Models.SupplierDTO
 @{
     ViewBag.Title = "EditSupplier";
+    SupplierEF supplier = ViewBag.supplier;
 }
 
-<h2>EditSupplier</h2>
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Edit Supplier Details(@supplier.SupplierCode)</h3>
+
+    @using (Html.BeginForm("EditSupplier", "ManageSupplier", FormMethod.Post))
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Supplier Code</td>
+                    <td class="oddlistview">@supplier.SupplierCode</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Name</td>
+                    <td class="oddlistview">@supplier.SupplierName</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">GST Registration No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.GstNumber, new { htmlAttributes = new { Value = supplier.GstRegistrationNo } })</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Address</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.Address, new {htmlAttributes = new {Value = supplier.Address}})</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Contact Name</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.Contact, new { htmlAttributes = new { Value = supplier.ContactName } })</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Phone No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.PhoneNo, new { htmlAttributes = new { Value = supplier.PhoneNo } })</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Fax No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.FaxNo, new { htmlAttributes = new { Value = supplier.FaxNo } })</td>
+                </tr>
+                <tr class="decision">
+                    <td class="decision" colspan="2" align="right">
+                        <input type="submit" class="decision" name="decision" value="Confirm Changes" />
+                        <input type="hidden" name="supplierCode" value="@supplier.SupplierCode" />
+                    </td>
+                </tr>
+
+                @Html.HiddenFor(m=> m.SupplierCode, supplier.SupplierCode)
+                @Html.HiddenFor(m=> m.SupplierName, supplier.SupplierName)          
+            </table>
+        </div>
+    }
+</div>
+
 

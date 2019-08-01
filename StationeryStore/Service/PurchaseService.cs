@@ -138,7 +138,7 @@ namespace StationeryStore.Service
             return suppliers;
         }
 
-        public void AddNewSupplier(SupplierDTO supDto)
+        public bool AddNewSupplier(SupplierDTO supDto)
         {
             SupplierEF sup = new SupplierEF();
             sup.SupplierCode = supDto.SupplierCode;
@@ -149,7 +149,7 @@ namespace StationeryStore.Service
             sup.PhoneNo = supDto.PhoneNo;
             sup.FaxNo = supDto.FaxNo;
 
-            purchaseEFF.AddToSupplier(sup);
+            return purchaseEFF.AddToSupplier(sup);
         }
 
         public void EditSupplier(SupplierDTO supDto)

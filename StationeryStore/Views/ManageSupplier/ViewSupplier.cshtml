@@ -1,6 +1,60 @@
-﻿
+﻿@using StationeryStore.Models
 @{
     ViewBag.Title = "ViewSupplier";
+    SupplierEF supplier = ViewBag.supplier;
 }
 
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Supplier Details(@supplier.SupplierCode)</h3>
+    <div class="listview">
+        <table class="listview">
+            <tr class="listview">
+                <td class="listviewheader">Supplier Code</td>
+                <td class="oddlistview">@supplier.SupplierCode</td>
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">Name</td>
+                <td class="oddlistview">@supplier.SupplierName</td>
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">GST Registration No.</td>
+                @if (supplier.GstRegistrationNo != null)
+                {
+                    <td class="oddlistview">@supplier.GstRegistrationNo</td>
+                }
+                else
+                {
+                    <td class="oddlistview">N.A.</td>
+
+                }
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">Address</td>
+                <td class="oddlistview">@supplier.Address</td>
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">Contact Name</td>
+                <td class="oddlistview">@supplier.ContactName</td>
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">Phone No.</td>
+                <td class="oddlistview">@supplier.PhoneNo</td>
+            </tr>
+            <tr class="listview">
+                <td class="listviewheader">Fax No.</td>
+                <td class="oddlistview">@supplier.FaxNo</td>
+            </tr>
+            <tr class="decision">
+                <td class="decision" colspan="2" align="right">
+                    <input type="submit" class="decision" name="decision" value="Edit Supplier" onclick="location.href='@Url.Action("EditSupplier", "ManageSupplier", new { supplierCode = supplier.SupplierCode })'" />
+
+
+                    <input type="submit" class="decision" name="decision" value="View Supplier Items" onclick="location.href='@Url.Action("ViewSupplierItems", "ManageSupplier", new { supplierCode = supplier.SupplierCode })'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 

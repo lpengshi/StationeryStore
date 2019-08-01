@@ -1,6 +1,7 @@
 ﻿@using StationeryStore.Models
 @{
-    List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["supplier"];
+    //List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["suppliers"];
+    var suppliers = ViewBag.suppliers;
 }
 
 
@@ -24,15 +25,18 @@
                 </tr>
                 @foreach (var s in suppliers)
                 {
-                    <tr class="listview">
-                        <td class="oddlistview">@Html.ActionLink(s.SupplierCode, "ViewSupplier", new { supplierCode = s.SupplierCode })</td>
-                        <td class="oddlistview">@s.SupplierName</td>
-                        <td class="oddlistview">Link to view Tender Quotation Form</td>
-                    </tr>
+                <tr class="listview">
+                    <td class="oddlistview"><a href="@Url.Action("ViewSupplier", "ManageSupplier", new {supplierCode = s.SupplierCode} )">@s.SupplierCode</a></td>
+                    <td class="oddlistview">@s.SupplierName</td>
+                    <td class="oddlistview">*View/Print??*</td>
+                </tr>
                 }
             </table>
         </div>
-        <input type="button" onclick="location.href='~/ManageSupplier/CreateSupplier';" value="Add New Supplier" />
+        <br />
+        <div>
+            <input type="button" onclick="location.href='~/ManageSupplier/CreateSupplier';" value="Add New Supplier" class="decision"/>
+        </div>
     }
 
 </div>

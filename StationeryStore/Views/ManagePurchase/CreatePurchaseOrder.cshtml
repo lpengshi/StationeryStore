@@ -72,9 +72,6 @@
                         </tr>
                         <tr>
                             <td>Select Items to order:</td>
-                        </tr>
-                        <tr>
-                            <td></td>
                             <td>
                                 <select id="items" name="items">
                                     @{ if (supplierItemList != null)
@@ -87,7 +84,7 @@
                                         }
                                     }
                                 </select>
-                                <input type="submit" onclick="submit()" value="AddItem" name="choice" />
+                                <input class="decision" type="submit" onclick="submit()" value="AddItem" name="choice" />
                             </td>
                         </tr>
                     </table>

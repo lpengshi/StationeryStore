@@ -1,0 +1,56 @@
+﻿@using StationeryStore.Models
+@model StationeryStore.Models.SupplierDTO
+@{
+    ViewBag.Title = "EditSupplier";
+    var errMsg = ViewBag.SavingError;
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Add New Supplier</h3>
+
+    @using (Html.BeginForm("CreateSupplier", "ManageSupplier", FormMethod.Post))
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Supplier Code</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.SupplierCode)
+                    @if(errMsg != null){<br /> <font color="red">@errMsg</font>}</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Name</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.SupplierName)</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">GST Registration No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.GstNumber)</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Address</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.Address)</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Contact Name</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.Contact)</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Phone No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.PhoneNo)</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Fax No.</td>
+                    <td class="oddlistview">@Html.EditorFor(m => m.FaxNo)</td>
+                </tr>
+                <tr class="decision">
+                    <td class="decision" colspan="2" align="right">
+                        <input type="submit" class="decision" name="decision" value="Create Supplier" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</div>
+
+
