@@ -7,6 +7,7 @@ using System.Web;
 
 namespace StationeryStore.Models
 {
+    [Table("StationeryDisbursement", Schema = "dbo")]
     public class StationeryDisbursementDetailsEF
     {
         [Key]

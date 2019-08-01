@@ -31,13 +31,13 @@
         <br />
         @{ Html.BeginForm("CreateRequest", "ManageRequest", FormMethod.Post);
             <div class="searchblock">
-                <div class="addItem">Add to Request</div>
+                <div class="addItem">Add Item to Request</div>
                 @if (amend != null)
                 {
-                                    @Html.HiddenFor(m => m.RequestId, @Model.RequestId)
-                @Html.HiddenFor(m => m.Status, @Model.Status)
+                    @Html.HiddenFor(m => m.RequestId, @Model.RequestId)
+                    @Html.HiddenFor(m => m.Status, @Model.Status)
                 }
-                <input list="items" class="addItem" name="items" id="selectItem">
+                <input list="items" class="addItem" name="items" id="selectItem" placeholder="enter item name to search">
                 <datalist id="items">
                     @{
                         foreach (var item in catalogueList)

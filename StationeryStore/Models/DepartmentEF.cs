@@ -18,8 +18,9 @@ namespace StationeryStore.Models
         [MaxLength(255)]
         public string DepartmentName { get; set; }
 
-        [MaxLength(255)]
-        public string ContactName { get; set; }
+        public int? ContactNameId { get; set; }
+        [ForeignKey("ContactNameId")]
+        public virtual StaffEF ContactName { get; set; }
 
         public int? AuthorityId { get; set; }
         [ForeignKey("AuthorityId")]
