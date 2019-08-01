@@ -1,0 +1,64 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@{
+    List<LowStockDTO> lowStocks = (List<LowStockDTO>)ViewData["lowStocks"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Low Stock Items</h3>
+    <br />
+    @if (lowStocks.Count() == 0)
+    {
+        <h5>The quantity on hand for all stocks are above reorder level</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewheader">Description</td>
+                    <td class="listviewheader">QuantityOnHand</td>
+                    <td class="listviewheader">ReorderLevel</td>
+                    <td class="listviewheader">ReorderQuantity</td>
+                </tr>
+                @foreach (var stock in lowStocks)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@stock.ItemCode</td>
+                        <td class="oddlistview">@stock.Description</td>
+                        <td class="oddlistview">@stock.QuantityOnHand</td>
+                        <td class="oddlistview">@stock.ReorderLevel</td>
+                        <td class="oddlistview">@stock.ReorderQuantity</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewLowStock", "ViewLowStock", new { page = 1 }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewLowStock", "ViewLowStock", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewLowStock", "ViewLowStock", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+
+</div>

@@ -1,0 +1,34 @@
+﻿@model StationeryStore.Models.LoginDTO
+
+@{
+    ViewBag.Title = "Login Page";
+    string note = (string)ViewData["note"];
+    string note1 = (string)ViewData["note1"];
+}
+
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div class="mainheaderbar">
+        <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
+    </div>
+    <div class="login">
+        <table class="login" align="center">
+            <tr class="login">
+                <th colspan="3">&emsp;&emsp; @note<span style="color:red">@note1</span><br /><br /></th>
+            </tr>
+            <tr class="login">
+                <td class="login" align="right">@Html.LabelFor(x => x.Username):</td>
+                <td class="login">@Html.TextBoxFor(x => x.Username)</td>
+                <td class="login" width="150px" style="color:red">@Html.ValidationMessageFor(x => x.Username)</td>
+            </tr>
+            <tr class="login">
+                <td class="login" align="right">@Html.LabelFor(x => x.Password):</td>
+                <td class="login">@Html.PasswordFor(x => x.Password)</td>
+                <td class="login" style="color:red">@Html.ValidationMessageFor(x => x.Password)</td>
+            </tr>
+            <tr class="login">
+                <td class="login" colspan="2" align="right"><input class="decision" type="submit" value="Login"></td>
+            </tr>
+        </table>
+    </div>
+}

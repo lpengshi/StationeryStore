@@ -1,0 +1,47 @@
+﻿@model StationeryStore.Models.DepartmentEF
+
+@{
+    ViewBag.Title = "Manage Department Collection";
+}
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Manage Department Collection</h3>
+        @{ Html.BeginForm("Index", "ManageCollection", FormMethod.Post)
+    <br />
+    <div class="listview">
+        <table class="listview">
+            <tr class="listview">
+                <td class="listrequestlabel">Current Collection Point:</td>
+                <td class="listrequestvalue">@Model.CollectionPoint.Location</td>
+            </tr>
+
+            <tr class="listview">
+                <td class="listrequestlabel">Request Date:</td>
+                <td class="listrequestvalue">@date</td>
+            </tr>
+        </table>
+        <br />
+    </div>
+
+    <br />
+
+    <div class="listview">
+
+        <table class="listview">
+            <tr class="listview">
+                <td colspan="2" class="listrequestfield"><textarea name="comment" rows="4" cols="50" placeholder="Please enter reason for approval / rejection"></textarea></td>
+            </tr>
+            <tr class="decision">
+                <td class="decision" colspan="2" align="right">
+                    <input type="hidden" name="requestId" value="@request.RequestId" />
+                    <input type="submit" name="decision" value="Reject" class="reject" />
+                    <input type="submit" name="decision" value="Approve" class="approve" />
+                </td>
+            </tr>
+        </table>
+    </div>
+        }
+</div>
+    </div>

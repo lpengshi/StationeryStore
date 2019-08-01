@@ -1,0 +1,72 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@{
+    List<CatalogueItemEF> catalogue = (List<CatalogueItemEF>)ViewData["catalogue"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+    string search = (string)ViewData["search"];
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Catalogue</h3>
+        <div class="listview">
+            @using (Html.BeginForm("ViewCatalogue", "ManageCatalogue", FormMethod.Get))
+            {
+                <br/>
+                <input type="text" name="search" size="50" value="@search" placeholder="Search by Item Code or Description...">
+                <input type="submit" class="decision" value="Filter" />
+                <input type="hidden" name="page" value="1" />
+                <br/><br/>
+            }
+            @if (catalogue.Count() != 0)
+            {
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">Catalogue Id</td>
+                        <td class="listviewheader">Item Code</td>
+                        <td class="listviewheader">Description</td>
+                        <td class="listviewheader">Reorder Level</td>
+                        <td class="listviewheader">Reorder Quantity</td>
+                    </tr>
+                    @foreach (CatalogueItemEF cat in catalogue)
+                    {
+                        <tr class="listview">
+                            <td class="oddlistview">@Html.ActionLink(cat.CatalogueId.ToString(), "ViewCatalogueItem", new { catalogueId = cat.CatalogueId })</td>
+                            <td class="oddlistview">@cat.ItemCode</td>
+                            <td class="oddlistview">@cat.Stock.Description</td>
+                            <td class="oddlistview">@cat.ReorderLevel</td>
+                            <td class="oddlistview">@cat.ReorderQty</td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                @: No results. Please search again.
+            }
+
+        </div>
+
+        @if (noOfPages > 1)
+        {
+            <br/>
+            <div class="pagination">
+                @{
+                    <span>@Html.ActionLink("«", "ViewCatalogue", "ManageCatalogue", new { page = 1, search = search }, null)</span>
+
+                    for (int i = 1; i <= noOfPages; i++)
+                    {
+                        string num = i.ToString();
+                        <span>@Html.ActionLink(num, "ViewCatalogue", "ManageCatalogue", new { page = i, search = search }, null)</span>
+                    }
+
+                    <span>@Html.ActionLink("»", "ViewCatalogue", "ManageCatalogue", new { page = noOfPages, search = search }, null)</span>
+                }
+            </div>
+        }
+    </div>
+</div>

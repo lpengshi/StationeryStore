@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "View Catalogue";
+    var catalogueList = ViewBag.catalogueList;
+    var pageNum = ViewBag.pageNum;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Stationery Catalogue</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewdescription">Description</td>
+                    <td class="listviewuom">UOM</td>
+                </tr>
+                @{
+                    for (int i = 0; i < catalogueList.Count; i++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@catalogueList[i].Stock.Description</td>
+                                <td class="oddlistview">@catalogueList[i].Stock.Uom</td>
+                            </tr>
+                        }
+                        else if (i % 2 == 0)
+                        {
+                            <tr class="listview">
+                                <td class="evenlistview">@catalogueList[i].Stock.Description</td>
+                                <td class="evenlistview">@catalogueList[i].Stock.Uom</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "Index", "ViewCatalogue", new { id = 1 }, null)</span>
+
+                for (int i = 1; i <= pageNum + 1; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "Index", "ViewCatalogue", new { id = i }, null)</span>          
+                }
+
+                <span>@Html.ActionLink("»", "Index", "ViewCatalogue", new { id = pageNum + 1}, null)</span>
+            }
+        </div>
+        <br /><br /><br /><br />
+    </div>
+</div>  

@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "View Disbursement";
+}
+
+<div>@Html.Partial("_Department")</div>
+
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Disbursement</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Reference No</td>
+                    <td class="listviewheader">Disbursement Date</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                <tr class="listview">
+                    <td class="oddlistview">@Html.ActionLink("DIS3", "ViewDisbursement", new { requestId = "DIS1" })</td>
+                    <td class="oddlistview">13 Jul 19</td>
+                    <td class="oddlistview">Processing</td>
+                </tr>
+                <tr class="listview">
+                    <td class="evenlistview">@Html.ActionLink("DIS2", "ViewDisbursement", new { requestId = "DIS2" })</td>
+                    <td class="evenlistview">12 Jul 19</td>
+                    <td class="evenlistview">Processing</td>
+                </tr>
+                <tr class="listview">
+                    <td class="oddlistview">@Html.ActionLink("DIS1", "ViewDisbursement", new { requestId = "DIS3" })</td>
+                    <td class="oddlistview">10 Jul 19</td>
+                    <td class="oddlistview">Processed</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

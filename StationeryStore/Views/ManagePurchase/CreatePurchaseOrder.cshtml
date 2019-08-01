@@ -1,0 +1,165 @@
+﻿@model StationeryStore.Models.PurchaseOrderFormDTO
+@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    string supplier = (string)ViewData["supplier"];
+    List<SupplierEF> supplierList = (List<SupplierEF>)ViewData["supplierList"];
+    List<SupplierDetailsEF> supplierItemList = (List<SupplierDetailsEF>)ViewData["supplierItems"];
+    List<SupplierDetailsEF> selectedItems = (List<SupplierDetailsEF>)ViewData["selectedItems"];
+
+    //List<Stock> addedItems = (List<Stock>)ViewData["addedItemList"];
+    string currentDate = DateTime.Now.ToShortDateString();
+
+
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Create Purchase Order</h3>
+        <br />
+        @using (Html.BeginForm("CreatePurchaseOrder", "ManagePurchase", FormMethod.Post))
+        {
+            <div>
+                <div>
+                    <table class="listview">
+                        <tr>
+                            <td>Date:</td>
+                            <td>@currentDate</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier: </td>
+                            <td>
+                                <select name="supplier">
+                                    @{ foreach (SupplierEF s in supplierList)
+                                        {
+                                            if (s.SupplierCode == supplier)
+                                            {
+                                                <option value="@s.SupplierCode" selected="selected">@s.SupplierCode</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@s.SupplierCode">@s.SupplierCode</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <button onclick="submit()" class="decision" name="choice" value="setSupplier">Set Supplier</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Deliver to: </td>
+                            <td>
+                                @Html.EditorFor(m => m.DeliveryAdd)
+                                <br />
+                                @Html.ValidationMessageFor(m => m.DeliveryAdd)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Supply items by:</td>
+                            <td>
+                                @Html.EditorFor(m => m.SupplyItemBy)
+                                <br />
+                                @Html.ValidationMessageFor(m => m.SupplyItemBy)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description: </td>
+                            <td>
+                                @Html.EditorFor(m => m.Description)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Select Items to order:</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <select id="items" name="items">
+                                    @{ if (supplierItemList != null)
+                                        {
+                                            foreach (SupplierDetailsEF sd in supplierItemList)
+                                            {
+                                                string opStr = sd.Stock.ItemCode + "(Rank: " + sd.SupplierRank + ")- " + sd.Stock.Description;
+                                                <option value="@sd.SupplierDetailsId">@opStr</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <input type="submit" onclick="submit()" value="AddItem" name="choice" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <h3>Items selected</h3>
+                <div>
+                    <table class="listview">
+                        <tr>
+                            <th class="listviewheader">Item SN</th>
+                            <th class="listviewheader">Id</th>
+                            <th class="listviewheader">Description</th>
+                            <th class="listviewheader">UOM</th>
+                            <th class="listviewheader">Price/unit</th>
+                            <th class="listviewheader">Quantity</th>
+                            <th class="listviewheader">Remove</th>
+                        </tr>
+                        @{if (Model != null && Model.SupplierDetailIds != null)
+                            {
+                                for (int i = 0; i < @Model.SupplierDetailIds.Count; i++)
+                                {
+                                    int itemSN = i + 1;
+                                    <tr>
+                                        <td class="oddlistview">@itemSN</td>
+                                        <td class="oddlistview">@Model.Icodes[i]</td>
+                                        <td class="oddlistview">@Model.Descs[i]</td>
+                                        <td class="oddlistview">@Model.Uoms[i]</td>
+                                        <td class="oddlistview">@Model.Prices[i]</td>
+                                        <td class="oddlistview">
+                                            @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { min = 1, max = 99999 } })
+                                            <br />@Html.ValidationMessageFor(m => m.Quantities[i])
+                                        </td>
+                                        <td class="oddlistview">@Html.CheckBoxFor(m => m.Remove[i])</td>
+                                    </tr>
+
+                                    @Html.HiddenFor(m => m.SupplierDetailIds[i], Model.SupplierDetailIds[i])
+                                    @Html.HiddenFor(m => m.Quantities[i], Model.Quantities[i])
+                                    @Html.HiddenFor(m => m.Icodes[i], Model.Icodes[i])
+                                    @Html.HiddenFor(m => m.Descs[i], Model.Descs[i])
+                                    @Html.HiddenFor(m => m.Uoms[i], Model.Uoms[i])
+                                    @Html.HiddenFor(m => m.Prices[i], Model.Prices[i])
+                                    @Html.HiddenFor(m => m.Remove[i], Model.Remove[i])
+
+
+                                }
+                            }
+                        }
+
+                        <tr>
+                            <td>
+                                <button onclick="warning()" name="choice" value="CreatePO" class="decision">Submit</button>
+                            </td>
+                            <td>
+                                <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
+                            </td>
+                            <td>
+                                <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back"></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    function warning() {
+        confirm("Create the purchase order?")
+    }
+</script>
+<style>
+    .field-validation-error {
+        color: #ff0000
+    }
+</style>
+

@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "View Request";
+    var request = ViewBag.request;
+    var requestdate = ViewBag.requestdate;
+    var decisiondate = ViewBag.decisiondate;
+}
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Stationery Request (Status: @request.Status)</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listrequestlabel">Request Date:</td>
+                    <td class="listrequestvalue">@requestdate</td>
+                </tr>
+                <tr>
+                    @if (request.Status == "Approved" || request.Status == "Completed")
+                    {
+                        <td class="listrequestlabel">Approved By:</td>
+                        <td class="listrequestvalue">@request.DecisionBy.Name</td>
+                    }
+                    else if (request.Status == "Rejected")
+                    {
+                        <td class="listrequestlabel">Rejected By:</td>
+                        <td class="listrequestvalue">@request.DecisionBy.Name</td>
+                    }
+
+                </tr>
+                <tr>
+                    @if (request.Comment != null)
+                    {
+                        <td class="listrequestlabel">Comment:</td>
+                        <td class="listrequestvalue">@request.Comment</td>
+                    }
+                    else if (request.Comment == "")
+                    {
+                        <td class="listrequestlabel">Comment:</td>
+                        <td class="listrequestvalue">None</td>
+                    }
+                </tr>
+                <tr class="listview">
+                    @if (request.Status == "Approved" || request.Status == "Completed")
+                    {
+                        <td class="listrequestlabel">Approved On:</td>
+                        <td class="listrequestvalue">@decisiondate</td>
+                    }
+                    else if (request.Status == "Rejected")
+                    {
+                        <td class="listrequestlabel">Rejected On:</td>
+                        <td class="listrequestvalue">@decisiondate</td>
+                    }
+
+                </tr>
+            </table>
+            <br />
+        </div>
+
+        <div>@Html.Partial("_RequestDetails")</div>
+
+    </div>
+</div>

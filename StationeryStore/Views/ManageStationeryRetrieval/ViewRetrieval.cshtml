@@ -1,0 +1,70 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@using StationeryStore.Util
+
+@model List<StationeryStore.Models.RetrievalItemDTO>
+@{
+    StationeryRetrievalEF retrieval = (StationeryRetrievalEF)ViewData["retrieval"];
+}
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>View Stationery Retrieval</h3>
+    <br />Retrieval Id: @retrieval.RetrievalId
+    <br />Retrieval Date: @Timestamp.dateFromTimestamp(retrieval.DateRetrieved)
+    @using (Html.BeginForm("SaveRetrieval", "ManageStationeryRetrieval", FormMethod.Post))
+    {
+        @:Disbursement Date: <input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")"/> 
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Bin</td>
+                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Total Requested Quantity</td>
+                    <td class="listviewheader">Total Retrieved Quantity</td>
+                </tr>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@Html.Raw(Model[i].Bin)</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x[i].ItemCode)</td>
+                        <td class="oddlistview">@Html.Raw(Model[i].ItemDescription)</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x[i].TotalOutstandingQty)</td>
+                        @if (retrieval.Status != "Retrieved")
+                        {
+                            <td class="oddlistview">
+                                @Html.EditorFor(x => x[i].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].TotalOutstandingQty } })
+                                @Html.ValidationMessageFor(x => x[i].RetrievedQty)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="oddlistview">@Html.DisplayFor(x => x[i].RetrievedQty)</td>
+                        }
+                        <td>@Html.HiddenFor(x => x[i].ItemCode)</td>
+                        <td>@Html.HiddenFor(x => x[i].TotalOutstandingQty)</td>
+                        <td><input type="hidden" name="retrievalId" value="@retrieval.RetrievalId" /></td>
+                    </tr>
+                }
+                @if (retrieval.Status != "Retrieved")
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="6" align="right">
+                            <input type="submit" class="decision" name="decision" value="Cancel" />
+                            <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Confirm retrieval quantities?')" />
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>

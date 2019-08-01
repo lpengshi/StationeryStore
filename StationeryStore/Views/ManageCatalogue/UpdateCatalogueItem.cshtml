@@ -1,0 +1,70 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@model StationeryStore.Models.CatalogueItemDTO
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Update Catalogue Item</h3>
+        @using (Html.BeginForm("UpdateCatalogueItem", "ManageCatalogue", FormMethod.Post))
+        {
+            <div class="listview">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.CatalogueId)</td>
+                        <td class="oddlistview">
+                            @Html.DisplayFor(x => x.CatalogueId)
+                            @Html.HiddenFor(x => x.CatalogueId)
+                        </td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.ItemCode)</td>
+                        <td class="oddlistview">
+                            @Html.DisplayFor(x => x.ItemCode)
+                            @Html.HiddenFor(x => x.ItemCode)
+                        </td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Description)</td>
+                        <td class="oddlistview">
+                            @Html.DisplayFor(x => x.Description)
+                            @Html.HiddenFor(x => x.Description)
+                        </td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.ReorderLevel)</td>
+                        <td class="oddlistview">
+                            @Html.EditorFor(x => x.ReorderLevel)
+                            <input type="submit" class="decision" name="decision" value="Predict Reorder Level" />
+                            <br />@Html.ValidationMessageFor(x => x.ReorderLevel)
+                        </td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.ReorderQty)</td>
+                        <td class="oddlistview">
+                            @Html.EditorFor(x => x.ReorderQty)
+                            <input type="submit" class="decision" name="decision" value="Predict Reorder Quantity" />
+                            <br />@Html.ValidationMessageFor(x => x.ReorderQty)
+                        </td>
+                    </tr>
+                    <tr class="decision">
+                        <td class="decision" colspan="2" align="right">
+                            <input type="submit" class="decision" name="decision" value="Cancel" />
+                            <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Confirm updates to catalogue item?')" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>

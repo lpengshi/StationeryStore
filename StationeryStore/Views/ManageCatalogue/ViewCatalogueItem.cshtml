@@ -1,0 +1,56 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+
+@{
+    CatalogueItemEF catItem = (CatalogueItemEF)ViewData["catItem"];
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Catalogue Item</h3>
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Catalogue Id</td>
+                    <td class="oddlistview">@catItem.CatalogueId</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Item Code</td>
+                    <td class="oddlistview">@catItem.ItemCode</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Description</td>
+                    <td class="oddlistview">@catItem.Stock.Description</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Reorder Level</td>
+                    <td class="oddlistview">@catItem.ReorderLevel</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Reorder Quantity</td>
+                    <td class="oddlistview">@catItem.ReorderQty</td>
+                </tr>
+                <tr class="decision">
+                    <td class="decision" colspan="2" align="right">
+                        <input type="button" class="decision" name="decision" value="Delete" onclick="return confirmDelete()" />
+                        <input type="submit" class="decision" name="decision" value="Update" onclick="location.href='@Url.Action("UpdateCatalogueItem", "ManageCatalogue", new { catalogueId = catItem.CatalogueId })'" />
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        var result = confirm("Confirm deletion of item from catalogue?");
+        if (result == true) {
+            location.href = '@Url.Action("DeleteCatalogueItem", "ManageCatalogue", new { catalogueId = catItem.CatalogueId })';
+        }
+    }
+</script>

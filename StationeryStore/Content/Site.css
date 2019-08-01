@@ -1,0 +1,344 @@
+﻿.active, .collapsible:hover, a.sidenavlink:hover {
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+}
+
+.topnavlink:hover {
+    background-color: #555;
+
+}
+
+a.topnavlink:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.addItem {
+    display:inline-block;
+    font-weight:bold;
+    margin: 0 10px;
+    padding: 0 5px;
+}
+
+body, html {
+    height: 0;
+    margin: 0;
+    padding: 0;
+    width: 0;
+}
+
+button.decision {
+    background-color: #444444;
+    border: none;
+    color: white;
+    margin: 0 0 0 10px;
+    padding: 2px 10px;
+}
+
+.checkItem {
+    color:red;
+    font-weight: bold;
+    margin: 0 10px;
+    padding: 0 5px;
+}
+
+.collapsible {
+    background-color: #CCCCCC;
+    border: 0;
+    color: black;
+    cursor: pointer;    
+    display: block;
+    font-weight: bold;
+    font-family: "Segoe UI", Arial, sans-serif;
+    padding: 8px 16px;
+    text-align: left;
+    width: 100%;
+}
+
+.content {
+    background-color: #F4F4F4;
+    font-family: "Segoe UI", Arial, sans-serif;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: max-height 0.2s ease-out;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+div.login {
+    font-family: "Segoe UI", Arial, sans-serif;
+    height: 100%;
+    left: 0;
+    margin-left: 50px;
+    margin-top: 100px;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+}
+
+div.sidenavbar {
+    background-color: #CCCCCC;
+    left: 0;
+    margin: 0;
+    margin-top: 50px;
+    height: 100%;
+    padding: 0;
+    position: fixed;
+    width: 220px;
+}
+
+input.decision {
+    background-color: #444444;
+    border: none;
+    color: white;
+    margin: 0 0 0 10px;
+    padding: 2px 10px;
+}
+
+.approve, .reject {
+    border: none;
+    margin: 0 0 0 10px;
+    padding: 2px 10px;
+    width: 100px;
+    font-weight: bold;
+    color: black;
+}
+
+.approve {
+    background-color: #43D470;
+}
+
+.reject {
+    background-color: #D44347;
+}
+
+.inputquantity {
+    width: 75px;
+}
+
+.quantity {
+    padding: 0;
+    width: 60px;
+}
+
+li a {
+    display: block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li.sidenavdetails {
+    color: black;
+    font-weight: bold;
+    padding: 0;
+}
+
+.mainheaderbar {
+    background-color: #444444;
+    height: 50px;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+}
+
+.mainheaderdetail {
+    color: white;
+    display: block;
+    height: 100%;
+    float: right;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    padding: 16px 16px;
+}
+
+.topnavlink {
+    background-color: #444444;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    height: 100%;
+    padding: 16px 16px;
+}
+
+.mainview {
+    font-family: "Segoe UI", Arial, sans-serif;
+    height: 90%;
+    left: 0;
+    margin-left: 220px;
+    margin-top: 50px;
+    overflow: scroll;
+    position: fixed;
+    text-align: center;
+    width: 1320px;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #555;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #555;
+    color:white;
+}
+
+.searchblock {
+    margin: 20px;
+}
+
+.sidemain {
+    background-color: #CCCCCC;
+    border: 0;
+    color: black;
+    cursor: pointer;
+    display: block;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.system {
+    color: white;
+    display: block;
+    height: 100%;
+    float: left;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    padding: 16px 16px;
+}
+
+.listview {
+    margin: 0 auto;
+}
+
+.decision {
+    padding: 20px 0;
+    text-align: right;
+}
+
+.listrequestlabel, .listrequestvalue {
+    table-layout: fixed;
+    text-align: left;
+    padding: 10px 0;
+}
+
+.listrequestlabel {
+    width: 150px;
+}
+
+.listrequestvalue {
+    width: 350px;
+    font-weight: bold;
+}
+
+
+
+.listviewheader {
+    background-color: #CCCCCC;
+    border: 1.5px solid black;
+    font-weight: bold;
+    padding: 10px;
+    table-layout: fixed;
+    text-align: left;
+    width: 200px;
+}
+
+.listviewdescription {
+    background-color: #CCCCCC;
+    border: 1.5px solid black;
+    font-weight: bold;
+    padding: 10px;
+    table-layout: fixed;
+    text-align: left;
+    width: 300px;
+}
+
+.listviewuom, .listviewquantity, .listviewremove {
+    background-color: #CCCCCC;
+    border: 1.5px solid black;
+    font-weight: bold;
+    padding: 10px;
+    table-layout: fixed;
+    text-align: left;
+    width: 100px;
+}
+
+.evenlistview {
+    background-color: #FFFFFF;
+    border: 1.5px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+.oddlistview {
+    background-color: #F4F4F4;
+    border: 1.5px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+td.login {
+    padding: 6px;
+    font-size: 12px;
+    table-layout:fixed;
+    width: 150px;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+ul.sidenavbar {
+    font-family: "Segoe UI", Arial, sans-serif;
+    left: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+ul.sidenavdetails {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: none;
+    width: 500px;
+    height: 100px;
+}

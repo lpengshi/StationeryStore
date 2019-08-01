@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home";
+    var requestDTOList = ViewBag.requestDTOList;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Pending Requests</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Stationery Request</td>
+                    <td class="listviewheader">Date Created</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @{
+                    for (int i = 0; i < requestDTOList.Count; i++)
+                    {
+                        string requestNo = requestDTOList[i].RequestId;
+                        if (i % 2 != 0)
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                                <td class="oddlistview">@requestDTOList[i].RequestDate</td>
+                                <td class="oddlistview">@requestDTOList[i].Status</td>
+                            </tr>
+                        }
+                        else if (i % 2 == 0)
+                        {
+                            <tr class="listview">
+                                <td class="evenlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                                <td class="evenlistview">@requestDTOList[i].RequestDate</td>
+                                <td class="evenlistview">@requestDTOList[i].Status</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

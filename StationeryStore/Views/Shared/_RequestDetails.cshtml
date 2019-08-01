@@ -1,0 +1,34 @@
+﻿@{
+    var requestDetails = ViewBag.requestDetails;
+}
+
+<div class="listview">
+    <table class="listview" id="requestTable">
+        <tr class="listview">
+            <td class="listviewdescription">Description</td>
+            <td class="listviewuom">UOM</td>
+            <td class="listviewquantity">Quantity</td>
+        </tr>
+        @{
+            for (int i = 0; i < requestDetails.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    <tr class="listview">
+                        <td class="evenlistview">@requestDetails[i].Stock.Description</td>
+                        <td class="evenlistview">@requestDetails[i].Stock.Uom</td>
+                        <td class="evenlistview">@requestDetails[i].RequestQuantity</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@requestDetails[i].Stock.Description</td>
+                        <td class="oddlistview">@requestDetails[i].Stock.Uom</td>
+                        <td class="oddlistview">@requestDetails[i].RequestQuantity</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>

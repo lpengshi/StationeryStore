@@ -1,0 +1,60 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models;
+@using StationeryStore.Util;
+@{
+    List<StationeryRetrievalEF> retrievals = (List<StationeryRetrievalEF>)ViewData["retrievals"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Retrieval History</h3>
+    <br />
+    @if (retrievals.Count() == 0)
+    {
+        <h5>There is no history of retrieval</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Retrieval Id</td>
+                    <td class="listviewheader">Retrieval Date</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @foreach (var r in retrievals)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@Html.ActionLink(r.RetrievalId.ToString(), "ViewRetrieval", new { retrievalId = r.RetrievalId })</td>
+                        <td class="oddlistview">@Timestamp.dateFromTimestamp(r.DateRetrieved)</td>
+                        <td class="oddlistview">@r.Status</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+
+</div>

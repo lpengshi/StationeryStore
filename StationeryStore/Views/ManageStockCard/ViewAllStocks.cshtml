@@ -1,0 +1,75 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@{
+    List<StockEF> stocks = (List<StockEF>)ViewData["stocks"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+    string search = (string)ViewData["search"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3>Stock Cards</h3>
+
+        @using (Html.BeginForm("ViewAllStocks", "ManageStockCard", FormMethod.Get))
+        {
+            <br />
+            <input type="text" name="search" size="50" value="@search" placeholder="Search by Item Code or Description...">
+            <input type="submit" class="decision" value="Filter" />
+            <input type="hidden" name="page" value="1" />
+            <br /><br />
+        }
+        @if (stocks.Count() != 0)
+        {
+            <div class="listview">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">Item Code</td>
+                        <td class="listviewheader">Description</td>
+                        <td class="listviewheader">UOM</td>
+                        <td class="listviewheader">Bin</td>
+                    </tr>
+                    @foreach (var stock in stocks)
+                    {
+                        <tr class="listview">
+                            <td class="oddlistview">@Html.ActionLink(stock.ItemCode, "ViewStockCard", new { itemCode = stock.ItemCode })</td>
+                            <td class="oddlistview">@stock.Description</td>
+                            <td class="oddlistview">@stock.Uom</td>
+                            <td class="oddlistview">@stock.Bin</td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        }
+        else
+        {
+            @: No results. Please search again.
+        }
+
+
+        @if (noOfPages > 1)
+        {
+            <br />
+            <div class="pagination">
+                @{
+                    <span>@Html.ActionLink("«", "ViewAllStocks", "ManageStockCard", new { page = 1, search = search }, null)</span>
+
+                    for (int i = 1; i <= noOfPages; i++)
+                    {
+                        string num = i.ToString();
+                        <span>@Html.ActionLink(num, "ViewAllStocks", "ManageStockCard", new { page = i, search = search }, null)</span>
+                    }
+
+                    <span>@Html.ActionLink("»", "ViewAllStocks", "ManageStockCard", new { page = noOfPages, search = search }, null)</span>
+                }
+            </div>
+        }
+
+    </div>
+    </div>
+

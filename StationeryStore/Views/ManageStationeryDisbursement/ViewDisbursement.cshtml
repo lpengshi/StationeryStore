@@ -1,0 +1,103 @@
+﻿@*JANEL*@
+
+@using StationeryStore.Models
+@using StationeryStore.Util
+
+@model List<StationeryStore.Models.StationeryDisbursementDetailsEF>
+@{
+    StationeryDisbursementEF disbursement = (StationeryDisbursementEF)ViewData["disbursement"];
+    List<StaffEF> deptStaff = (List<StaffEF>)ViewData["deptStaff"];
+}
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>View Stationery Disbursement</h3>
+
+    @using (Html.BeginForm("SaveDisbursement", "ManageStationeryDisbursement", FormMethod.Post))
+    {
+        
+
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview" align="left">
+                    <td colspan="4" >
+                        <br />Retrieval Id: @disbursement.RetrievalId
+                        <br />Disbursement Id: @disbursement.DisbursementId
+                        <br />Disbursement Date: @Timestamp.dateFromTimestamp((long)disbursement.DateDisbursed)
+                        <br />Department: @disbursement.Department.DepartmentName
+                        @if (disbursement.Status == "Retrieved")
+                        {
+                        <br/> @:Department Representative: 
+                        <select name="collectionRepId">
+                            @foreach (StaffEF staff in deptStaff)
+                            {
+                                if (staff.StaffId == disbursement.CollectionRepId)
+                                {
+                                    <option value="@staff.StaffId" selected>@staff.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@staff.StaffId">@staff.Name</option>
+                                }
+
+                            }
+                        </select>
+                        }
+                        else
+                        {
+                            <br/>@:Collected By: @disbursement.CollectionRepId
+                        }
+                        <br/>Status: @disbursement.Status
+                    </td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Total Retrieved Quantity</td>
+                    <td class="listviewheader">Total Disbursed Quantity</td>
+                </tr>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@Html.DisplayFor(x => x[i].ItemCode)</td>
+                        <td class="oddlistview">@Model[i].Stock.Description</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x[i].RetrievedQuantity)</td>
+                        @if (disbursement.Status == "Retrieved")
+                        {
+                            <td class="oddlistview">
+                                @Html.EditorFor(x => x[i].DisbursedQuantity, new { htmlAttributes = new { min = 0, max = Model[i].RetrievedQuantity } })
+                                @Html.ValidationMessageFor(x => x[i].DisbursedQuantity)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="oddlistview">@Html.DisplayFor(x => x[i].DisbursedQuantity)</td>
+                        }
+                        <td>@Html.HiddenFor(x => x[i].DisbursementDetailsId)</td>
+                        <td>@Html.HiddenFor(x => x[i].DisbursementId)</td>
+                        <td>@Html.HiddenFor(x => x[i].ItemCode)</td>
+                        <td>@Html.HiddenFor(x => x[i].RequestQuantity)</td>
+                        <td>@Html.HiddenFor(x => x[i].RetrievedQuantity)</td>
+                        <td><input type="hidden" name="disbursementId" value="@disbursement.DisbursementId" /></td>
+                    </tr>
+                }
+                @if (disbursement.Status == "Retrieved")
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="6" align="right">
+                            <input type="submit" class="decision" name="decision" value="Cancel" />
+                            <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Confirm disbursed quantities?')" />
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>

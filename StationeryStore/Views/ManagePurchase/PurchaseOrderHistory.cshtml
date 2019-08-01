@@ -1,0 +1,69 @@
+﻿@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    List<PurchaseOrderEF> poList = (List<PurchaseOrderEF>)ViewData["purchaseOrders"];
+}
+
+<div>@Html.Partial("_Store")</div>
+
+
+<div class="mainview">
+    <h3>View Purchase Orders</h3>
+    <br />
+    <div>
+        @{string currentDate = DateTime.Now.ToShortDateString();
+        <form action="~/ManagePurchase/PurchaseOrderHistory" method="post">
+            <table class="listview">
+                <tr>
+                    <td><input type="date" name="startDate" /></td>
+                    <td><input type="date" name="endDate" /></td>
+                </tr>
+                <tr>
+                    <td><input type="search" name="search" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </form>
+            }
+    </div>
+            
+    <div class="listview">
+        <table class="listview">
+            <tr class="listview">
+                <th class="listviewheader">OrderId</th>
+                <th class="listviewheader">Created Date</th>
+                <th class="listviewheader">Supplier</th>
+                <th class="listviewheader">No. Items</th>
+                <th class="listviewheader">Description</th>
+                <th class="listviewheader">Status</th>
+            </tr>
+            @{if (poList != null)
+                {
+                    foreach (var po in poList)
+                    {
+                        var itemCount = po.PurchaseOrderDetails.Count;
+                        string createdDate = Timestamp.dateFromTimestamp(po.OrderDate);
+
+                    <tr>
+                        <td><a href="@Url.Action("ViewPurchaseOrder", "ManagePurchase", new {purchaseOrderId = po.OrderId.ToString() } )">@po.OrderId</a></td>
+                        <td>@createdDate</td>
+                        <td>@po.SupplierCode</td>
+                        <td>@itemCount</td>
+                        <td>@po.Description</td>
+                        <td>@po.Status</td>
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">No history</td>
+                    </tr>
+                }
+                }
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,84 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@{
+    List<StationeryRequestDetailsEF> outstandingRequests = (List<StationeryRequestDetailsEF>)ViewData["outstandingRequests"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Outstanding Requests</h3>
+    <br />
+    @if (outstandingRequests.Count() == 0)
+    {
+        <h5>There are no outstanding requests.</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="decision">
+                    <td class="decision" colspan="6" align="right">
+                        <input type="button" class="decision" value="Generate Retrieval List"
+                               @{ if (ViewData["error"] != null) { @: onclick="rejectGeneration()"
+                               } else { @: onclick="confirmGeneration()"
+                               } } />
+                    </td>
+                </tr>
+                <tr class="listview">
+                    <td class="listviewheader">Request Details Id</td>
+                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Request Quantity</td>
+                    <td class="listviewheader">Outstanding Quantity</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @foreach (var request in outstandingRequests)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@request.RequestDetailsId</td>
+                        <td class="oddlistview">@request.ItemCode</td>
+                        <td class="oddlistview">@request.Stock.Description</td>
+                        <td class="oddlistview">@request.RequestQuantity</td>
+                        <td class="oddlistview">@(request.RequestQuantity - request.FulfilledQuantity)</td>
+                        <td class="oddlistview">@request.FulfilmentStatus</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = 1 }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+</div>
+
+<script>
+    function confirmGeneration() {
+        var result = confirm("Confirm generation of retrieval list?");
+        if (result == true) {
+            location.href = '@Url.Action("GenerateRetrievalList", "GenerateRetrievalList")';
+        }
+    }
+    function rejectGeneration() {
+        alert("Retrieval disallowed as there is already an ongoing retrieval.");
+    }
+</script>

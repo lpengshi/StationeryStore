@@ -1,0 +1,116 @@
+﻿@model StationeryStore.Models.RequestListDTO
+
+@{
+
+    var catalogueList = ViewBag.catalogueList;
+    var note = ViewBag.note;
+    var amend = ViewBag.amend;
+
+    if (amend != null)
+    {
+        ViewBag.Title = "Manage Request";
+    } else
+    {
+        ViewBag.Title = "Create Request";
+    }
+
+}
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+
+        @if (amend != null)
+        {
+            <h3 class="title">Manage Stationery Request (Status: @Model.Status)</h3>
+        }
+        else
+        {
+            <h3 class="title">Create Stationery Request</h3>
+        }
+        <br />
+        @{ Html.BeginForm("CreateRequest", "ManageRequest", FormMethod.Post);
+            <div class="searchblock">
+                <div class="addItem">Add to Request</div>
+                @if (amend != null)
+                {
+                                    @Html.HiddenFor(m => m.RequestId, @Model.RequestId)
+                @Html.HiddenFor(m => m.Status, @Model.Status)
+                }
+                <input list="items" class="addItem" name="items" id="selectItem">
+                <datalist id="items">
+                    @{
+                        foreach (var item in catalogueList)
+                        {
+                            <option value="@item.Stock.Description"></option>
+                        }
+                    }
+                </datalist>
+                <button onclick="submit()" name="decision" value="Add Item" class="decision">Add Item</button>
+                <br /> <br />
+                <div class="checkItem">@note</div>
+            </div>
+
+            <div class="listview">
+                <table class="listview" id="requestTable">
+                    <tr class="listview">
+                        <td class="listviewdescription">Description</td>
+                        <td class="listviewuom">UOM</td>
+                        <td class="listviewquantity">Quantity</td>
+                        <td class="listviewremove">Remove</td>
+                    </tr>
+                    @{
+                        if (@Model != null && @Model.ItemDescription != null)
+                        {
+                            for (int i = 0; i < @Model.ItemDescription.Count; i++)
+                            {
+                                if (i % 2 == 0)
+                                {
+                                    <tr class="listview">
+                                        @Html.HiddenFor(m => m.ItemDescription[i], Model.ItemDescription[i])
+                                        @Html.HiddenFor(m => m.ItemUom[i], Model.ItemUom[i])
+
+                                        <td class="evenlistview">@Model.ItemDescription[i]</td>
+                                        <td class="evenlistview">@Model.ItemUom[i]</td>
+                                        <td class="evenlistview">@Html.EditorFor(m => m.Quantity[i], new { htmlAttributes = new { @min = "1", @class = "inputquantity" } })</td>
+                                        <td class="evenlistview">@Html.CheckBoxFor(m => m.Remove[i])</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="listview">
+                                        @Html.HiddenFor(m => m.ItemDescription[i], Model.ItemDescription[i])
+                                        @Html.HiddenFor(m => m.ItemUom[i], Model.ItemUom[i])
+
+                                        <td class="oddlistview">@Model.ItemDescription[i]</td>
+                                        <td class="oddlistview">@Model.ItemUom[i]</td>
+                                        <td class="oddlistview">@Html.EditorFor(m => m.Quantity[i], new { htmlAttributes = new { @min = "1", @class = "inputquantity" } })</td>
+                                        <td class="oddlistview">@Html.CheckBoxFor(m => m.Remove[i], false)</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                    <tfoot>
+                        <tr class="decision">
+                            <td class="decision" colspan="6" align="right">
+                                <button onclick="location.href='@Url.Action("Index", "ManageRequest")'" value="Cancel" class="decision">Cancel</button>
+                                <button onclick="submit()" name="decision" value="Remove Selected Items" class="decision">Remove Selected Items</button>
+                                @if (amend != null)
+                                {
+                                    <button onclick="submit()" name="decision" value="Delete" class="decision">Delete</button>
+                                    <button onclick="submit()" name="decision" value="Update" class="decision">Update</button>
+                                }
+                                else
+                                {
+                                    <button onclick="submit()" name="decision" value="Submit" class="decision">Submit</button>
+                                }
+
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        }
+    </div>
+</div>

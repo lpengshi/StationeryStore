@@ -1,0 +1,81 @@
+﻿@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    PurchaseOrderEF po = (PurchaseOrderEF)ViewData["purchaseOrder"];
+    List<PurchaseOrderDetailsEF> pod = (List<PurchaseOrderDetailsEF>)ViewData["purchaseOrderDetails"];
+
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<h2>ViewPurchaseOrder</h2>
+<div class="mainview">
+    <h4>View Purchase Order (@po.Status)</h4>
+    <table>
+        <tr>
+            <td>Purchase Order Id:</td>
+            <td>@po.OrderId (@po.Status)</td>
+        </tr>
+        <tr>
+            <td>Created on:</td>
+            <td>@Timestamp.dateFromTimestamp(po.OrderDate)</td>
+        </tr>
+        <tr>
+            <td>Ordered by:</td>
+            <td>@po.CreatedBy.Name</td>
+        </tr>
+        <tr>
+            <td>Items received on:</td>
+            @{
+                if (po.Status == "Delivered")
+                {
+                    <td>@Timestamp.dateFromTimestamp(po.DateDeliveredOn)</td>
+                }
+                else
+                {
+                    <td>N.A</td>
+                }
+            }
+        </tr>
+        <tr>
+            <td>Supplier:</td>
+            <td>@po.SupplierCode</td>
+        </tr>
+    </table>
+
+    <p>Items:</p>
+    <table class="listview">
+        <tr>
+            <th class="listviewheader">Item SN</th>
+            <th class="listviewheader">Item Code</th>
+            <th class="listviewheader">Description</th>
+            <th class="listviewheader">UOM</th>
+            <th class="listviewheader">Order quantity</th>
+        </tr>
+
+        @{ int i = 0;
+            foreach (var p in pod)
+            {
+                ++i;
+                <tr>
+                    <td class="oddlistview">@i</td>
+                    <td class="oddlistview">@p.ItemCode</td>
+                    <td class="oddlistview">@p.Stock.Description</td>
+                    <td class="oddlistview">@p.Stock.Uom</td>
+                    <td class="oddlistview">@p.QuantityOrdered</td>
+
+                </tr>
+            }
+
+        }
+    </table>
+    <br />
+    <form action="~/ManagePurchase/ViewPurchaseOrder" method="post">
+        <input type="hidden" name="purchaseOrderId" value="@po.OrderId.ToString()" />
+        @{ if (po.Status == "Pending Delivery")
+            { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
+            }
+        }
+        <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back" class="decision">Back</button>
+    </form>
+</div>

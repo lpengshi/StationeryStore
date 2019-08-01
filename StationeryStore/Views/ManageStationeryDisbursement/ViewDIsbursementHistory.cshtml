@@ -1,0 +1,64 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models;
+@using StationeryStore.Util;
+@{
+    List<StationeryDisbursementEF> disbursements = (List<StationeryDisbursementEF>)ViewData["disbursements"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Disbursement History</h3>
+    <br />
+    @if (disbursements.Count() == 0)
+    {
+        <h5>There is no history of disbursement</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Retrieval Id</td>
+                    <td class="listviewheader">Disbursement Id</td>
+                    <td class="listviewheader">Department</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @foreach (var d in disbursements)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@d.RetrievalId</td>
+                        <td class="oddlistview">@Html.ActionLink(d.DisbursementId.ToString(), "ViewDisbursement", new { disbursementId = d.DisbursementId })</td>
+                        <td class="oddlistview">@d.Department.DepartmentName</td>
+                        <td class="oddlistview">@d.Status</td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+
+</div>

@@ -1,0 +1,62 @@
+﻿@*Janel*@
+
+@model StationeryStore.Models.StockCardDTO
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Create Stock Card</h3>
+        @using (Html.BeginForm("CreateStockCard", "ManageStockCard", FormMethod.Post))
+        {
+            <div class="listview">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.ItemCode)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.ItemCode)</td>
+                        <td>@Html.ValidationMessageFor(x => x.ItemCode)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Category)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.Category)</td>
+                        <td>@Html.ValidationMessageFor(x => x.Category)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Description)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.Description)</td>
+                        <td>@Html.ValidationMessageFor(x => x.Description)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Uom)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.Uom)</td>
+                        <td>@Html.ValidationMessageFor(x => x.Uom)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Bin)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.Bin)</td>
+                        <td>@Html.ValidationMessageFor(x => x.Bin)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.QuantityOnHand)</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x.QuantityOnHand)</td>
+                        <td>@Html.HiddenFor(x => x.QuantityOnHand)</td>
+                    </tr>
+                    <tr class="decision">
+                        <td class="decision" colspan="2" align="right">
+                            <input type="button" class="decision" name="decision" value="Cancel" onclick="location.href='@Url.Action("ViewAllStocks", "ManageStockCard", new { page = 1 })'" />
+                            <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Create stock card?')" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>
