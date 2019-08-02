@@ -48,10 +48,10 @@
             </tr>
             <tr class="decision">
                 <td class="decision" colspan="2" align="right">
-                    <input type="submit" class="decision" name="decision" value="Edit Supplier" onclick="location.href='@Url.Action("EditSupplier", "ManageSupplier", new { supplierCode = supplier.SupplierCode })'" />
+                    <input type="submit" class="decision" name="decision" value="Edit Supplier" onclick="location.href='@Url.Action("EditSupplier", "ManageSupplier", new { supplierCode = supplier.SupplierCode})'" />
 
 
-                    <input type="submit" class="decision" name="decision" value="View Supplier Items" onclick="location.href='@Url.Action("ViewSupplierItems", "ManageSupplier", new { supplierCode = supplier.SupplierCode })'" />
+                    <input type="submit" class="decision" name="decision" value="View Supplier Items" onclick="location.href='@Url.Action("ViewSupplierDetails", "ManageSupplier", new { supplierCode = supplier.SupplierCode , page = 1})'" />
                 </td>
             </tr>
         </table>

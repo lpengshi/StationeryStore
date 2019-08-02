@@ -38,17 +38,19 @@ namespace StationeryStore.Controllers
 
         public ActionResult ViewSupplierDetails(string supplierCode, int page)
         {
-            ///MAKE VIEW
+            SupplierEF supplier = purchaseService.FindSupplierBySupplierCode(supplierCode);
             List<SupplierDetailsEF> allDetailsList = purchaseService.FindSupplierItems(supplierCode);
 
             int pageSize = 8;
             List<SupplierDetailsEF> details = allDetailsList
-                .OrderByDescending(x => x.ItemCode)
+                .OrderBy(x => x.ItemCode)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList<SupplierDetailsEF>();
 
             int noOfPages = (int)Math.Ceiling((double)allDetailsList.Count() / pageSize);
+
+            ViewData["supplier"] = supplier;
             ViewData["page"] = page;
             ViewData["supplierDetails"] = details;
             ViewData["noOfPages"] = noOfPages;
@@ -78,8 +80,6 @@ namespace StationeryStore.Controllers
         
         public ActionResult EditSupplier(string supplierCode, SupplierDTO supplierForm, string decision)
         {
-            //cannot amend supplier code/supplier name
-
             SupplierEF baseSupplier = purchaseService.FindSupplierBySupplierCode(supplierCode);
             ViewBag.supplier = baseSupplier;
 
@@ -96,11 +96,15 @@ namespace StationeryStore.Controllers
 
         public ActionResult AssignItemRank(List<SupplierDetailsEF> editedItems, string choice)
         {
-            //NEED TO UPDATE SUPPLIER DETAILS AS WELL BUT HOW TO SEARCH FOR ITEMS???
-            //by unassigned rank item??
-            //order by unassigned items first, then items with supp rank etc.
-            //search page 
-            //search individual items to add, then can assign multiple items at a go
+
+            return View();
+        }
+
+        public ActionResult EditSupplierDetails(string choice, string supplierCode, List<SupplierDetailsEF> supplierDetailsEFs)
+        {
+            //only able to assign the item price for the selected items
+            List<SupplierDetailsEF> supplierDetailsList = purchaseService.FindSupplierItems(supplierCode);
+            
             return View();
         }
     }

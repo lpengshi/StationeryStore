@@ -16,32 +16,55 @@
             <table class="listview">
                 <tr class="listview">
                     <td class="listviewheader">Supplier Code</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.SupplierCode)
-                    @if(errMsg != null){<br /> <font color="red">@errMsg</font>}</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.SupplierCode)
+                        @if (errMsg != null)
+                        {<br /> <font color="red">@errMsg</font>}
+                    else
+                    {<br />@Html.ValidationMessageFor(m => m.SupplierCode)}
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">Name</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.SupplierName)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.SupplierName)
+                        <br />@Html.ValidationMessageFor(m => m.SupplierName)
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">GST Registration No.</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.GstNumber)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.GstNumber)
+                        <br />@Html.ValidationMessageFor(m => m.GstNumber)
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">Address</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.Address)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.Address)
+                        <br />@Html.ValidationMessageFor(m => m.Address)
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">Contact Name</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.Contact)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.Contact)
+                        <br />@Html.ValidationMessageFor(m => m.Contact)
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">Phone No.</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.PhoneNo)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.PhoneNo)
+                        <br />@Html.ValidationMessageFor(m => m.PhoneNo)
+                    </td>
                 </tr>
                 <tr class="listview">
                     <td class="listviewheader">Fax No.</td>
-                    <td class="oddlistview">@Html.EditorFor(m => m.FaxNo)</td>
+                    <td class="oddlistview">
+                        @Html.EditorFor(m => m.FaxNo)
+                        <br />@Html.ValidationMessageFor(m => m.FaxNo)
+                    </td>
                 </tr>
                 <tr class="decision">
                     <td class="decision" colspan="2" align="right">
