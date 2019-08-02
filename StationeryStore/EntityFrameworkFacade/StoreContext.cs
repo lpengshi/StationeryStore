@@ -35,6 +35,8 @@ namespace StationeryStore.EntityFrameworkFacade
         public virtual DbSet<SupplierDetailsEF> SupplierDetails { get; set; }
         public virtual DbSet<StationeryDisbursementEF> StationeryDisbursements { get; set; }
         public virtual DbSet<StationeryDisbursementDetailsEF> StationeryDisbursementDetails { get; set; }
+        public virtual DbSet<RequestTemplateEF> RequestTemplates { get; set; }
+        public virtual DbSet<RequestTemplateDetailsEF> RequestTemplateDetails { get; set; }
 
     }
 }

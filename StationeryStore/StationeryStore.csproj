@@ -177,6 +177,8 @@
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
     <Compile Include="Models\RequestDTO.cs" />
     <Compile Include="Models\RequestListDTO.cs" />
+    <Compile Include="Models\RequestTemplateDetailsEF.cs" />
+    <Compile Include="Models\RequestTemplateEF.cs" />
     <Compile Include="Models\RetrievalItemDTO.cs" />
     <Compile Include="Models\RoleEF.cs" />
     <Compile Include="Models\StaffEF.cs" />
