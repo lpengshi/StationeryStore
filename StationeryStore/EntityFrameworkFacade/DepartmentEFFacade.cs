@@ -42,5 +42,21 @@ namespace StationeryStore.EntityFrameworkFacade
         {
             return context.CollectionPoints.ToList();
         }
+
+        public CollectionPointEF FindCollectionPointById(int id)
+        {
+            return context.CollectionPoints.Find(id);
+        }
+
+        public void SaveCollectionPoint(CollectionPointEF point)
+        {
+            var existingPoint = context.CollectionPoints.Find(point.CollectionPointId);
+            if (existingPoint != null)
+            {
+                existingPoint.Location = point.Location;
+                existingPoint.CollectionTime = point.CollectionTime;
+                context.SaveChanges();
+            }
+        }
     }
 }

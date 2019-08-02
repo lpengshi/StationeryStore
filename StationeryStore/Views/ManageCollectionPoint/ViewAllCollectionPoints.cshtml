@@ -1,0 +1,45 @@
+﻿@*Janel*@
+
+@using StationeryStore.Models
+@{
+    List<CollectionPointEF> collectionPoints = (List<CollectionPointEF>)ViewData["collectionPoints"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3>Collection Points</h3>
+
+        @if (collectionPoints.Count() != 0)
+        {
+            <div class="listview">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">Collection Point Id</td>
+                        <td class="listviewheader">Location</td>
+                        <td class="listviewheader">Collection Time</td>
+                    </tr>
+                    @foreach (var point in collectionPoints)
+                    {
+                        <tr class="listview">
+                            <td class="oddlistview">@Html.ActionLink(point.CollectionPointId.ToString(), "UpdateCollectionPoint", new { collectionPointId = point.CollectionPointId })</td>
+                            <td class="oddlistview">@point.Location</td>
+                            <td class="oddlistview">@point.CollectionTime</td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        }
+        else
+        {
+            @: There are no collection points.
+        }
+
+        <br /><br />
+
+    </div>
+</div>
+

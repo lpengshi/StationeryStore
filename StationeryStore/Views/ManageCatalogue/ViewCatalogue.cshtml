@@ -16,11 +16,11 @@
         <div class="listview">
             @using (Html.BeginForm("ViewCatalogue", "ManageCatalogue", FormMethod.Get))
             {
-                <br/>
+                <br />
                 <input type="text" name="search" size="50" value="@search" placeholder="Search by Item Code or Description...">
                 <input type="submit" class="decision" value="Filter" />
                 <input type="hidden" name="page" value="1" />
-                <br/><br/>
+                <br /><br />
             }
             @if (catalogue.Count() != 0)
             {
@@ -51,9 +51,9 @@
 
         </div>
 
-        @if (noOfPages > 1)
+        <br />
+        @if (noOfPages > 0)
         {
-            <br/>
             <div class="pagination">
                 @{
                     <span>@Html.ActionLink("«", "ViewCatalogue", "ManageCatalogue", new { page = 1, search = search }, null)</span>
@@ -68,5 +68,6 @@
                 }
             </div>
         }
+
     </div>
 </div>

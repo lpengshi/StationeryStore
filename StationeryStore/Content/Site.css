@@ -343,3 +343,8 @@ textarea {
     width: 500px;
     height: 100px;
 }
+
+.details {
+    font-weight: bold;
+    text-align: left;
+}

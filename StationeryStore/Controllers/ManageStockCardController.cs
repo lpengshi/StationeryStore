@@ -83,7 +83,7 @@ namespace StationeryStore.Controllers
                 Description = stock.Description,
                 Uom = stock.Uom,
                 Bin = stock.Bin,
-                QuantityOnHand = 0
+                QuantityOnHand = stock.QuantityOnHand
             };
             stockService.UpdateStock(s);
 

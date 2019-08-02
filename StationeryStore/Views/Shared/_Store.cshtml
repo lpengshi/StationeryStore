@@ -1,14 +1,17 @@
 ﻿@*Janel*@
+@using StationeryStore.Service
 
 @{
-    var role = ViewBag.role;
+    StaffService staff = new StaffService();
+    var name = staff.GetStaff().Name;
+    var role = staff.GetStaff().Role.Description;
 }
 
 <div class="mainheaderbar">
-    <span class="system">STATIONERY STORE INVENTORY SYSTEM</span>
-    <span class="mainheaderdetail">Logout</span>
-    <span class="mainheaderdetail">Help Btn</span>
-    <span class="mainheaderdetail">Store Name (Role)</span>
+    <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
+    <div class="mainheaderlink">@Html.ActionLink("Logout", "Index", "Logout", null, new { @class = "topnavlink" })</div>
+    <div class="mainheaderlink">@Html.ActionLink("Help", "Index", "Logout", null, new { @class = "topnavlink" })</div>
+    <div class="mainheaderdetail">@name (@role)</div>
 </div>
 
 <div class="sidenavbar">
@@ -32,6 +35,7 @@
                     <li class="sidenavdetails">@Html.ActionLink("Outstanding Requests", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = 1 }, new { @class = "sidenavlink" })</li>
                     <li class="sidenavdetails">@Html.ActionLink("Retrieval History", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, new { @class = "sidenavlink" })</li>
                     <li class="sidenavdetails">@Html.ActionLink("Disbursement History", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    <li class="sidenavdetails">@Html.ActionLink("Collection Points", "ViewAllCollectionPoints", "ManageCollectionPoint", null, new { @class = "sidenavlink" })</li>
                 </ul>
             </div>
         </li>
@@ -68,6 +72,15 @@
                 <ul class="sidenavdetails">
                     <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
                     <li class="sidenavdetails">@Html.ActionLink("Create Adjustment Voucher", "CreateAdjustmentVoucher", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
+                </ul>
+            </div>
+            <button class="collapsible">Report</button>
+            <div class="content">
+                <ul class="sidenavdetails">
+                    <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                    <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
                 </ul>
             </div>
         </li>

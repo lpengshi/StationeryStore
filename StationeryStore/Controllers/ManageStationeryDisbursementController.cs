@@ -43,19 +43,21 @@ namespace StationeryStore.Controllers
             // list of staff in that department
             List<StaffEF> deptStaff = staffService.FindAllStaffByDepartmentCode(disbursement.DepartmentCode);
             ViewData["deptStaff"] = deptStaff;
+            StaffEF storeClerk = staffService.GetStaff();
+            ViewData["storeClerk"] = storeClerk;
             return View(details);
         }
 
         [HttpPost]
         public ActionResult SaveDisbursement(List<StationeryDisbursementDetailsEF> details, int disbursementId,
-            string decision, int collectionRepId)
+            string decision, int collectionRepId, int storeClerkId)
         {
             if (decision == "Cancel")
             {
                 return RedirectToAction("ViewDisbursementHistory", new { page = 1 });
             }
             // update disbursement details' Disbursed Quantity and disbursement status to disbursed
-            rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId);
+            rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId, storeClerkId);
 
             // update request details
             rndService.UpdateRequestAfterDisbursement(details, disbursementId);

@@ -84,8 +84,8 @@ namespace StationeryStore.Controllers
             List<SupplierEF> supplierList = purchaseService.FindAllSuppliers();
             ViewData["supplierList"] = supplierList;
 
-            //Staff createdBy = staffService.GetStaff();
-            StaffEF createdBy = staffService.FindStaffByUsername("scienceemp1");
+            StaffEF createdBy = staffService.GetStaff();
+            //StaffEF createdBy = staffService.FindStaffByUsername("scienceemp1");
             if (supplier == null)
                 supplierItems = null;
             else
@@ -178,8 +178,8 @@ namespace StationeryStore.Controllers
             bool validId = Int32.TryParse(purchaseOrderId, out int id);
             PurchaseOrderEF po = purchaseService.FindPOById(id);
             List<PurchaseOrderDetailsEF> pod = purchaseService.FindPODetailsByOrderId(id);
-            //Staff receivedBy = staffService.GetStaff();
-            StaffEF receivedBy = staffService.FindStaffByUsername("scienceemp1");
+            StaffEF receivedBy = staffService.GetStaff();
+            //StaffEF receivedBy = staffService.FindStaffByUsername("scienceemp1");
             ViewData["purchaseOrder"] = po;
             ViewData["purchaseOrderDetails"] = pod;
 
