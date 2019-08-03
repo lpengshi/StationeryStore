@@ -42,7 +42,16 @@
                     <td class="oddlistview">@item.Stock.Bin</td>
                     <td class="oddlistview">@item.Stock.Uom</td>
                     <td class="oddlistview">@item.Stock.QuantityOnHand</td>
-                    <td class="oddlistview">@item.CatalogueItem.ReorderLevel</td>
+                    <td class="oddlistview">
+                        @if (item.CatalogueItem != null)
+                        {
+                            @item.CatalogueItem.ReorderLevel
+                        }
+                        else
+                        {
+                            @:N.A.
+                        }
+                    </td>
                 </tr>
                 }
             </table>
@@ -55,15 +64,15 @@
     {
         <div class="pagination">
             @{
-                <span>@Html.ActionLink("«", "GenerateInventoryStatusReport", "ManageReport", new { page = 1 }, null)</span>
+                <span>@Html.ActionLink("«", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, null)</span>
 
                 for (int i = 1; i <= noOfPages; i++)
                 {
                     string num = i.ToString();
-                    <span>@Html.ActionLink(num, "GenerateInventoryStatusReport", "ManageReport", new { page = i }, null)</span>
+                    <span>@Html.ActionLink(num, "GenerateInventoryStatusReport", "GenerateReport", new { page = i }, null)</span>
                 }
 
-                <span>@Html.ActionLink("»", "GenerateInventoryStatusReport", "ManageReport", new { page = noOfPages }, null)</span>
+                <span>@Html.ActionLink("»", "GenerateInventoryStatusReport", "GenerateReport", new { page = noOfPages }, null)</span>
             }
         </div>
     }
