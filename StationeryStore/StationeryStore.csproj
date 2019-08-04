@@ -162,6 +162,7 @@
     <Compile Include="EntityFrameworkFacade\StockEFFacade.cs" />
     <Compile Include="EntityFrameworkFacade\StoreContext.cs" />
     <Compile Include="Filters\AuthorizeFilter.cs" />
+    <Compile Include="Filters\StoreManagerFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

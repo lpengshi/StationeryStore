@@ -4,6 +4,7 @@
 
 @{
     CatalogueItemEF catItem = (CatalogueItemEF)ViewData["catItem"];
+    StaffEF staff = (StaffEF)ViewData["staff"];
 }
 
 <div>@Html.Partial("_Store")</div>
@@ -33,13 +34,15 @@
                     <td class="listviewheader">Reorder Quantity</td>
                     <td class="oddlistview">@catItem.ReorderQty</td>
                 </tr>
-                <tr class="decision">
-                    <td class="decision" colspan="2" align="right">
-                        <input type="button" class="decision" name="decision" value="Delete" onclick="return confirmDelete()" />
-                        <input type="submit" class="decision" name="decision" value="Update" onclick="location.href='@Url.Action("UpdateCatalogueItem", "ManageCatalogue", new { catalogueId = catItem.CatalogueId })'" />
-                    </td>
-                </tr>
-
+                @if (staff.Role.Description == "Store Manager")
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="2" align="right">
+                            <input type="button" class="decision" name="decision" value="Delete" onclick="return confirmDelete()" />
+                            <input type="submit" class="decision" name="decision" value="Update" onclick="location.href='@Url.Action("UpdateCatalogueItem", "ManageCatalogue", new { catalogueId = catItem.CatalogueId })'" />
+                        </td>
+                    </tr>
+                }
             </table>
         </div>
 

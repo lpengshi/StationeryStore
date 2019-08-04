@@ -11,12 +11,16 @@ namespace StationeryStore.Controllers
     public class ManageSupplierController : Controller
     {
         PurchaseService purchaseService = new PurchaseService();
+        StaffService staffService = new StaffService();
         // GET: ManageSupplier
         //Supplier List
         public ActionResult Index()
         {
             List<SupplierEF> suppliers = purchaseService.FindAllSuppliers();
             ViewData["suppliers"] = suppliers;
+
+            StaffEF staff = staffService.GetStaff();
+            ViewData["staff"] = staff;
             return View();
         }
 

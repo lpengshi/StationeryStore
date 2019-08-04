@@ -40,7 +40,7 @@ namespace StationeryStore.Controllers
         {
             StationeryRetrievalEF retrieval = rndService.FindRetrievalById(retrievalId);
             ViewData["retrieval"] = retrieval;
-            List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrievalId);
+            List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrievalId).OrderBy(x => x.Bin).ToList();
             return View(details);
         }
 
