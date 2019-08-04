@@ -13,6 +13,8 @@ namespace StationeryStore.Models
         [Key]
         public int TemplateId { get; set; }
 
+        public string TemplateName { get; set; }
+
         public int StaffId { get; set; }
         [ForeignKey("StaffId")]
         public virtual StaffEF Staff { get; set; }

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Home";
+    var requestList = ViewBag.requestList;
+    var requestDate = ViewBag.requestDate;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Employee Request History</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Requsition Form No</td>
+                    <td class="listviewheader">Created Date</td>
+                    <td class="listviewheader">Requested By</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @{
+                    for (int i = 0; i < requestList.Count; i++)
+                    {
+                        string requestNo = requestList[i].RequestId;
+                        if (i % 2 != 0)
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@Html.ActionLink(requestNo, "ViewRequest", "ViewEmployeeRequestHistory", new { requestId = requestList[i].RequestId }, null)</td>
+                                <td class="oddlistview">@requestDate[i]</td>
+                                <td class="oddlistview">@requestList[i].Staff.Name</td>
+                                 <td class="oddlistview">@requestList[i].Status</td>
+                            </tr>
+                        }
+                        else if (i % 2 == 0)
+                        {
+                            <tr class="listview">
+                                <td class="evenlistview">@Html.ActionLink(requestNo, "ViewRequest", "ViewEmployeeRequestHistory", new { requestId = requestList[i].RequestId }, null)</td>
+                                <td class="evenlistview">@requestDate[i]</td>
+                                <td class="evenlistview">@requestList[i].Staff.Name</td>
+                                <td class="evenlistview">@requestList[i].Status</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

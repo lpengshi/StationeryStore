@@ -21,6 +21,7 @@ namespace StationeryStore.Controllers
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             List<StationeryRequestEF> pendingList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "Submitted");
+
             List<string> requestDate = rndService.ConvertToDate(pendingList);
 
             ViewBag.pendingList = pendingList;

@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ManageAdjustmentController.cs" />
     <Compile Include="Controllers\ManageCatalogueController.cs" />
     <Compile Include="Controllers\ManageCollectionController.cs" />
+    <Compile Include="Controllers\ManageDelegationController.cs" />
     <Compile Include="Controllers\ManagePurchaseController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageStationeryDisbursementController.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Controllers\ManageSupplierController.cs" />
     <Compile Include="Controllers\ViewCatalogueController.cs" />
     <Compile Include="Controllers\ViewDisbursementController.cs" />
+    <Compile Include="Controllers\ViewEmployeeRequestHistoryController.cs" />
     <Compile Include="Controllers\ViewLowStockController.cs" />
     <Compile Include="Controllers\ViewOutstandingRequestsController.cs" />
     <Compile Include="Controllers\ViewRequestHistoryController.cs" />
@@ -172,6 +174,8 @@
     <Compile Include="Models\DepartmentEF.cs" />
     <Compile Include="Models\LoginDTO.cs" />
     <Compile Include="Models\LowStockDTO.cs" />
+    <Compile Include="Models\ManageCollectionDTO.cs" />
+    <Compile Include="Models\ManageDelegationDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
@@ -249,7 +253,7 @@
     <Content Include="Views\ManageRequest\Index.cshtml" />
     <Content Include="Views\ManageRequest\ViewRequest.cshtml" />
     <Content Include="Views\ManageStationeryDisbursement\ViewDisbursement.cshtml" />
-    <Content Include="Views\ManageStationeryDisbursement\ViewDIsbursementHistory.cshtml" />
+    <Content Include="Views\ManageStationeryDisbursement\ViewDisbursementHistory.cshtml" />
     <Content Include="Views\ManageStationeryRetrieval\ViewRetrieval.cshtml" />
     <Content Include="Views\ManageStationeryRetrieval\ViewRetrievalHistory.cshtml" />
     <Content Include="Views\ManageStockCard\CreateStockCard.cshtml" />
@@ -267,6 +271,9 @@
     <Content Include="Views\ViewLowStock\ViewLowStock.cshtml" />
     <Content Include="Views\ViewOutstandingRequests\ViewOutstandingRequests.cshtml" />
     <Content Include="Views\ViewRequestHistory\Index.cshtml" />
+    <Content Include="Views\ManageDelegation\Index.cshtml" />
+    <Content Include="Views\ViewEmployeeRequestHistory\Index.cshtml" />
+    <Content Include="Views\ViewEmployeeRequestHistory\ViewRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

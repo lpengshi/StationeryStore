@@ -15,15 +15,35 @@ namespace StationeryStore.Controllers
         StaffService staffService = new StaffService();
         DepartmentService deptService = new DepartmentService();
 
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(string update)
         {
+            if (update == "success")
+            {
+                ViewBag.note = "Department collection details has been updated";
+            }
+
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
+            ViewBag.department = staff.Department;
+            List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(staff.DepartmentCode);
+            List<CollectionPointEF> collectionPoints = deptService.FindAllCollectionPoints();
 
-            DepartmentEF dept = staff.Department;
-            ViewBag.deptStaff = staffService.FindAllStaffByDepartmentCode(dept.DepartmentCode);
+            ManageCollectionDTO collectDTO = new ManageCollectionDTO();
 
-            return View(dept);
+            collectDTO.Department = staff.Department.DepartmentCode;
+            collectDTO.CollectionPoints = collectionPoints;
+            ViewBag.deptStaff = deptStaff;
+
+            return View(collectDTO);
+        }
+
+        [HttpPost]
+        public ActionResult Index(ManageCollectionDTO manageCollectionDTO)
+        {
+            deptService.UpdateDepartmentCollection(manageCollectionDTO);
+
+            return RedirectToAction("Index", new { update = "success"});
         }
     }
 }

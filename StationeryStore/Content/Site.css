@@ -1,4 +1,4 @@
-﻿.active, .collapsible:hover, a.sidenavlink:hover {
+﻿.active, .collapsible:hover, .sidenavlink:hover {
     background-color: #555;
     color: white;
     text-decoration: none;
@@ -32,7 +32,7 @@ body, html {
     width: 0;
 }
 
-button.decision {
+button.decision, input.decision, input.disableddecision {
     background-color: #444444;
     border: none;
     color: white;
@@ -100,15 +100,7 @@ div.sidenavbar {
     width: 220px;
 }
 
-input.decision {
-    background-color: #444444;
-    border: none;
-    color: white;
-    margin: 0 0 0 10px;
-    padding: 2px 10px;
-}
-
-.approve, .reject {
+.approve, .reject, .disabledapprove, .disabledreject {
     border: none;
     margin: 0 0 0 10px;
     padding: 2px 10px;
@@ -117,11 +109,15 @@ input.decision {
     color: black;
 }
 
-.approve {
+.disabledapprove, .disabledreject {
+    opacity: 0.3;
+}
+
+.approve, .disabledapprove {
     background-color: #43D470;
 }
 
-.reject {
+.reject, .disabledreject {
     background-color: #D44347;
 }
 
@@ -183,11 +179,11 @@ li.sidenavdetails {
 
 .mainview {
     font-family: "Segoe UI", Arial, sans-serif;
-    height: 90%;
+    height: 700px;
     left: 0;
     margin-left: 220px;
     margin-top: 50px;
-    overflow: scroll;
+    overflow: auto;
     position: fixed;
     text-align: center;
     width: 1320px;
@@ -242,13 +238,30 @@ li.sidenavdetails {
     padding: 16px 16px;
 }
 
-.listview {
+.listview, .tableview {
     margin: 0 auto;
+}
+
+.greyview {
+    margin: 0 300px;
+    padding: 20px;
+    background-color: #EEEEEE;
+}
+
+.viewlabel {
+    table-layout: fixed;
+    text-align: left;
+    padding: 0px 0;
+    font-weight: bold;
 }
 
 .decision {
     padding: 20px 0;
     text-align: right;
+}
+
+.disableddecision{
+    opacity: 0.3;
 }
 
 .listrequestlabel, .listrequestvalue {
@@ -258,15 +271,14 @@ li.sidenavdetails {
 }
 
 .listrequestlabel {
-    width: 150px;
+    width: 300px;
+    font-weight: bold;
+    padding-left: 100px;
 }
 
 .listrequestvalue {
-    width: 350px;
-    font-weight: bold;
+    width: 300px;
 }
-
-
 
 .listviewheader {
     background-color: #CCCCCC;

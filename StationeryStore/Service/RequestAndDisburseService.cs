@@ -70,22 +70,25 @@ namespace StationeryStore.Service
                 request.Designation = "Covering Department Head";
             }
 
+            List<StationeryRequestDetailsEF> requestList = rndEFF.FindAllStationeryRequestDetailsByRequestId(request.RequestId);
+
             request.Comment = comment;
 
             if (decision == "Approve")
             {
                 request.Status = "Approved";
+                for (int i = 0; i < requestList.Count; i++)
+                {
+                    requestList[i].FulfilmentStatus = "Approved";
+                }
             }
             else if (decision == "Reject")
             {
                 request.Status = "Rejected";
-            }
-
-            List<StationeryRequestDetailsEF> requestList = rndEFF.FindAllStationeryRequestDetailsByRequestId(request.RequestId);
-
-            for (int i = 0; i < requestList.Count; i++)
-            {
-                requestList[i].FulfilmentStatus = "Approved";
+                for (int i = 0; i < requestList.Count; i++)
+                {
+                    requestList[i].FulfilmentStatus = "Rejected";
+                }
             }
 
             rndEFF.SaveRequestAndRequestDetails(request, requestList);

@@ -37,7 +37,7 @@
                     @Html.HiddenFor(m => m.RequestId, @Model.RequestId)
                     @Html.HiddenFor(m => m.Status, @Model.Status)
                 }
-                <input list="items" class="addItem" name="items" id="selectItem" placeholder="enter item name to search">
+                <input list="items" class="addItem" name="items" id="selectItem" placeholder="search item name">
                 <datalist id="items">
                     @{
                         foreach (var item in catalogueList)

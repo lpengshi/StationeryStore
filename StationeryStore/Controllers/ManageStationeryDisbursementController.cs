@@ -41,7 +41,7 @@ namespace StationeryStore.Controllers
             ViewData["disbursement"] = disbursement;
             List<StationeryDisbursementDetailsEF> details = rndService.FindDisbursementDetailsByDisbursementId(disbursementId);
             // list of staff in that department
-            List<StaffEF> deptStaff = staffService.FindAllStaffByDepartmentCode(disbursement.DepartmentCode);
+            List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(disbursement.DepartmentCode);
             ViewData["deptStaff"] = deptStaff;
             return View(details);
         }

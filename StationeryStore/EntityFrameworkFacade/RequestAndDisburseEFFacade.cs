@@ -38,6 +38,14 @@ namespace StationeryStore.EntityFrameworkFacade
 
         public List<StationeryRequestEF> FindRequestsByDepartmentAndStatus(string departmentCode, string status)
         {
+            if (status == "all")
+            {
+                return context.StationeryRequests
+               .Where(a => a.RequestId.StartsWith(departmentCode))
+               .OrderBy(a => a.RequestDate)
+               .ToList<StationeryRequestEF>();
+            }
+
             return context.StationeryRequests
                 .Where(a => a.RequestId.StartsWith(departmentCode) && a.Status == status)
                 .OrderBy(a => a.RequestDate)

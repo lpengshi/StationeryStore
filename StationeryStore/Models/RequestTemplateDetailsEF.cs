@@ -14,7 +14,7 @@ namespace StationeryStore.Models
         public int TemplateDetailsId { get; set; }
 
         public int RequestTemplateId { get; set; }
-        [ForeignKey("Template")]
+        [ForeignKey("RequestTemplateId")]
         public virtual RequestTemplateEF RequestTemplate { get; set; }
 
         [MaxLength(50)]

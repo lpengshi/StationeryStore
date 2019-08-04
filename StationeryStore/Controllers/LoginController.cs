@@ -32,15 +32,16 @@ namespace StationeryStore.Controllers
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
 
+                if (staff.Role.Description == "Department Head" || staff.Department.AuthorityId == staff.StaffId)
+                {
+                    return RedirectToAction("Index", "ApproveRequest");
+                }
+
                 if (staff.Role.Description == "Employee")
                 {
                     return RedirectToAction("Index", "ManageRequest");
                 }
 
-                if (staff.Role.Description == "Department Head")
-                {
-                    return RedirectToAction("Index", "ApproveRequest");
-                }
                 if (staff.Role.Description == "Store Clerk")
                 {
                     return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });

@@ -10,18 +10,12 @@ namespace StationeryStore.EntityFrameworkFacade
     {
         StoreContext context = new StoreContext();
 
-        public void AddToDepartment(DepartmentEF department)
-        {
-            context.Departments.Add(department);
-            context.SaveChanges();
-        }
-
         public List<DepartmentEF> FindAllDepartments()
         {
             return context.Departments.ToList();
         }
 
-        public DepartmentEF FindDepartmentByCode(int code)
+        public DepartmentEF FindDepartmentByCode(string code)
         {
             return context.Departments.Find(code);
         }
@@ -41,6 +35,20 @@ namespace StationeryStore.EntityFrameworkFacade
         public List<CollectionPointEF> FindAllCollectionPoints()
         {
             return context.CollectionPoints.ToList();
+        }
+
+        public void SaveDepartment(DepartmentEF department)
+        {
+            var existingDepartment = context.Departments.Find(department.DepartmentCode);
+            if (existingDepartment == null)
+            {
+                context.Departments.Add(department);
+            }
+            else
+            {
+                context.Entry(existingDepartment).CurrentValues.SetValues(department);
+            }
+            context.SaveChanges();
         }
     }
 }
