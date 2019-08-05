@@ -6,6 +6,7 @@
     StockEF stock = (StockEF)ViewData["stock"];
     List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["suppliers"];
     List<StockTransactionDetailsEF> transactions = (List<StockTransactionDetailsEF>)ViewData["transactions"];
+    StaffEF staff = (StaffEF)ViewData["staff"];
 }
 
 <div>@Html.Partial("_Store")</div>
@@ -15,11 +16,14 @@
         <h3 class="title">Stock Card</h3>
         <div class="listview">
             <table class="listview">
-                <tr class="decision">
-                    <td class="decision" colspan="6" align="right">
-                        <input type="button" class="decision" value="Update" onclick="location.href='@Url.Action("UpdateStockCard", "ManageStockCard", new { itemCode = stock.ItemCode })'" />
-                    </td>
-                </tr>
+                @if (staff.Role.Description == "Store Manager")
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="6" align="right">
+                            <input type="button" class="decision" value="Update" onclick="location.href='@Url.Action("UpdateStockCard", "ManageStockCard", new { itemCode = stock.ItemCode })'" />
+                        </td>
+                    </tr>
+                }
                 <tr class="listview">
                     <td class="listviewheader">Item Code</td>
                     <td class="oddlistview">@stock.ItemCode</td>
@@ -47,36 +51,40 @@
                 @for (int i = 0; i < suppliers.Count; i++)
                 {
                     <tr class="listview">
-                        <td class="listviewheader">Supplier @(i+1)</td>
+                        <td class="listviewheader">Supplier @(i + 1)</td>
                         <td class="oddlistview">@suppliers[i].SupplierName</td>
                     </tr>
                 }
 
             </table>
-            <br/><br/>
+            <br /><br />
             @if (transactions.Count() != 0)
             {
-                <table class="listview">
-                    <tr class="listview">
-                        <td class="listviewheader">Date</td>
-                        <td class="listviewheader">Transaction Type</td>
-                        <td class="listviewheader">Quantity</td>
-                        <td class="listviewheader">Balance</td>
-                    </tr>
-                    @foreach (StockTransactionDetailsEF t in transactions)
-                    {
+                <div overflow-y="auto" height="10px">
+                    <table class="listview">
                         <tr class="listview">
-                            <td class="oddlistview">@Timestamp.dateFromTimestamp(t.Date)</td>
-                            <td class="oddlistview">@t.Type</td>
-                            <td class="oddlistview">@t.Quantity</td>
-                            <td class="oddlistview">@t.Balance</td>
+                            <td class="listviewheader">Date</td>
+                            <td class="listviewheader">Transaction Type</td>
+                            <td class="listviewheader">Quantity</td>
+                            <td class="listviewheader">Balance</td>
                         </tr>
-                    }
-                </table>
-            }else
+                        @foreach (StockTransactionDetailsEF t in transactions)
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@Timestamp.dateFromTimestamp(t.Date)</td>
+                                <td class="oddlistview">@t.Type</td>
+                                <td class="oddlistview">@t.Quantity</td>
+                                <td class="oddlistview">@t.Balance</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            else
             {
                 <h5>There are no transactions</h5>
             }
+            <br /><br />
 
         </div>
     </div>

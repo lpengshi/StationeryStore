@@ -202,6 +202,11 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.StationeryRetrievals.Find(id);
         }
 
+        public StationeryRetrievalEF FindRetrievalByStatus(string status)
+        {
+            return context.StationeryRetrievals.SingleOrDefault(x => x.Status == status);
+        }
+
 
         //DISBURSEMENT
         public void AddToDisbursement(StationeryDisbursementEF disbursement)

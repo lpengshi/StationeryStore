@@ -43,19 +43,21 @@ namespace StationeryStore.Controllers
             // list of staff in that department
             List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(disbursement.DepartmentCode);
             ViewData["deptStaff"] = deptStaff;
+            StaffEF storeClerk = staffService.GetStaff();
+            ViewData["storeClerk"] = storeClerk;
             return View(details);
         }
 
         [HttpPost]
         public ActionResult SaveDisbursement(List<StationeryDisbursementDetailsEF> details, int disbursementId,
-            string decision, int collectionRepId)
+            string decision, int collectionRepId, int storeClerkId)
         {
             if (decision == "Cancel")
             {
                 return RedirectToAction("ViewDisbursementHistory", new { page = 1 });
             }
             // update disbursement details' Disbursed Quantity and disbursement status to disbursed
-            rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId);
+            rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId, storeClerkId);
 
             // update request details
             rndService.UpdateRequestAfterDisbursement(details, disbursementId);
@@ -70,7 +72,7 @@ namespace StationeryStore.Controllers
         {
             ////get the collection rep for this disbursement
             //StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
-            //string collectionRepEmail = disbursement.Staff.Username + "@LogicUniversity";
+            //string collectionRepEmail = disbursement.Staff.Email;
             //System.Net.NetworkCredential credentials =
             //    new System.Net.NetworkCredential("sa48team5@gmail.com", "passTeam5word");
             //SmtpClient client = new SmtpClient()
@@ -88,7 +90,7 @@ namespace StationeryStore.Controllers
             //    // change the link once published
             //    Subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement",
             //    Body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
-            //    "<a href='localhost:56413/ManageStationeryDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
+            //    "<a href='localhost:56415/ManageStationeryDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
             //    "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s)."
             //};
             //mm.IsBodyHtml = true;

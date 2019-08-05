@@ -26,16 +26,18 @@
                     <td class="listviewheader">Retrieval Id</td>
                     <td class="listviewheader">Disbursement Id</td>
                     <td class="listviewheader">Department</td>
+                    <td class="listviewheader">Collection Date</td>
                     <td class="listviewheader">Status</td>
                 </tr>
                 @foreach (var d in disbursements)
                 {
-                    <tr class="listview">
-                        <td class="oddlistview">@d.RetrievalId</td>
-                        <td class="oddlistview">@Html.ActionLink(d.DisbursementId.ToString(), "ViewDisbursement", new { disbursementId = d.DisbursementId })</td>
-                        <td class="oddlistview">@d.Department.DepartmentName</td>
-                        <td class="oddlistview">@d.Status</td>
-                    </tr>
+                <tr class="listview">
+                    <td class="oddlistview">@d.RetrievalId</td>
+                    <td class="oddlistview">@Html.ActionLink(d.DisbursementId.ToString(), "ViewDisbursement", new { disbursementId = d.DisbursementId })</td>
+                    <td class="oddlistview">@d.Department.DepartmentName</td>
+                    <td class="oddlistview">@Timestamp.dateFromTimestamp((long)d.DateDisbursed)</td>
+                    <td class="oddlistview">@d.Status</td>
+                </tr>
                 }
 
             </table>
@@ -43,9 +45,10 @@
         </div>
     }
 
-    @if (noOfPages > 1)
+    <br />
+
+    @if (noOfPages > 0)
     {
-        <br />
         <div class="pagination">
             @{
                 <span>@Html.ActionLink("«", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, null)</span>
@@ -60,5 +63,7 @@
             }
         </div>
     }
+
+    <br /><br />
 
 </div>

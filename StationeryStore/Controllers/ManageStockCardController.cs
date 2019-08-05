@@ -1,4 +1,5 @@
-﻿using StationeryStore.Models;
+﻿using StationeryStore.Filters;
+using StationeryStore.Models;
 using StationeryStore.Service;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace StationeryStore.Controllers
     {
         StockService stockService = new StockService();
         PurchaseService purchaseService = new PurchaseService();
+        StaffService staffService = new StaffService();
 
         // GET: ManageStockCard
         public ActionResult ViewAllStocks(int page, string search)
@@ -42,9 +44,13 @@ namespace StationeryStore.Controllers
 
             List<StockTransactionDetailsEF> transactions = stockService.FindTransactionsByItemCode(itemCode);
             ViewData["transactions"] = transactions;
+
+            StaffEF staff = staffService.GetStaff();
+            ViewData["staff"] = staff;
             return View();
         }
 
+        [StoreManagerFilter]
         [HttpGet]
         public ActionResult UpdateStockCard(string itemCode)
         {
@@ -61,6 +67,7 @@ namespace StationeryStore.Controllers
             return View(stock);
         }
 
+        [StoreManagerFilter]
         [HttpPost]
         public ActionResult UpdateStockCard(StockCardDTO stock, string decision)
         {
@@ -83,13 +90,14 @@ namespace StationeryStore.Controllers
                 Description = stock.Description,
                 Uom = stock.Uom,
                 Bin = stock.Bin,
-                QuantityOnHand = 0
+                QuantityOnHand = stock.QuantityOnHand
             };
             stockService.UpdateStock(s);
 
             return RedirectToAction("ViewStockCard", new { itemCode = stock.ItemCode });
         }
 
+        [StoreManagerFilter]
         [HttpGet]
         public ActionResult CreateStockCard()
         {
@@ -97,6 +105,7 @@ namespace StationeryStore.Controllers
             return View(stock);
         }
 
+        [StoreManagerFilter]
         [HttpPost]
         public ActionResult CreateStockCard(StockCardDTO stock, string decision)
         {

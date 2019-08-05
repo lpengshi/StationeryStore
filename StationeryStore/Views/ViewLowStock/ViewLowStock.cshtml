@@ -43,9 +43,9 @@
         </div>
     }
 
-    @if (noOfPages > 1)
+    <br />
+    @if (noOfPages > 0)
     {
-        <br />
         <div class="pagination">
             @{
                 <span>@Html.ActionLink("«", "ViewLowStock", "ViewLowStock", new { page = 1 }, null)</span>
@@ -60,5 +60,7 @@
             }
         </div>
     }
+
+    <br /><br />
 
 </div>

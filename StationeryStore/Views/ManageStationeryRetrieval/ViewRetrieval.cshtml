@@ -11,11 +11,25 @@
 
 <div class="mainview">
     <h3>View Stationery Retrieval</h3>
-    <br />Retrieval Id: @retrieval.RetrievalId
-    <br />Retrieval Date: @Timestamp.dateFromTimestamp(retrieval.DateRetrieved)
+    <br/>
+    
     @using (Html.BeginForm("SaveRetrieval", "ManageStationeryRetrieval", FormMethod.Post))
     {
-        @:Disbursement Date: <input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")"/> 
+    <table align="center">
+        <tr>
+            <td class="details">Retrieval Id </td>
+            <td>@retrieval.RetrievalId</td>
+        </tr>
+        <tr>
+            <td class="details">Retrieval Date </td>
+            <td>@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
+        </tr>
+        <tr>
+            <td class="details">Disbursement Date </td>
+            <td><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
+        </tr>
+    </table> 
+    <br/>
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
