@@ -11,31 +11,38 @@
 
 <div class="mainview">
     <h3>View Stationery Retrieval</h3>
-    <br/>
-    
+    <br />
+
     @using (Html.BeginForm("SaveRetrieval", "ManageStationeryRetrieval", FormMethod.Post))
     {
-    <table align="center">
-        <tr>
-            <td class="details">Retrieval Id </td>
-            <td>@retrieval.RetrievalId</td>
-        </tr>
-        <tr>
-            <td class="details">Retrieval Date </td>
-            <td>@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
-        </tr>
-        <tr>
-            <td class="details">Disbursement Date </td>
-            <td><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
-        </tr>
-    </table> 
-    <br/>
+        <table align="center">
+            <tr>
+                <td class="details">Retrieval Id </td>
+                <td>@retrieval.RetrievalId</td>
+            </tr>
+            <tr>
+                <td class="details">Retrieval Date </td>
+                <td>@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
+            </tr>
+            <tr>
+                <td class="details">Disbursement Date </td>
+                @if (retrieval.Status == "Processing")
+                {
+                    <td><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
+                }
+                else
+                {
+                    <td>@Timestamp.dateFromTimestamp((long)retrieval.StationeryDisbursements.ElementAt(0).DateDisbursed)</td>
+                }
+            </tr>
+        </table>
+        <br />
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
-                    <td class="listviewheader">Bin</td>
-                    <td class="listviewheader">Item Code</td>
-                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewuom">Bin</td>
+                    <td class="listviewuom">Item Code</td>
+                    <td class="listviewdescription">Item Description</td>
                     <td class="listviewheader">Total Requested Quantity</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                 </tr>
@@ -75,6 +82,7 @@
             </table>
         </div>
     }
+    <br /><br />
 </div>
 
 <style>

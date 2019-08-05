@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td class="details">Store Clerk</td>
-                    <td>@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId"/></td>
+                    <td>@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
                 </tr>
                 @if (disbursement.Status == "Retrieved")
                 {
@@ -78,7 +78,7 @@
             <br />
             <table class="listview">
                 <tr class="listview">
-                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewuom">Item Code</td>
                     <td class="listviewheader">Item Description</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                     <td class="listviewheader">Total Disbursed Quantity</td>
@@ -129,6 +129,7 @@
             </table>
         </div>
     }
+    <br /><br />
 </div>
 
 <style>

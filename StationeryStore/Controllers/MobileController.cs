@@ -83,6 +83,12 @@ namespace StationeryStore.Controllers
 
         //}
 
+        //public JsonResult SendEmailForAcknowledgment()
+        //{
+        //    // department rep to acknowledge 
+        //    // system to update status of disbursement
+        //}
+
         //public JsonResult AcknowledgeDisbursement()
         //{
         //    // department rep to acknowledge 
