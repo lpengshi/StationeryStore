@@ -144,5 +144,10 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.CatalogueItems.Find(catalogueId);
         }
 
+        public CatalogueItemEF FindCatalogueItemByItemCode(string itemCode)
+        {
+            return context.CatalogueItems.SingleOrDefault(a => a.ItemCode == itemCode);
+        }
+
     }
 }

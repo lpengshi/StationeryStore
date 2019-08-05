@@ -11,17 +11,38 @@
 
 <div class="mainview">
     <h3>View Stationery Retrieval</h3>
-    <br />Retrieval Id: @retrieval.RetrievalId
-    <br />Retrieval Date: @Timestamp.dateFromTimestamp(retrieval.DateRetrieved)
+    <br />
+
     @using (Html.BeginForm("SaveRetrieval", "ManageStationeryRetrieval", FormMethod.Post))
     {
-        @:Disbursement Date: <input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")"/> 
+        <table align="center">
+            <tr>
+                <td class="details">Retrieval Id </td>
+                <td>@retrieval.RetrievalId</td>
+            </tr>
+            <tr>
+                <td class="details">Retrieval Date </td>
+                <td>@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
+            </tr>
+            <tr>
+                <td class="details">Disbursement Date </td>
+                @if (retrieval.Status == "Processing")
+                {
+                    <td><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
+                }
+                else
+                {
+                    <td>@Timestamp.dateFromTimestamp((long)retrieval.StationeryDisbursements.ElementAt(0).DateDisbursed)</td>
+                }
+            </tr>
+        </table>
+        <br />
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
-                    <td class="listviewheader">Bin</td>
-                    <td class="listviewheader">Item Code</td>
-                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewuom">Bin</td>
+                    <td class="listviewuom">Item Code</td>
+                    <td class="listviewdescription">Item Description</td>
                     <td class="listviewheader">Total Requested Quantity</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                 </tr>
@@ -51,9 +72,17 @@
                 @if (retrieval.Status != "Retrieved")
                 {
                     <tr class="decision">
-                        <td class="decision" colspan="6" align="right">
+                        <td class="decision" colspan="5" align="right">
                             <input type="submit" class="decision" name="decision" value="Cancel" />
                             <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Confirm retrieval quantities?')" />
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="5" align="right">
+                            <input type="button" class="decision" value="Back" onclick="location.href='@Url.Action("ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 })'" />
                         </td>
                     </tr>
                 }
@@ -61,6 +90,7 @@
             </table>
         </div>
     }
+    <br /><br />
 </div>
 
 <style>

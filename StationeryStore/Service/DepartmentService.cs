@@ -69,5 +69,15 @@ namespace StationeryStore.Service
 
             departmentEFF.SaveDepartment(department);
         }
+
+        public CollectionPointEF FindCollectionPointById(int id)
+        {
+            return departmentEFF.FindCollectionPointById(id);
+        }
+
+        public void UpdateCollectionPoint(CollectionPointEF point)
+        {
+            departmentEFF.SaveCollectionPoint(point);
+        }
     }
 }

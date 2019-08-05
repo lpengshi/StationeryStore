@@ -12,6 +12,7 @@ namespace StationeryStore.Service
     {
         StockEFFacade stockEFF = new StockEFFacade();
         RequestAndDisburseEFFacade rndEFF = new RequestAndDisburseEFFacade();
+        PurchaseEFFacade purchaseEFF = new PurchaseEFFacade();
 
         public void CreateStock(StockEF stock)
         {
@@ -134,6 +135,50 @@ namespace StationeryStore.Service
         public CatalogueItemEF FindCatalogueItemById(int catalogueId)
         {
             return stockEFF.FindCatalogueItemById(catalogueId);
+        }
+
+
+        //ReorderReport
+        public List<ReorderReportDTO> GenerateReorderReport()
+        {
+            List<LowStockDTO> lowStocks = stockEFF.FindLowStock();
+            // for each item code in the low stock, find a corresponding PO and delivery date
+            List<ReorderReportDTO> reorderList = new List<ReorderReportDTO>();
+            foreach(LowStockDTO s in lowStocks)
+            {
+                // find the order details for each item
+                List<PurchaseOrderDetailsEF> details = purchaseEFF.FindPurchaseOrderDetailsByItemCode(s.ItemCode)
+                    .Where(o => o.PurchaseOrder.Status == "Pending Delivery").ToList();
+                List<PurchaseOrderEF> orders = new List<PurchaseOrderEF>();
+                foreach(PurchaseOrderDetailsEF d in details)
+                {
+                    orders.Add(d.PurchaseOrder);
+                }
+
+                ReorderReportDTO item = new ReorderReportDTO()
+                {
+                    LowStockDTO = s,
+                    Order = orders
+                };
+                reorderList.Add(item);
+            }
+            return reorderList;
+        }
+
+        public List<InventoryStatusReportDTO> GenerateInventoryStatusReport()
+        {
+            List<StockEF> stocks = stockEFF.FindAllStock();
+            List<InventoryStatusReportDTO> inventoryStatusList = new List<InventoryStatusReportDTO>();
+            foreach(StockEF s in stocks)
+            {
+                InventoryStatusReportDTO item = new InventoryStatusReportDTO()
+                {
+                    Stock = s,
+                    CatalogueItem = stockEFF.FindCatalogueItemByItemCode(s.ItemCode)
+                };
+                inventoryStatusList.Add(item);
+            }
+            return inventoryStatusList;
         }
     }
 }

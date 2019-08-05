@@ -12,7 +12,6 @@ namespace StationeryStore.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            // First Login
             ViewData["note"] = "Please enter your Username and Password";
             return View();
         }
@@ -30,24 +29,24 @@ namespace StationeryStore.Controllers
                 return View();
             }
             else {
-                // Create SessionId and Store in Database
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
 
-                // Redirect based on role
+                if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
+                {
+                    return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });
+                }
+                if (staff.Role.Description == "Store Manager")
+                {
+                    return RedirectToAction("ViewAllStocks", "ManageStockCard", new { page = 1 });
+                }
                 if (staff.Role.Description == "Department Head" || staff.Department.AuthorityId == staff.StaffId)
                 {
                     return RedirectToAction("Index", "ApproveRequest");
                 }
-
                 if (staff.Role.Description == "Employee")
                 {
                     return RedirectToAction("Index", "ManageRequest");
-                }
-
-                if (staff.Role.Description == "Store Clerk")
-                {
-                    return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });
                 }
             }
             return View();

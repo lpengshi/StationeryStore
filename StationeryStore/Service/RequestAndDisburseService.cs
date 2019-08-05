@@ -456,6 +456,11 @@ namespace StationeryStore.Service
             return rndEFF.FindAllRetrieval().Where(x => x.Status == "Processing").ToList().Any();
         }
 
+        public StationeryRetrievalEF FindRetrievalByStatus(string status)
+        {
+            return rndEFF.FindRetrievalByStatus(status);
+        }
+
 
 
         //DISBURSE
@@ -561,7 +566,7 @@ namespace StationeryStore.Service
         }
         public List<StationeryDisbursementEF> FindAllDisbursements()
         {
-            return rndEFF.FindAllDisbursement();
+            return rndEFF.FindAllDisbursement().OrderByDescending(x => x.DateDisbursed).ToList();
         }
 
         public StationeryDisbursementEF FindDisbursementById(int disbursementId)
@@ -574,7 +579,8 @@ namespace StationeryStore.Service
             return rndEFF.FindDisbursementDetailsByDisbursementId(disbursementId);
         }
 
-        public void UpdateDisbursedQuantities(List<StationeryDisbursementDetailsEF> details, int disbursementId, int collectionRepId)
+        public void UpdateDisbursedQuantities(List<StationeryDisbursementDetailsEF> details, int disbursementId, 
+            int collectionRepId, int storeClerkId)
         {
             // update disbursement details' Disbursed Quantity 
             foreach (StationeryDisbursementDetailsEF d in details)
@@ -585,6 +591,7 @@ namespace StationeryStore.Service
             StationeryDisbursementEF disbursement = rndEFF.FindDisbursementById(disbursementId);
             disbursement.Status = "Disbursed";
             disbursement.CollectionRepId = collectionRepId;
+            disbursement.StoreClerkId = storeClerkId;
             rndEFF.SaveDisbursement(disbursement);
         }
 

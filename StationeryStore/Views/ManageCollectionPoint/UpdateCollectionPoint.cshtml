@@ -1,0 +1,47 @@
+﻿@*Janel*@
+
+@model StationeryStore.Models.CollectionPointEF
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Update Collection Point</h3>
+        @using (Html.BeginForm("UpdateCollectionPoint", "ManageCollectionPoint", FormMethod.Post))
+        {
+            <div class="listview">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.CollectionPointId)</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x.CollectionPointId)</td>
+                        <td>@Html.HiddenFor(x => x.CollectionPointId)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.CollectionTime)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.CollectionTime)</td>
+                        <td>@Html.ValidationMessageFor(x => x.CollectionTime)</td>
+                    </tr>
+                    <tr class="listview">
+                        <td class="listviewheader">@Html.LabelFor(x => x.Location)</td>
+                        <td class="oddlistview">@Html.TextBoxFor(x => x.Location)</td>
+                        <td>@Html.ValidationMessageFor(x => x.Location)</td>
+                    </tr>
+                    <tr class="decision">
+                        <td class="decision" colspan="2" align="right">
+                            <input type="button" class="decision" name="decision" value="Cancel" onclick="location.href='@Url.Action("ViewAllCollectionPoints", "ManageCollectionPoint", new { collectionPointId = Model.CollectionPointId})'" />
+                            <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Save changes?')" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+        <br /><br />
+    </div>
+</div>
+
+<style>
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>
