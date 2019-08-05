@@ -446,6 +446,11 @@ namespace StationeryStore.Service
             return rndEFF.FindAllRetrieval().Where(x => x.Status == "Processing").ToList().Any();
         }
 
+        public StationeryRetrievalEF FindRetrievalByStatus(string status)
+        {
+            return rndEFF.FindRetrievalByStatus(status);
+        }
+
 
 
         //DISBURSE

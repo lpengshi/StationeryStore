@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ManageStationeryRetrievalController.cs" />
     <Compile Include="Controllers\ManageStockCardController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\ViewCatalogueController.cs" />
     <Compile Include="Controllers\ViewDisbursementController.cs" />
     <Compile Include="Controllers\ViewLowStockController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\InventoryStatusReportDTO.cs" />
     <Compile Include="Models\LoginDTO.cs" />
     <Compile Include="Models\LowStockDTO.cs" />
+    <Compile Include="Models\MobileRetrievalItemDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
@@ -281,6 +283,7 @@
     <Folder Include="Views\GenerateRetrievalList\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\ManageAdjustment\" />
+    <Folder Include="Views\Mobile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
