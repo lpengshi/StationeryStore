@@ -41,11 +41,6 @@ namespace StationeryStore.Controllers
                 {
                     return RedirectToAction("Index", "ManageRequest");
                 }
-
-                if (staff.Role.Description == "Department Head")
-                {
-                    return RedirectToAction("Index", "ApproveRequest");
-                }
                 if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
                 {
                     return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });
