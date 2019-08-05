@@ -17,6 +17,10 @@ namespace StationeryStore.Models
         [ForeignKey("ApproverId")]
         public virtual StaffEF Approver { get; set; }
 
+        public int RequesterId { get; set; }
+        [ForeignKey("RequesterId")]
+        public virtual StaffEF Requester { get; set; }
+
         public long DateIssued { get; set; }
 
         public string Status { get; set; }

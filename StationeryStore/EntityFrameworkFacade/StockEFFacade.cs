@@ -144,5 +144,84 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.CatalogueItems.Find(catalogueId);
         }
 
+        public CatalogueItemEF FindCatalogueItemByItemCode(string itemCode)
+        {
+            return context.CatalogueItems.Where(x => x.ItemCode == itemCode).SingleOrDefault();
+        }
+
+        //ADJUSTMENT VOUCHER
+
+        public List<AdjustmentVoucherEF> FindAllAdjustmentVouchers()
+        {
+            return context.AdjustmentVouchers.OrderBy(x => x.VoucherId).ToList();
+        }
+
+        public AdjustmentVoucherEF FindAdjustmentVoucherById(string voucherId)
+        {
+            return context.AdjustmentVouchers.Where(x => x.VoucherId == voucherId).SingleOrDefault();
+        }
+
+        public List<AdjustmentVoucherDetailsEF> FindAdjustmentVoucherDetailsById(string voucherId)
+        {
+            return context.AdjustmentVouchersDetails.Where(x => x.VoucherId == voucherId).ToList();
+        }
+
+        public bool UpdateAdjustmentVoucher(AdjustmentVoucherEF voucher)
+        {
+            var existingRecord = context.AdjustmentVouchers.Find(voucher.VoucherId);
+            if (existingRecord != null)
+            {
+                context.Entry(existingRecord).CurrentValues.SetValues(voucher);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool AddNewAdjustmentVoucherAndDetails(AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> voucherDetailsList)
+        {
+            var existingRecord = context.AdjustmentVouchers.Find(voucher.VoucherId);
+            if (existingRecord == null)
+            {
+                context.AdjustmentVouchers.Add(voucher);
+                foreach(AdjustmentVoucherDetailsDTO newItem in voucherDetailsList)
+                {
+                    AdjustmentVoucherDetailsEF d = new AdjustmentVoucherDetailsEF();
+                    d.ItemCode = newItem.ItemCode;
+                    d.Quantity = newItem.Quantity;
+                    d.Reason = newItem.Reason;
+                    d.VoucherId = voucher.VoucherId;
+                    context.AdjustmentVouchersDetails.Add(d);
+                }
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public int FindLastAdjustmentVoucher(string prefix)
+        {
+            return context.AdjustmentVouchers.Count(x => x.VoucherId.StartsWith(prefix));
+        }
+
+        public bool FindAndReplaceAdjustmentVoucherDetails(string voucherId, List<AdjustmentVoucherDetailsDTO> detailsList)
+        {
+            //delete existing records
+            context.AdjustmentVouchersDetails.RemoveRange(context.AdjustmentVouchersDetails.Where(x => x.VoucherId == voucherId));
+
+            //replace records
+            foreach (AdjustmentVoucherDetailsDTO newItem in detailsList)
+            {
+                AdjustmentVoucherDetailsEF d = new AdjustmentVoucherDetailsEF();
+                d.ItemCode = newItem.ItemCode;
+                d.Quantity = newItem.Quantity;
+                d.Reason = newItem.Reason;
+                d.VoucherId = voucherId;
+                context.AdjustmentVouchersDetails.Add(d);
+            }
+            context.SaveChanges();
+
+            return false;
+        }
     }
 }

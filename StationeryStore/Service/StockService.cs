@@ -12,6 +12,7 @@ namespace StationeryStore.Service
     {
         StockEFFacade stockEFF = new StockEFFacade();
         RequestAndDisburseEFFacade rndEFF = new RequestAndDisburseEFFacade();
+        PurchaseEFFacade purchaseEFF = new PurchaseEFFacade();
 
         public void CreateStock(StockEF stock)
         {
@@ -93,6 +94,49 @@ namespace StationeryStore.Service
             }
         }
 
+        public void LogTransactionsForDeliveryOrder(int purchaseOrderId)
+        {
+            List<PurchaseOrderDetailsEF> poDetails = purchaseEFF.FindPurchaseOrderDetailsByOrderId(purchaseOrderId);
+
+            foreach(PurchaseOrderDetailsEF d in poDetails)
+            {
+                StockTransactionDetailsEF transaction = new StockTransactionDetailsEF()
+                {
+                    ItemCode = d.ItemCode,
+                    Date = Timestamp.unixTimestamp(),
+                    Quantity = d.QuantityOrdered,
+                    Type = "Supplier "+ d.PurchaseOrder.SupplierCode,
+                    Balance = stockEFF.FindStockByItemCode(d.ItemCode).QuantityOnHand + d.QuantityOrdered,
+                };
+                stockEFF.AddToStockTransaction(transaction);
+
+                StockEF stock = stockEFF.FindStockByItemCode(d.ItemCode);
+                stock.QuantityOnHand = stock.QuantityOnHand + d.QuantityOrdered;
+                stockEFF.SaveStock(stock);
+            }
+        }
+
+        public void LogTransactionsForAdjustmentVoucher(string adjustmentVoucherId)
+        {
+            List<AdjustmentVoucherDetailsEF> adjVoucherDetails = stockEFF.FindAdjustmentVoucherDetailsById(adjustmentVoucherId);
+
+            foreach (AdjustmentVoucherDetailsEF d in adjVoucherDetails)
+            {
+                StockTransactionDetailsEF transaction = new StockTransactionDetailsEF()
+                {
+                    ItemCode = d.ItemCode,
+                    Date = Timestamp.unixTimestamp(),
+                    Quantity = d.Quantity,
+                    Type = "Stock Adjustment " + d.VoucherId,
+                    Balance = stockEFF.FindStockByItemCode(d.ItemCode).QuantityOnHand + d.Quantity,
+                };
+                stockEFF.AddToStockTransaction(transaction);
+
+                StockEF stock = stockEFF.FindStockByItemCode(d.ItemCode);
+                stock.QuantityOnHand = stock.QuantityOnHand + d.Quantity;
+                stockEFF.SaveStock(stock);
+            }
+        }
 
         //Catalogue
         public List<CatalogueItemEF> ListCatalogueItems()
@@ -134,6 +178,84 @@ namespace StationeryStore.Service
         public CatalogueItemEF FindCatalogueItemById(int catalogueId)
         {
             return stockEFF.FindCatalogueItemById(catalogueId);
+        }
+
+        //AdjustmentVoucher
+
+        public List<AdjustmentVoucherEF> FindAllAdjustmentVouchers()
+        {
+            return stockEFF.FindAllAdjustmentVouchers();
+        }
+
+        public AdjustmentVoucherEF FindAdjustmentVoucherById(string voucherId)
+        {
+            return stockEFF.FindAdjustmentVoucherById(voucherId);
+        }
+
+        public List<AdjustmentVoucherDetailsEF> FindAdjustmentDetailsById(string voucherId)
+        {
+            return stockEFF.FindAdjustmentVoucherDetailsById(voucherId);
+        }
+
+        public bool UpdateAdjustmentVoucherStatus(StaffEF decisionMaker, string voucherId, string status)
+        {
+            AdjustmentVoucherEF voucher = FindAdjustmentVoucherById(voucherId);
+            if(status == "Approve")
+            {
+                voucher.Status = "Approved";
+                voucher.ApproverId = decisionMaker.StaffId;
+                //change status to Approved, update the stock card
+                stockEFF.UpdateAdjustmentVoucher(voucher);
+                LogTransactionsForAdjustmentVoucher(voucherId);
+                return true;
+            }
+            if(status == "Reject")
+            {
+                voucher.Status = "Rejected";               
+                stockEFF.UpdateAdjustmentVoucher(voucher);
+            }
+            return false;
+        }
+
+        public bool SaveAdjustmentVoucherAndDetails(StaffEF requester, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList)
+        {
+            //check if when make adj voucher the voucher id remains null!!!!
+            var existing = stockEFF.FindAdjustmentVoucherById(voucher.VoucherId);
+            if (existing == null)
+            {
+                int year = DateTime.Now.Year;
+                string prefix = "VO/" + year + "/";
+                int num = stockEFF.FindLastAdjustmentVoucher(prefix) + 1;
+                voucher.VoucherId = prefix + num;
+
+                long unixTimestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                voucher.DateIssued = unixTimestamp;
+                voucher.RequesterId = requester.StaffId;
+                return stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
+            }
+            else
+            {
+                stockEFF.FindAndReplaceAdjustmentVoucherDetails(voucher.VoucherId, detailsList);
+            }
+            return false;
+        }
+
+        public bool VoucherExceedsSetValue(List<AdjustmentVoucherDetailsDTO> detailsList)
+        {
+            double minValPerLineItem = 250;
+            bool valueExceeded = false;
+            foreach(var d in detailsList)
+            {
+                //for now, derived the cost flag by averaging stock cost across suppliers.
+                List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
+                double unitAvgCost = items.Average(x => x.UnitPrice);
+                double sumPrice = unitAvgCost * d.Quantity;
+                if(sumPrice >= minValPerLineItem)
+                {
+                    valueExceeded = true;
+                }
+            }
+            return valueExceeded;
         }
     }
 }

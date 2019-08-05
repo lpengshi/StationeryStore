@@ -1,0 +1,87 @@
+﻿@model List<StationeryStore.Models.AdjustmentVoucherDetailsDTO>
+@using StationeryStore.Models
+@using StationeryStore.Util
+
+@{
+    ViewBag.Title = "CreateAdjustmentVoucher";
+    List<StockEF> itemList = (List<StockEF>)ViewData["itemList"];
+    AdjustmentVoucherEF voucher = (AdjustmentVoucherEF)ViewData["voucher"];
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="maindetails">
+    <h3 class="title">Edit Adjustment Voucher</h3>
+    <div>
+        @using (Html.BeginForm("CreateAdjustmentVoucher", "ManageAdjustment", FormMethod.Post))
+        {
+            @{ if (voucher.VoucherId != null)
+                {
+                    <table>
+                        <tr>
+                            <td class="listrequestlabel">Voucher Id:</td>
+                            <td class="listrequestvalue">@voucher.VoucherId</td>
+                        </tr>
+                        <tr>
+                            <td class="listrequestlabel">Requester:</td>
+                            <td class="listrequestvalue">@voucher.Requester.Name</td>
+                        </tr>
+                    </table>
+                }
+            }
+            <p>Add items to adjustment voucher.</p>
+
+            <input list="items" name="itemToAdd" />
+            <datalist id="items">
+                @{ foreach (var item in itemList)
+                    {
+                        string itemDetail = item.ItemCode + "- " + item.Description;
+                        <option value="@item.ItemCode">@itemDetail</option>
+                    }
+                }
+            </datalist>
+            <input class="decision" type="submit" value="Add Item" name="choice" />
+
+            <table class="listview">
+                <tr>
+                    <th class="listviewheader">S/N</th>
+                    <th class="listviewheader">Item Code</th>
+                    <th class="listviewheader">Description</th>
+                    <th class="listviewheader">Quantity Adjusted</th>
+                    <th class="listviewheader">Reason</th>
+                    <th class="listviewheader">Remove</th>
+                </tr>
+                @{if (Model.Count == 0 || Model == null)
+                    {
+                        <tr class="oddlistview">
+                            <td colspan="6" class="oddlistview">Please Add Items.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            int count = i + 1;
+                            <tr class="oddlistview">
+                                <td class="oddlistview">@count</td>
+                                <td class="oddlistview">@Model[i].ItemCode</td>
+                                <td class="oddlistview">@Model[i].Description</td>
+                                <td class="oddlistview">@Html.EditorFor(x => Model[i].Quantity)<br />@Html.ValidationMessageFor(x=> Model[i].Quantity)</td>
+                                <td class="oddlistview">@Html.EditorFor(x => Model[i].Reason)</td>
+                                <td class="oddlistview">@Html.CheckBoxFor(x => Model[i].Remove)</td>
+
+                                @Html.HiddenFor(x => Model[i].Remove)
+                                @Html.HiddenFor(x => Model[i].ItemCode)
+                                @Html.HiddenFor(x => Model[i].Description)
+                                @Html.HiddenFor(x => Model[i].Reason)
+                                @Html.HiddenFor(x => Model[i].Quantity)
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+            <input class="decision" type="submit" value="Submit" name="choice" />
+            <button onclick="location.href='@Url.Action("Index", "ManageAdjustment")'" name="choice" value="Cancel" class="decision">Cancel</button>
+        }
+    </div>
+</div>

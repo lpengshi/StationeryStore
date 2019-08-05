@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdjustmentVoucherDetailsDTO.cs" />
     <Compile Include="Models\AdjustmentVoucherDetailsEF.cs" />
     <Compile Include="Models\AdjustmentVoucherEF.cs" />
     <Compile Include="Models\CatalogueItemDTO.cs" />
@@ -267,6 +268,9 @@
     <Content Include="Views\ViewRequestHistory\Index.cshtml" />
     <Content Include="Views\ManageSupplier\CreateSupplier.cshtml" />
     <Content Include="Views\ManageSupplier\ViewSupplierDetails.cshtml" />
+    <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
+    <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
+    <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

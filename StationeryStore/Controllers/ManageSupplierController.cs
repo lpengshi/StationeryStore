@@ -100,11 +100,15 @@ namespace StationeryStore.Controllers
             return View();
         }
 
-        public ActionResult EditSupplierDetails(string choice, string supplierCode, List<SupplierDetailsEF> supplierDetailsEFs)
+        public ActionResult EditSupplierDetails(string decision, string supplierCode, List<SupplierDetailsEF> supplierDetailsEFs)
         {
             //only able to assign the item price for the selected items
+
             List<SupplierDetailsEF> supplierDetailsList = purchaseService.FindSupplierItems(supplierCode);
-            
+            if(decision == "Submit")
+            {
+              
+            }
             return View();
         }
     }

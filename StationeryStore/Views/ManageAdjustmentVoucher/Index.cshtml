@@ -1,0 +1,61 @@
+﻿@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    List<AdjustmentVoucherEF> voucherList = (List<AdjustmentVoucherEF>)ViewData["voucherList"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Supplier List</h3>
+    <br />
+
+    @if (voucherList.Count == 0)
+    {
+        <h5>There are no adjustment vouchers</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Voucher No.</td>
+                    <td class="listviewheader">Date requested</td>
+                    <td class="listviewheader">Requester</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @foreach (var ad in voucherList)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview"><a href="@Url.Action("ViewAdjustmentDetails", "ManageAdjustment", new {itemCode = ad.VoucherId} )">@ad.VoucherId</a></td>
+                        <td class="oddlistview">@Timestamp.dateFromTimestamp(ad.DateIssued)</td>
+                        <td class="oddlistview">@ad.Requester.Name</td>
+                        <td class="oddlistview">@ad.Status</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewSupplierDetails", "ManageSupplier", new { page = 1}, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewSupplierDetails", "ManageSupplier", new { page = i}, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewSupplierDetails", "ManageSupplier", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+
+</div>

@@ -37,13 +37,13 @@
                         var itemCount = po.PurchaseOrderDetails.Count;
                         string createdDate = Timestamp.dateFromTimestamp(po.OrderDate);
 
-                        <tr>
-                            <td><a href="@Url.Action("ViewPurchaseOrder", "ManagePurchase", new {purchaseOrderId = po.OrderId.ToString() } )">@po.OrderId</a></td>
-                            <td>@createdDate</td>
-                            <td>@po.SupplierCode</td>
-                            <td>@itemCount</td>
-                            <td>@po.Description</td>
-                            <td>@po.Status</td>
+                        <tr class="listview" onclick="location.href='@Url.Action("ViewPurchaseOrder", "ManagePurchase", new {purchaseOrderId = po.OrderId.ToString() } )'">
+                            <td class="oddlistview">@po.OrderId</td>
+                            <td class="oddlistview">@createdDate</td>
+                            <td class="oddlistview">@po.SupplierCode</td>
+                            <td class="oddlistview">@itemCount</td>
+                            <td class="oddlistview">@po.Description</td>
+                            <td class="oddlistview">@po.Status</td>
                         </tr>
                     }
                 }
