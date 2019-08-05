@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "View Request Template";
+    var requestDTOList = ViewBag.requestDTOList;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Request Template</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader" colspan="2">Request Template</td>
+                </tr>
+                @*{
+            for (int i = 0; i < requestDTOList.Count; i++)
+            {
+                string requestNo = requestDTOList[i].RequestId;
+                if (i % 2 != 0)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                    </tr>
+                }
+                else if (i % 2 == 0)
+                {
+                    <tr class="listview">
+                        <td class="evenlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                    </tr>
+                }
+            }
+        }*@
+                <tr class="decision">
+                    @{ Html.BeginForm("CreateRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
+                        <td><input type="text" name="templatename" placeholder="enter template name" class="addItem" /></td>
+                        <td class="decision" align="right">
+                            <input type="submit" value="Add New Request Template" class="decision" />
+                        </td>
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

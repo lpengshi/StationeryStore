@@ -145,6 +145,7 @@
     <Compile Include="Controllers\ManageDelegationController.cs" />
     <Compile Include="Controllers\ManagePurchaseController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\ManageRequestTemplateController.cs" />
     <Compile Include="Controllers\ManageStationeryDisbursementController.cs" />
     <Compile Include="Controllers\ManageStationeryRetrievalController.cs" />
     <Compile Include="Controllers\ManageStockCardController.cs" />
@@ -274,6 +275,8 @@
     <Content Include="Views\ManageDelegation\Index.cshtml" />
     <Content Include="Views\ViewEmployeeRequestHistory\Index.cshtml" />
     <Content Include="Views\ViewEmployeeRequestHistory\ViewRequest.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\CreateRequestTemplate.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

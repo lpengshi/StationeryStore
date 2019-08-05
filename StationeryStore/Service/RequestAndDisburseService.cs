@@ -22,6 +22,13 @@ namespace StationeryStore.Service
             return unfulfilledRequests;
         }
 
+        public List<RequestTemplateEF> FindRequestTemplateByStaffId(int staffId)
+        {
+            List<RequestTemplateEF> requestTemplate = rndEFF.FindRequestTemplateByStaffId(staffId);
+
+            return requestTemplate;
+        }
+
         public List<string> ConvertToDate(List<StationeryRequestEF> pendingList)
         {
             string date;
