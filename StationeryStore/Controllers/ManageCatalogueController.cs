@@ -1,4 +1,5 @@
-﻿using StationeryStore.Models;
+﻿using StationeryStore.Filters;
+using StationeryStore.Models;
 using StationeryStore.Service;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace StationeryStore.Controllers
     public class ManageCatalogueController : Controller
     {
         StockService stockService = new StockService();
+        StaffService staffService = new StaffService();
 
         // GET: ManageCatalogue
 
@@ -40,9 +42,13 @@ namespace StationeryStore.Controllers
                 return View("Error");
             }
             ViewData["catItem"] = catItem;
+
+            StaffEF staff = staffService.GetStaff();
+            ViewData["staff"] = staff;
             return View();
         }
 
+        [StoreManagerFilter]
         [HttpGet]
         public ActionResult CreateCatalogueItem()
         {
@@ -61,6 +67,7 @@ namespace StationeryStore.Controllers
             return View(item);
         }
 
+        [StoreManagerFilter]
         [HttpPost]
         public ActionResult CreateCatalogueItem(CatalogueItemDTO item)
         {
@@ -75,6 +82,7 @@ namespace StationeryStore.Controllers
             return RedirectToAction("ViewCatalogueItem", new { catalogueId = catItem.CatalogueId });
         }
 
+        [StoreManagerFilter]
         [HttpGet]
         public ActionResult UpdateCatalogueItem(int catalogueId)
         {
@@ -94,6 +102,7 @@ namespace StationeryStore.Controllers
             return View(item);
         }
 
+        [StoreManagerFilter]
         [HttpPost]
         public ActionResult UpdateCatalogueItem(CatalogueItemDTO item, string decision)
         {
@@ -134,6 +143,7 @@ namespace StationeryStore.Controllers
             return RedirectToAction("ViewCatalogueItem", new { catalogueId = catItem.CatalogueId });
         }
 
+        [StoreManagerFilter]
         public ActionResult DeleteCatalogueItem(int catalogueId)
         {
             CatalogueItemEF item = stockService.FindCatalogueItemById(catalogueId);

@@ -5,22 +5,40 @@ using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Service;
 using StationeryStore.Models;
+using StationeryStore.Filters;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
     public class ManageAdjustmentVoucherController : Controller
     {
         StockService stockService = new StockService();
         StaffService staffService = new StaffService();
 
         // GET: ManageAdjustment
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int page)
         {
             List<AdjustmentVoucherEF> adjVouchers = stockService.FindAllAdjustmentVouchers();
+
+            if (search != null) {
+                adjVouchers = adjVouchers.Where(x => x.Status != null && x.Status.Contains(search)).ToList();
+            }
+            int pageSize = 8;
+            List<AdjustmentVoucherEF> details = adjVouchers
+                .OrderBy(x => x.DateIssued)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList<AdjustmentVoucherEF>();
+
+            int noOfPages = (int)Math.Ceiling((double)adjVouchers.Count() / pageSize);
+
+            ViewData["page"] = page;
+            ViewData["noOfPages"] = noOfPages;
             ViewData["voucherList"] = adjVouchers;
+
             return View();
         }
-
+        
         public ActionResult ViewAdjustmentDetails(string voucherId, string choice)
         {
             AdjustmentVoucherEF voucher = stockService.FindAdjustmentVoucherById(voucherId);
@@ -38,7 +56,7 @@ namespace StationeryStore.Controllers
 
                 if (choice == "Edit" && !isManager)
                 {
-                    return RedirectToAction("CreateAdjustmentVoucher", "ManageAdjustment", new { voucher = voucher, detailsList= voucherDetailsList});
+                    return RedirectToAction("CreateAdjustmentVoucher", "ManageAdjustmentVoucher", new { voucherId = voucherId});
                 }
                 if (choice == "Approve" || choice == "Reject" && isManager)
                 {
@@ -48,14 +66,54 @@ namespace StationeryStore.Controllers
             return View();
         }
 
-        public ActionResult CreateAdjustmentVoucher(string itemToAdd, string removalItem, string choice, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList)
+        [HttpGet]
+        public ActionResult CreateAdjustmentVoucher(string voucherId)
+        {
+            List<AdjustmentVoucherDetailsDTO> detailsList = new List<AdjustmentVoucherDetailsDTO>();
+            if (voucherId != null)
+            {
+                AdjustmentVoucherEF voucher = stockService.FindAdjustmentVoucherById(voucherId);
+                var baseDetailsList = stockService.FindAdjustmentDetailsById(voucherId);
+                foreach (var d in baseDetailsList)
+                {
+                    AdjustmentVoucherDetailsDTO toAdd = new AdjustmentVoucherDetailsDTO();
+                    toAdd.ItemCode = d.ItemCode;
+                    toAdd.Quantity = d.Quantity;
+                    toAdd.Reason = d.Reason;
+                    toAdd.Description = d.Stock.Description;
+                    toAdd.Remove = false;
+
+                    detailsList.Add(toAdd);
+                }
+
+                ViewData["voucher"] = voucher;
+            }
+            List<StockEF> itemList = stockService.FindAllStocks().OrderBy(x => x.ItemCode).ToList();
+            ViewData["itemList"] = itemList;
+
+            return View(detailsList);
+        }
+
+        [HttpPost]
+        public ActionResult CreateAdjustmentVoucher(string itemToAdd, string removalItem, string choice, string voucherId, List<AdjustmentVoucherDetailsDTO> detailsList)
         {
             List<StockEF> itemList = stockService.FindAllStocks().OrderBy(x=> x.ItemCode).ToList();
             ViewData["itemList"] = itemList;
 
-            if (voucher == null || voucher.VoucherId == null)
+            AdjustmentVoucherEF voucher = new AdjustmentVoucherEF();
+            if (voucherId == null)
             {
                 voucher = new AdjustmentVoucherEF();
+            }
+            else
+            {
+                voucher = stockService.FindAdjustmentVoucherById(voucherId);
+
+            }
+            ViewData["voucher"] = voucher;
+
+            if (detailsList == null)
+            {
                 detailsList = new List<AdjustmentVoucherDetailsDTO>();
             }
             if(choice == "Add Item")
@@ -71,16 +129,7 @@ namespace StationeryStore.Controllers
                         description = v.Description;
                         isValid = true;
                     }
-                }
-                //check if in the existing voucher details list
-                //same item can exist but with different reasons.
-                //foreach (var v in detailsList)
-                //{
-                //    if(v.ItemCode == itemToAdd)
-                //    {
-                //        isValid = false;
-                //    }
-                //}                
+                }                              
                 if (isValid)
                 {
                     AdjustmentVoucherDetailsDTO newVoucherDetails = new AdjustmentVoucherDetailsDTO();
@@ -91,32 +140,28 @@ namespace StationeryStore.Controllers
                     detailsList.Add(newVoucherDetails);
                 }
             }
-            if(choice == "Remove")
+            if(choice == "Remove" && detailsList.Count > 0)
             {
-                foreach (var v in detailsList)
-                {
-                    if(v.Remove == true)
-                    {
-                        detailsList.Remove(v);
-                    }
-                }
+                detailsList = detailsList.Where(x => x.Remove != true).ToList();               
             }
             if(choice == "Submit")
             {
                 StaffEF requester = staffService.GetStaff();
-                stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList);
+                string newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList);
                 if (stockService.VoucherExceedsSetValue(detailsList))
                 {
+                    System.Diagnostics.Debug.Print("Pending appr sent to manager");
                     SendEmailToAuthority(voucher.VoucherId, "Manager");
                 }
                 else
                 {
+                    System.Diagnostics.Debug.Print("Pending appr sent to supervisor");
                     SendEmailToAuthority(voucher.VoucherId, "Supervisor");
                 }
+                return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId});
             }
 
-            ViewData["detailsList"] = detailsList;
-            return View();
+            return View(detailsList);
         }
 
         public void SendEmailToAuthority(string voucherId, string authorityLevel)

@@ -11,10 +11,10 @@
 
 <div>@Html.Partial("_Store")</div>
 
-<div class="maindetails">
+<div class="mainview">
     <h3 class="title">Adjustment Voucher Details(@voucher.Status)</h3>
-    <div>
-        @using (Html.BeginForm("ViewAdjustmentDetails", "ManageAdjustment", FormMethod.Post))
+    <div class="maindview">
+        @using (Html.BeginForm("ViewAdjustmentDetails", "ManageAdjustmentVoucher", FormMethod.Post))
         {
             <table class="listview">
                 <tr>
@@ -51,17 +51,18 @@
                 @{ foreach (var v in voucherDetails)
                     {
                         <tr class="oddlistview">
-                            <td>@v.ItemCode</td>
-                            <td>@v.Stock.Description</td>
-                            <td>@v.Quantity</td>
-                            <td>@v.Reason</td>
+                            <td class="oddlistview">@v.ItemCode</td>
+                            <td class="oddlistview">@v.Stock.Description</td>
+                            <td class="oddlistview">@v.Quantity</td>
+                            <td class="oddlistview">@v.Reason</td>
                         </tr>
                     }
                 }
             </table>
-
+            <br />
             if (voucher.Status == "Pending Approval")
             {
+                <input type="hidden" name="voucherId" value="@voucher.VoucherId"/>
                 if (staffRole == "Store Clerk" && staffId == voucher.RequesterId)
                 {
                     <button onclick="submit()" class="decision" name="choice" value="Edit">Edit</button>

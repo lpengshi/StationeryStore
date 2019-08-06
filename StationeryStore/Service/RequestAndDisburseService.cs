@@ -22,6 +22,13 @@ namespace StationeryStore.Service
             return unfulfilledRequests;
         }
 
+        public List<RequestTemplateEF> FindRequestTemplateByStaffId(int staffId)
+        {
+            List<RequestTemplateEF> requestTemplate = rndEFF.FindRequestTemplateByStaffId(staffId);
+
+            return requestTemplate;
+        }
+
         public List<string> ConvertToDate(List<StationeryRequestEF> pendingList)
         {
             string date;
@@ -35,11 +42,74 @@ namespace StationeryStore.Service
             return dateList;
         }
 
+        public void CreateRequestTemplate(string templateName, int staffId)
+        {
+            RequestTemplateEF requestTemplate = new RequestTemplateEF()
+            {
+                TemplateName = templateName,
+                StaffId = staffId,
+            };
+
+            rndEFF.SaveRequestTemplate(requestTemplate);
+        }
+
         public List<StationeryRequestEF> FindRequestByDepartmentAndStatus(DepartmentEF department, string status)
         {
             List<StationeryRequestEF> pendingList = rndEFF.FindRequestsByDepartmentAndStatus(department.DepartmentCode, status);
 
             return pendingList;
+        }
+
+        public RequestTemplateDTO FindRequestTemplateDetailsByTemplateId(int templateId)
+        {
+            List<RequestTemplateDetailsEF> requestTemplateDetailsList = rndEFF.FindRequestTemplateDetailsByTemplateId(templateId);
+
+            RequestTemplateDTO requestTemplateDTO = new RequestTemplateDTO()
+            {
+                TemplateId = templateId,
+            };
+
+           foreach (var item in requestTemplateDetailsList)
+            {
+                requestTemplateDTO.ItemDescription.Add(item.Stock.Description);
+                requestTemplateDTO.ItemUom.Add(item.Stock.Uom);
+                requestTemplateDTO.Quantity.Add(item.RequestQuantity);
+                requestTemplateDTO.Remove.Add(false);
+            }
+
+            return requestTemplateDTO;
+        }
+
+        public RequestTemplateDTO AddToRequestTemplateDTO(RequestTemplateDTO requestTemplateDTO, string description, string uom)
+        {
+            requestTemplateDTO.ItemDescription.Add(description);
+            requestTemplateDTO.ItemUom.Add(uom);
+            requestTemplateDTO.Quantity.Add(1);
+            requestTemplateDTO.Remove.Add(false);
+
+            return requestTemplateDTO;
+        }
+
+        public RequestTemplateDTO RemoveFromRequestTemplateDTO(RequestTemplateDTO requestTemplateDTO)
+        {
+            for (int i = 0; i < requestTemplateDTO.ItemDescription.Count; i++)
+            {
+                if (requestTemplateDTO.Remove[i] == true)
+                {
+                    requestTemplateDTO.ItemDescription.RemoveAt(i);
+                    requestTemplateDTO.Quantity.RemoveAt(i);
+                    requestTemplateDTO.ItemUom.RemoveAt(i);
+                    requestTemplateDTO.Remove.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            return requestTemplateDTO;
+        }
+
+        public void DeleteRequestTemplate(int templateId)
+        {
+            rndEFF.DeleteRequestTemplate(templateId);
         }
 
         public List<RequestDTO> ConvertToRequestDTO(List<StationeryRequestEF> requestList)
@@ -70,25 +140,82 @@ namespace StationeryStore.Service
                 request.Designation = "Covering Department Head";
             }
 
+            List<StationeryRequestDetailsEF> requestList = rndEFF.FindAllStationeryRequestDetailsByRequestId(request.RequestId);
+
             request.Comment = comment;
 
             if (decision == "Approve")
             {
                 request.Status = "Approved";
+                for (int i = 0; i < requestList.Count; i++)
+                {
+                    requestList[i].FulfilmentStatus = "Approved";
+                }
             }
             else if (decision == "Reject")
             {
                 request.Status = "Rejected";
-            }
-
-            List<StationeryRequestDetailsEF> requestList = rndEFF.FindAllStationeryRequestDetailsByRequestId(request.RequestId);
-
-            for (int i = 0; i < requestList.Count; i++)
-            {
-                requestList[i].FulfilmentStatus = "Approved";
+                for (int i = 0; i < requestList.Count; i++)
+                {
+                    requestList[i].FulfilmentStatus = "Rejected";
+                }
             }
 
             rndEFF.SaveRequestAndRequestDetails(request, requestList);
+        }
+
+        public RequestListDTO ConvertToRequestListDTO(RequestTemplateDTO requestTemplateDTO)
+        {
+            RequestListDTO requestListDTO = new RequestListDTO();
+
+            for (int i = 0; i < requestTemplateDTO.ItemDescription.Count; i++)
+            {
+                requestListDTO.ItemDescription.Add(requestTemplateDTO.ItemDescription[i]);
+                requestListDTO.ItemUom.Add(requestTemplateDTO.ItemUom[i]);
+                requestListDTO.Quantity.Add(requestTemplateDTO.Quantity[i]);
+                requestListDTO.Remove.Add(requestTemplateDTO.Remove[i]);
+            }
+
+            return requestListDTO;
+        }
+
+        public void UpdateRequestTemplate(StaffEF staff, RequestTemplateDTO requestTemplateDTO)
+        {
+            RequestTemplateDetailsEF requestTemplateItem; bool existingItem;
+            List<RequestTemplateDetailsEF> requestTemplateList = new List<RequestTemplateDetailsEF>();
+            List <RequestTemplateDetailsEF> requestTemplateDetails = rndEFF.FindRequestTemplateDetailsByTemplateId(requestTemplateDTO.TemplateId);
+                for (int i = 0; i < requestTemplateDetails.Count; i++)
+                {
+                    existingItem = false;
+                    for (int j = 0; j < requestTemplateDTO.ItemDescription.Count; j++)
+                    {
+                        if (requestTemplateDetails[i].Stock.Description == requestTemplateDTO.ItemDescription[j])
+                        {
+                            requestTemplateItem = rndEFF.FindRequestTemplateDetailsByTemplateIdAndItemCode(requestTemplateDTO.TemplateId, requestTemplateDetails[i].Stock.ItemCode);
+                            requestTemplateItem.RequestQuantity = requestTemplateDTO.Quantity[j];
+                            requestTemplateList.Add(requestTemplateItem);
+                            existingItem = true;
+                            requestTemplateDTO.Remove[j] = true;
+                            break;
+                        }
+                    }
+
+                    if (!existingItem)
+                    {
+                        rndEFF.DropRequestTemplateDetails(requestTemplateDetails[i]);
+                    }
+                }
+
+                requestTemplateDTO = RemoveFromRequestTemplateDTO(requestTemplateDTO);
+
+            for (int k = 0; k < requestTemplateDTO.ItemDescription.Count; k++)
+            {
+                string stockId = stockEFF.FindStockByDescription(requestTemplateDTO.ItemDescription[k]).ItemCode;
+                requestTemplateItem = new RequestTemplateDetailsEF(requestTemplateDTO.TemplateId, stockId, requestTemplateDTO.Quantity[k]);
+                requestTemplateList.Add(requestTemplateItem);
+            }
+
+            rndEFF.SaveRequestTemplateDetails(requestTemplateList);
         }
 
         public List<RequestDTO> FindRequestByStaffAndStatus(int staffId, string status)
@@ -446,6 +573,11 @@ namespace StationeryStore.Service
             return rndEFF.FindAllRetrieval().Where(x => x.Status == "Processing").ToList().Any();
         }
 
+        public StationeryRetrievalEF FindRetrievalByStatus(string status)
+        {
+            return rndEFF.FindRetrievalByStatus(status);
+        }
+
 
 
         //DISBURSE
@@ -551,7 +683,7 @@ namespace StationeryStore.Service
         }
         public List<StationeryDisbursementEF> FindAllDisbursements()
         {
-            return rndEFF.FindAllDisbursement();
+            return rndEFF.FindAllDisbursement().OrderByDescending(x => x.DateDisbursed).ToList();
         }
 
         public StationeryDisbursementEF FindDisbursementById(int disbursementId)
@@ -564,7 +696,8 @@ namespace StationeryStore.Service
             return rndEFF.FindDisbursementDetailsByDisbursementId(disbursementId);
         }
 
-        public void UpdateDisbursedQuantities(List<StationeryDisbursementDetailsEF> details, int disbursementId, int collectionRepId)
+        public void UpdateDisbursedQuantities(List<StationeryDisbursementDetailsEF> details, int disbursementId, 
+            int collectionRepId, int storeClerkId)
         {
             // update disbursement details' Disbursed Quantity 
             foreach (StationeryDisbursementDetailsEF d in details)
@@ -575,6 +708,7 @@ namespace StationeryStore.Service
             StationeryDisbursementEF disbursement = rndEFF.FindDisbursementById(disbursementId);
             disbursement.Status = "Disbursed";
             disbursement.CollectionRepId = collectionRepId;
+            disbursement.StoreClerkId = storeClerkId;
             rndEFF.SaveDisbursement(disbursement);
         }
 

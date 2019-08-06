@@ -1,76 +1,200 @@
 ﻿@*Janel*@
+@using StationeryStore.Service
 
 @{
-    var role = ViewBag.role;
+    StaffService staff = new StaffService();
+    var name = staff.GetStaff().Name;
+    var role = staff.GetStaff().Role.Description;
 }
 
 <div class="mainheaderbar">
-    <span class="system">STATIONERY STORE INVENTORY SYSTEM</span>
-    <span class="mainheaderdetail">Logout</span>
-    <span class="mainheaderdetail">Help Btn</span>
-    <span class="mainheaderdetail">Store Name (Role)</span>
+    <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
+    <div class="mainheaderlink">@Html.ActionLink("Logout", "Index", "Logout", null, new { @class = "topnavlink" })</div>
+    <div class="mainheaderlink">@Html.ActionLink("Help", "Index", "Logout", null, new { @class = "topnavlink" })</div>
+    <div class="mainheaderdetail">@name (@role)</div>
 </div>
 
 <div class="sidenavbar">
     <ul class="sidenavbar">
-        <li>
-            <button class="sidemain">@Html.ActionLink("Home", "ViewLowStock", "ViewLowStock", new { page = 1 }, new { @class = "sidenavlink" })</button>
-        </li>
-        <li>
-            <button class="collapsible">Inventory</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("Manage Stock Cards", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Create Stock Card", "CreateStockCard", "ManageStockCard", null, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <button class="collapsible">Disbursement</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("Outstanding Requests", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = 1 }, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Retrieval History", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Disbursement History", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <button class="collapsible">Purchase Order</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("View Purchase Order History", "PurchaseOrderHistory", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Create Purchase Order", "CreatePurchaseOrder", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <button class="collapsible">Catalogue</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("Manage Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Create Catalogue Item", "CreateCatalogueItem", "ManageCatalogue", null, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <button class="collapsible">Supplier</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("Supplier List", "Index", "ManageSupplier", null, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Add New Supplier", "CreateSupplier", "ManageSupplier", null, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <button class="collapsible">Adjustment Voucher</button>
-            <div class="content">
-                <ul class="sidenavdetails">
-                    <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
-                    <li class="sidenavdetails">@Html.ActionLink("Create Adjustment Voucher", "CreateAdjustmentVoucher", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
-                </ul>
-            </div>
-        </li>
+
+        @if (role == "Store Clerk")
+        {
+            <li>
+                <button class="sidemain">@Html.ActionLink("Home", "ViewLowStock", "ViewLowStock", new { page = 1 }, new { @class = "sidenavlink" })</button>
+            </li>
+            <li>
+                <button class="collapsible">Inventory</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Stock Cards", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Disbursement</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Outstanding Requests", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Retrieval History", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Disbursement History", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Collection Points", "ViewAllCollectionPoints", "ManageCollectionPoint", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Purchase Order</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Purchase Order History", "PurchaseOrderHistory", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Create Purchase Order", "CreatePurchaseOrder", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Catalogue</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Supplier</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Supplier List", "Index", "ManageSupplier", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Adjustment Voucher</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Create Adjustment Voucher", "CreateAdjustmentVoucher", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+                <button class="collapsible">Report</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+        }
+
+        else if (role == "Store Supervisor")
+        {
+            <li>
+                <button class="sidemain">@Html.ActionLink("Home", "ViewLowStock", "ViewLowStock", new { page = 1 }, new { @class = "sidenavlink" })</button>
+            </li>
+            <li>
+                <button class="collapsible">Inventory</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Stock Cards", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Disbursement</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Outstanding Requests", "ViewOutstandingRequests", "ViewOutstandingRequests", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Retrieval History", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Disbursement History", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Collection Points", "ViewAllCollectionPoints", "ManageCollectionPoint", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Catalogue</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Supplier</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Supplier List", "Index", "ViewSupplier", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Adjustment Voucher</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+                <button class="collapsible">Report</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+        }
+        else if (role == "Store Manager")
+        {
+            <li>
+                <button class="sidemain">@Html.ActionLink("Home", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</button>
+            </li>
+            <li>
+                <button class="collapsible">Inventory</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Manage Stock Cards", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Create Stock Card", "CreateStockCard", "ManageStockCard", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Catalogue</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Manage Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Create Catalogue Item", "CreateCatalogueItem", "ManageCatalogue", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Supplier</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Supplier List", "Index", "ManageSupplier", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Add New Supplier", "CreateSupplier", "ManageSupplier", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button class="collapsible">Adjustment Voucher</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+                <button class="collapsible">Report</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+        }
+
     </ul>
 </div>
 

@@ -7,51 +7,78 @@
 @{
     StationeryDisbursementEF disbursement = (StationeryDisbursementEF)ViewData["disbursement"];
     List<StaffEF> deptStaff = (List<StaffEF>)ViewData["deptStaff"];
+    StaffEF storeClerk = (StaffEF)ViewData["storeClerk"];
 }
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
     <h3>View Stationery Disbursement</h3>
+    <br />
 
     @using (Html.BeginForm("SaveDisbursement", "ManageStationeryDisbursement", FormMethod.Post))
     {
-        
+
 
         <div class="listview">
-            <table class="listview">
-                <tr class="listview" align="left">
-                    <td colspan="4" >
-                        <br />Retrieval Id: @disbursement.RetrievalId
-                        <br />Disbursement Id: @disbursement.DisbursementId
-                        <br />Disbursement Date: @Timestamp.dateFromTimestamp((long)disbursement.DateDisbursed)
-                        <br />Department: @disbursement.Department.DepartmentName
-                        @if (disbursement.Status == "Retrieved")
-                        {
-                        <br/> @:Department Representative: 
-                        <select name="collectionRepId">
-                            @foreach (StaffEF staff in deptStaff)
-                            {
-                                if (staff.StaffId == disbursement.CollectionRepId)
-                                {
-                                    <option value="@staff.StaffId" selected>@staff.Name</option>
-                                }
-                                else
-                                {
-                                    <option value="@staff.StaffId">@staff.Name</option>
-                                }
-
-                            }
-                        </select>
-                        }
-                        else
-                        {
-                            <br/>@:Collected By: @disbursement.CollectionRepId
-                        }
-                        <br/>Status: @disbursement.Status
-                    </td>
+            <table align="center">
+                <tr>
+                    <td class="details">Retrieval Id</td>
+                    <td>@disbursement.RetrievalId</td>
                 </tr>
+                <tr>
+                    <td class="details">Disbursement Id</td>
+                    <td>@disbursement.DisbursementId</td>
+                </tr>
+                <tr>
+                    <td class="details">Disbursement Date</td>
+                    <td>@Timestamp.dateFromTimestamp((long)disbursement.DateDisbursed)</td>
+                </tr>
+                <tr>
+                    <td class="details">Department</td>
+                    <td>@disbursement.Department.DepartmentName</td>
+                </tr>
+                <tr>
+                    <td class="details">Store Clerk</td>
+                    <td>@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
+                </tr>
+                @if (disbursement.Status == "Retrieved")
+                {
+                    <tr>
+                        <td class="details">Department Representative</td>
+                        <td>
+                            <select name="collectionRepId">
+                                @foreach (StaffEF staff in deptStaff)
+                                {
+                                    if (staff.StaffId == disbursement.CollectionRepId)
+                                    {
+                                        <option value="@staff.StaffId" selected>@staff.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@staff.StaffId">@staff.Name</option>
+                                    }
+
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="details">Collected By</td>
+                        <td>@disbursement.Staff.Name</td>
+                    </tr>
+                }
+                <tr>
+                    <td class="details">Status</td>
+                    <td>@disbursement.Status</td>
+                </tr>
+            </table>
+            <br />
+            <table class="listview">
                 <tr class="listview">
-                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewuom">Item Code</td>
                     <td class="listviewheader">Item Description</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                     <td class="listviewheader">Total Disbursed Quantity</td>
@@ -90,10 +117,19 @@
                         </td>
                     </tr>
                 }
+                else
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="4" align="right">
+                            <input type="button" class="decision" value="Back" onclick="location.href='@Url.Action("ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 })'" />
+                        </td>
+                    </tr>
+                }
 
             </table>
         </div>
     }
+    <br /><br />
 </div>
 
 <style>

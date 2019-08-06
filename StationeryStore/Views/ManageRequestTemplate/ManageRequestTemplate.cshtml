@@ -1,0 +1,87 @@
+﻿@model StationeryStore.Models.RequestTemplateDTO
+
+@{
+    var catalogueList = ViewBag.catalogueList;
+    var note = ViewBag.note;
+    ViewBag.Title = "Manage Request Template";
+
+}
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">Manage Request Template</h3>
+        <br />
+        @{ Html.BeginForm("ManageRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
+            <div class="searchblock">
+                <div class="addItem">Add Item to Request Template</div>  
+                @Html.HiddenFor(m => m.TemplateId, @Model.TemplateId)
+                <input list="items" class="addItem" name="items" id="selectItem" placeholder="search item name">
+                <datalist id="items">
+                    @{
+                        foreach (var item in catalogueList)
+                        {
+                            <option value="@item.Stock.Description"></option>
+                        }
+                    }
+                </datalist>
+                <button onclick="submit()" name="decision" value="Add Item" class="decision">Add Item</button>
+                <br /> <br />
+                <div class="checkItem">@note</div>
+            </div>
+
+            <div class="listview">
+                <table class="listview" id="requestTable">
+                    <tr class="listview">
+                        <td class="listviewdescription">Description</td>
+                        <td class="listviewuom">UOM</td>
+                        <td class="listviewquantity">Quantity</td>
+                        <td class="listviewremove">Remove</td>
+                    </tr>
+                    @{
+                        if (@Model != null && @Model.ItemDescription != null)
+                        {
+                            for (int i = 0; i < @Model.ItemDescription.Count; i++)
+                            {
+                                if (i % 2 == 0)
+                                {
+                                    <tr class="listview">
+                                        @Html.HiddenFor(m => m.ItemDescription[i], Model.ItemDescription[i])
+                                        @Html.HiddenFor(m => m.ItemUom[i], Model.ItemUom[i])
+
+                                        <td class="evenlistview">@Model.ItemDescription[i]</td>
+                                        <td class="evenlistview">@Model.ItemUom[i]</td>
+                                        <td class="evenlistview">@Html.EditorFor(m => m.Quantity[i], new { htmlAttributes = new { @min = "1", @class = "inputquantity" } })</td>
+                                        <td class="evenlistview">@Html.CheckBoxFor(m => m.Remove[i])</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="listview">
+                                        @Html.HiddenFor(m => m.ItemDescription[i], Model.ItemDescription[i])
+                                        @Html.HiddenFor(m => m.ItemUom[i], Model.ItemUom[i])
+
+                                        <td class="oddlistview">@Model.ItemDescription[i]</td>
+                                        <td class="oddlistview">@Model.ItemUom[i]</td>
+                                        <td class="oddlistview">@Html.EditorFor(m => m.Quantity[i], new { htmlAttributes = new { @min = "1", @class = "inputquantity" } })</td>
+                                        <td class="oddlistview">@Html.CheckBoxFor(m => m.Remove[i], false)</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                    <tfoot>
+                        <tr class="decision">
+                            <td class="decision" colspan="6" align="right">
+                                <button onclick="submit()" name="decision" value="Remove Selected Items" class="decision">Remove Selected Items</button>
+                                <button onclick="submit()" name="decision" value="Delete" class="decision">Delete Template</button>
+                                <button onclick="submit()" name="decision" value="Update" class="decision">Update Template</button>
+                                <button onclick="submit()" name="decision" value="Submit" class="decision">Submit Request</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        }
+    </div>
+</div>

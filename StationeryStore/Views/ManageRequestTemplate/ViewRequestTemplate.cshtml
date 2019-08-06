@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "View Request Template";
+    var requestTemplate = ViewBag.requestTemplate;
+    var note = ViewBag.note;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Request Template</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader" colspan="2">Request Template</td>
+                </tr>
+                @{
+            for (int i = 0; i < requestTemplate.Count; i++)
+            {
+                string templateName = requestTemplate[i].TemplateName;
+                if (i % 2 != 0)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview" colspan="2">@Html.ActionLink(templateName, "ManageRequestTemplate", new { templateId = @requestTemplate[i].TemplateId })</td>
+                    </tr>
+                }
+                else if (i % 2 == 0)
+                {
+                    <tr class="listview">
+                        <td class="evenlistview" colspan="2">@Html.ActionLink(templateName, "ManageRequestTemplate", new { templateId = @requestTemplate[i].TemplateId })</td>
+                    </tr>
+                }
+            }
+        }
+                <tr class="decision">
+                    @{ Html.BeginForm("ViewRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
+                        <td><input type="text" name="templateName" placeholder="enter template name" class="addItem" /></td>
+                        <td class="decision" align="right">
+                            <input type="submit" value="Add New Request Template" class="decision" />
+                        </td>
+                    }
+                </tr>
+                <tr class="decision"><td colspan="2" style="font-weight:bold; color:red; text-align:left">@note</td></tr>
+            </table>
+        </div>
+    </div>
+</div>

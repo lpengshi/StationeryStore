@@ -20,7 +20,10 @@ namespace StationeryStore.Controllers
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
+            // Pass all submitted request from the department
             List<StationeryRequestEF> pendingList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "Submitted");
+
+            // Convert request date from long to string (Date)
             List<string> requestDate = rndService.ConvertToDate(pendingList);
 
             ViewBag.pendingList = pendingList;
@@ -35,6 +38,7 @@ namespace StationeryStore.Controllers
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
 
+            // See request details
             StationeryRequestEF request = rndService.FindRequestById(requestId);
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
 
@@ -53,7 +57,7 @@ namespace StationeryStore.Controllers
 
             StationeryRequestEF request = rndService.FindRequestById(requestId);
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
-
+            // Update approval/rejection and comments to request
             rndService.UpdateRequestDecision(staff, request, comment, decision);
 
             return RedirectToAction("Index");

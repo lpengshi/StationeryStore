@@ -51,6 +51,11 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.PurchaseOrderDetails.Where(a => a.OrderId == orderId).ToList<PurchaseOrderDetailsEF>();
         }
 
+        public List<PurchaseOrderDetailsEF> FindPurchaseOrderDetailsByItemCode(string itemCode)
+        {
+            return context.PurchaseOrderDetails.Where(a => a.ItemCode == itemCode).ToList<PurchaseOrderDetailsEF>();
+        }
+
         public int FindLastPOId()
         {
             return context.PurchaseOrders.Count();

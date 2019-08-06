@@ -217,7 +217,7 @@ namespace StationeryStore.Service
             return false;
         }
 
-        public bool SaveAdjustmentVoucherAndDetails(StaffEF requester, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList)
+        public string SaveAdjustmentVoucherAndDetails(StaffEF requester, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList)
         {
             //check if when make adj voucher the voucher id remains null!!!!
             var existing = stockEFF.FindAdjustmentVoucherById(voucher.VoucherId);
@@ -231,13 +231,17 @@ namespace StationeryStore.Service
                 long unixTimestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                 voucher.DateIssued = unixTimestamp;
                 voucher.RequesterId = requester.StaffId;
-                return stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
+
+                voucher.Status = "Pending Approval";
+                stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
+                //return stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
             }
             else
             {
                 stockEFF.FindAndReplaceAdjustmentVoucherDetails(voucher.VoucherId, detailsList);
             }
-            return false;
+            //return false;
+            return voucher.VoucherId;
         }
 
         public bool VoucherExceedsSetValue(List<AdjustmentVoucherDetailsDTO> detailsList)
@@ -246,16 +250,60 @@ namespace StationeryStore.Service
             bool valueExceeded = false;
             foreach(var d in detailsList)
             {
-                //for now, derived the cost flag by averaging stock cost across suppliers.
+                //Derived the cost flag by averaging stock cost across suppliers.
                 List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
                 double unitAvgCost = items.Average(x => x.UnitPrice);
                 double sumPrice = unitAvgCost * d.Quantity;
-                if(sumPrice >= minValPerLineItem)
+                if(sumPrice >= minValPerLineItem || sumPrice <= (-1 * minValPerLineItem))
                 {
                     valueExceeded = true;
                 }
             }
             return valueExceeded;
+        }
+
+
+        //ReorderReport
+        public List<ReorderReportDTO> GenerateReorderReport()
+        {
+            List<LowStockDTO> lowStocks = stockEFF.FindLowStock();
+            // for each item code in the low stock, find a corresponding PO and delivery date
+            List<ReorderReportDTO> reorderList = new List<ReorderReportDTO>();
+            foreach(LowStockDTO s in lowStocks)
+            {
+                // find the order details for each item
+                List<PurchaseOrderDetailsEF> details = purchaseEFF.FindPurchaseOrderDetailsByItemCode(s.ItemCode)
+                    .Where(o => o.PurchaseOrder.Status == "Pending Delivery").ToList();
+                List<PurchaseOrderEF> orders = new List<PurchaseOrderEF>();
+                foreach(PurchaseOrderDetailsEF d in details)
+                {
+                    orders.Add(d.PurchaseOrder);
+                }
+
+                ReorderReportDTO item = new ReorderReportDTO()
+                {
+                    LowStockDTO = s,
+                    Order = orders
+                };
+                reorderList.Add(item);
+            }
+            return reorderList;
+        }
+
+        public List<InventoryStatusReportDTO> GenerateInventoryStatusReport()
+        {
+            List<StockEF> stocks = stockEFF.FindAllStock();
+            List<InventoryStatusReportDTO> inventoryStatusList = new List<InventoryStatusReportDTO>();
+            foreach(StockEF s in stocks)
+            {
+                InventoryStatusReportDTO item = new InventoryStatusReportDTO()
+                {
+                    Stock = s,
+                    CatalogueItem = stockEFF.FindCatalogueItemByItemCode(s.ItemCode)
+                };
+                inventoryStatusList.Add(item);
+            }
+            return inventoryStatusList;
         }
     }
 }

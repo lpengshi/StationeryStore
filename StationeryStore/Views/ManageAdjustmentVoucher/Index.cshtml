@@ -19,6 +19,18 @@
     }
     else
     {
+        <form action="ManageAdjustmentVoucher/Index" method="get">
+            <p>
+                Sort by status:
+                <select id="status" name="search">
+                    <option value="Pending Approval">Pending Approval</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+                <input type="submit">
+                <input type="hidden" name="page" value="@page"/>
+            </p>
+        </form>
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
@@ -30,7 +42,7 @@
                 @foreach (var ad in voucherList)
                 {
                     <tr class="listview">
-                        <td class="oddlistview"><a href="@Url.Action("ViewAdjustmentDetails", "ManageAdjustment", new {itemCode = ad.VoucherId} )">@ad.VoucherId</a></td>
+                        <td class="oddlistview"><a href="@Url.Action("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new {voucherId = ad.VoucherId} )">@ad.VoucherId</a></td>
                         <td class="oddlistview">@Timestamp.dateFromTimestamp(ad.DateIssued)</td>
                         <td class="oddlistview">@ad.Requester.Name</td>
                         <td class="oddlistview">@ad.Status</td>
@@ -45,12 +57,12 @@
         <br />
         <div class="pagination">
             @{
-                <span>@Html.ActionLink("«", "ViewSupplierDetails", "ManageSupplier", new { page = 1}, null)</span>
+                <span>@Html.ActionLink("«", "ViewSupplierDetails", "ManageSupplier", new { page = 1 }, null)</span>
 
                 for (int i = 1; i <= noOfPages; i++)
                 {
                     string num = i.ToString();
-                    <span>@Html.ActionLink(num, "ViewSupplierDetails", "ManageSupplier", new { page = i}, null)</span>
+                    <span>@Html.ActionLink(num, "ViewSupplierDetails", "ManageSupplier", new { page = i }, null)</span>
                 }
 
                 <span>@Html.ActionLink("»", "ViewSupplierDetails", "ManageSupplier", new { page = noOfPages }, null)</span>

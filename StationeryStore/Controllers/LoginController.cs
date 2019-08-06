@@ -21,7 +21,7 @@ namespace StationeryStore.Controllers
         {
 
             StaffEF staff = staffService.FindStaffByUsername(loginDTO.Username);
-
+            
             if (staff == null || staff.Password != loginDTO.Password)
             {
 
@@ -32,18 +32,21 @@ namespace StationeryStore.Controllers
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
 
-                if (staff.Role.Description == "Employee")
+                if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
                 {
-                    return RedirectToAction("Index", "ManageRequest");
+                    return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });
                 }
-
-                if (staff.Role.Description == "Department Head")
+                if (staff.Role.Description == "Store Manager")
+                {
+                    return RedirectToAction("ViewAllStocks", "ManageStockCard", new { page = 1 });
+                }
+                if (staff.Role.Description == "Department Head" || staff.Department.AuthorityId == staff.StaffId)
                 {
                     return RedirectToAction("Index", "ApproveRequest");
                 }
-                if (staff.Role.Description == "Store Clerk")
+                if (staff.Role.Description == "Employee")
                 {
-                    return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });
+                    return RedirectToAction("Index", "ManageRequest");
                 }
             }
             return View();

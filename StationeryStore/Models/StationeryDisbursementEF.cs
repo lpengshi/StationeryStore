@@ -31,6 +31,10 @@ namespace StationeryStore.Models
         [ForeignKey("CollectionRepId")]
         public virtual StaffEF Staff { get; set; }
 
+        public int? StoreClerkId { get; set; }
+        [ForeignKey("StoreClerkId")]
+        public virtual StaffEF StoreClerk { get; set; }
+
         public virtual ICollection<StationeryDisbursementDetailsEF> StationeryDisbursementDetails { get; set; }
     }
 }

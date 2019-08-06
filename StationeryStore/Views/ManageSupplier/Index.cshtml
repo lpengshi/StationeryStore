@@ -18,6 +18,14 @@
     {
         <div class="listview">
             <table class="listview">
+                @if (staff.Role.Description == "Store Manager")
+                {
+                    <tr class="decision">
+                        <td class="decision" colspan="2" align="right">
+                            <input type="button" class="decision" onclick="location.href='~/ManageSupplier/CreateSupplier';" value="Add New Supplier" />
+                        </td>
+                    </tr>
+                }
                 <tr class="listview">
                     <td class="listviewheader">Supplier Code</td>
                     <td class="listviewheader">Supplier Name</td>

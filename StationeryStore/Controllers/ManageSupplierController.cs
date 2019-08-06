@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Models;
 using StationeryStore.Service;
+using StationeryStore.Filters;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
     public class ManageSupplierController : Controller
     {
         PurchaseService purchaseService = new PurchaseService();
@@ -26,10 +28,7 @@ namespace StationeryStore.Controllers
             SupplierEF supplier = purchaseService.FindSupplierBySupplierCode(supplierCode);
             ViewBag.supplier = supplier;
 
-            //StaffEF staff = staffService.GetStaff();
-            //ViewBag.staff = staff;
-
-            if (decision == "edit" /* && staff.role.rolename? == "manager" */)
+            if (decision == "edit")
             {
                 return RedirectToAction("EditSupplier", "ManageSupplier", new { supplierCode = supplier.SupplierCode });
             }
@@ -57,6 +56,7 @@ namespace StationeryStore.Controllers
             return View();
         }
 
+
         public ActionResult CreateSupplier(SupplierDTO supplierForm, string decision)
         {
 
@@ -75,9 +75,9 @@ namespace StationeryStore.Controllers
                 }
             }
             return View();
-        }      
+        }
 
-        
+
         public ActionResult EditSupplier(string supplierCode, SupplierDTO supplierForm, string decision)
         {
             SupplierEF baseSupplier = purchaseService.FindSupplierBySupplierCode(supplierCode);
@@ -97,18 +97,6 @@ namespace StationeryStore.Controllers
         public ActionResult AssignItemRank(List<SupplierDetailsEF> editedItems, string choice)
         {
 
-            return View();
-        }
-
-        public ActionResult EditSupplierDetails(string decision, string supplierCode, List<SupplierDetailsEF> supplierDetailsEFs)
-        {
-            //only able to assign the item price for the selected items
-
-            List<SupplierDetailsEF> supplierDetailsList = purchaseService.FindSupplierItems(supplierCode);
-            if(decision == "Submit")
-            {
-              
-            }
             return View();
         }
     }

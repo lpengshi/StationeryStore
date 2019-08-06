@@ -1,0 +1,89 @@
+﻿@model StationeryStore.Models.ManageDelegationDTO
+
+@{
+    ViewBag.Title = "Manage Delegation";
+    var staff = ViewBag.staff;
+    var deptStaff = ViewBag.deptStaff;
+    var department = ViewBag.department;
+    var note = ViewBag.note;
+}
+
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    @{Html.BeginForm("Index", "ManageDelegation", FormMethod.Post);
+    <div class="maindetails">
+        <h3 class="title">Manage Delegation</h3>
+        @Html.HiddenFor(a => a.DepartmentCode)
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listrequestlabel">Current Authority</td>
+                    <td class="listrequestlabel">Delegation Start Date</td>
+                    <td class="listrequestlabel">Delegation End Date</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listrequestlabel">@department.Authority.Name</td>
+                    @if (department.DelegationStartDate != null)
+                    {
+                        <td class="listrequestlabel">@StationeryStore.Util.Timestamp.dateFromTimestamp(department.DelegationStartDate)</td>
+                        <td class="listrequestlabel">@StationeryStore.Util.Timestamp.dateFromTimestamp(department.DelegationEndDate)</td>
+                    }
+                </tr>
+                <tr class="listview">
+                    <td class="listrequestlabel">
+                        <br /> <br />
+                        @if (department.Authority.Name != staff.Name)
+                        {
+                            <input type="submit" name="decision" value="Remove Delegation" class="decision" />
+                        }
+                        else
+                        {
+                            <input type="submit" name="decision" value="Remove Delegation" class="disableddecision" disabled />
+                        }
+                    </td>
+                </tr>
+            </table>
+            <br /><br />
+        </div>
+
+        <div class="greyview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="viewlabel">Delegate Staff <br /><br /></td>
+                </tr>
+                <tr class="listview">
+                    <td class="viewlabel">@Html.DropDownListFor(a => a.AuthorityId, new SelectList(deptStaff, "StaffId", "Name"))<br /><br /></td>
+                </tr>
+                <tr class="listview">
+                    <td class="viewlabel">Select Start Date</td>
+                    <td class="listrequestlabel">Select End Date</td>
+                </tr>
+                <tr class="listview">
+                    @if (Model.DelegationStartDate.Date.CompareTo(DateTime.UtcNow.Date) > -1)
+                    {
+                        <td class="viewlabel"><input type="date" name="DelegationStartDate" value="@Model.DelegationStartDate.ToString("yyyy-MM-dd")" /></td>
+                        <td class="listrequestlabel"><input type="date" name="DelegationEndDate" value="@Model.DelegationEndDate.ToString("yyyy-MM-dd"))" /></td>
+                    }
+                    else
+                    {
+                        <td class="viewlabel"><input type="date" name="DelegationStartDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" /></td>
+                        <td class="listrequestlabel"><input type="date" name="DelegationEndDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" /></td>
+                    }
+                </tr>
+                <tr>
+                    <td class="viewlabel" colspan="2" style="color:red">@note</td>
+                </tr>
+                <tr class="decision">
+                    <td class="decision" colspan="2" align="right">
+                        <button onclick="location.href='@Url.Action("Index", "ApproveRequest")'" value="Cancel" class="decision">Cancel</button>
+                        <input type="submit" name="decision" value="Add Delegation" class="decision" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+        }
+</div>

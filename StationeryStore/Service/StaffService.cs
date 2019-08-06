@@ -30,10 +30,19 @@ namespace StationeryStore.Service
             return staff;
         }
 
-        public List<StaffEF> FindAllStaffByDepartmentCode(string departmentCode)
+        public List<StaffEF> FindAllEmployeeByDepartmentCode(string departmentCode)
         {
             List<StaffEF> staffList = staffEFF.FindAllStaffByDepartmentCode(departmentCode);
-            return staffList;
+            List<StaffEF> employeeList = new List<StaffEF>();
+
+            foreach (StaffEF staff in staffList)
+            {
+                if (staff.Role.Description == "Employee")
+                {
+                    employeeList.Add(staff);
+                }
+            }
+            return employeeList;
         }
 
         public StaffEF FindStaffBySessionId(string sessionId)

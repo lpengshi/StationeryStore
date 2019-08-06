@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "View Request";
+    var staff = ViewBag.staff;
     var request = ViewBag.request;
     var date = ViewBag.date;
     var note = ViewBag.note;
@@ -13,13 +14,13 @@
         <div class="listview">
                 <table class="listview">
                     <tr class="listview">
-                        <td class="listrequestlabel">Requested By:</td>
-                        <td class="listrequestvalue">@request.Staff.Name</td>
+                        <td class="listrequestlabel">Requested By</td>
+                        <td class="listrequestvalue">: @request.Staff.Name</td>
                     </tr>
            
                     <tr class="listview">
                         <td class="listrequestlabel">Request Date:</td>
-                        <td class="listrequestvalue">@date</td>
+                        <td class="listrequestvalue">: @date</td>
                     </tr>
                 </table>
                 <br />
@@ -38,8 +39,16 @@
                 <tr class="decision">
                     <td class="decision" colspan="2" align="right">
                         <input type="hidden" name="requestId" value="@request.RequestId" />
-                        <input type="submit" name="decision" value="Reject" class="reject" />
-                        <input type="submit" name="decision" value="Approve" class="approve" />
+                        @if (request.StaffId == staff.StaffId || staff.Department.AuthorityId != staff.StaffId)
+                        {
+                            <input type="submit" name="decision" value="Reject" class="disabledreject" disabled/>
+                            <input type="submit" name="decision" value="Approve" class="disabledapprove" disabled />
+                        }
+                        else
+                        {
+                            <input type="submit" name="decision" value="Reject" class="reject" />
+                            <input type="submit" name="decision" value="Approve" class="approve" />
+                        }
                     </td>
                 </tr>
             </table>

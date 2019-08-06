@@ -1,19 +1,45 @@
 ﻿@{
-    var name = ViewBag.staff.Name;
-    var role = ViewBag.staff.Role.Description;
+    var staff = ViewBag.staff;
 }
 
 <div class="mainheaderbar">
     <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
     <div class="mainheaderlink">@Html.ActionLink("Logout", "Index", "Logout", null, new { @class = "topnavlink" })</div>
     <div class="mainheaderlink">@Html.ActionLink("Help", "Index", "Logout", null, new { @class = "topnavlink" })</div>
-    <div class="mainheaderdetail">@name (@role)</div>
+    @if (staff.Department.AuthorityId == staff.StaffId &&
+                      staff.Department.DelegationStartDate <= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow) &&
+                      staff.Department.DelegationEndDate >= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow))
+    {
+        <div class="mainheaderdetail">@staff.Name (Covering Department Head)</div>
+    }
+    else
+    {
+        <div class="mainheaderdetail">@staff.Name (@staff.Role.Description)</div>
+    }
+
 </div>
 
 <div class="sidenavbar">
     <ul class="sidenavbar">
         @{
-            if (role == "Employee")
+            if (staff.Role.Description == "Department Head")
+            {
+                <li>
+                    <button class="sidemain">@Html.ActionLink("Home", "Index", "ApproveRequest", null, new { @class = "sidenavlink" })</button>
+                    <button class="sidemain">@Html.ActionLink("Manage Collection", "Index", "ManageCollection", null, new { @class = "sidenavlink" })</button>
+                    <button class="sidemain">@Html.ActionLink("Manage Delegation", "Index", "ManageDelegation", null, new { @class = "sidenavlink" })</button>
+                    <button class="sidemain">@Html.ActionLink("View Employee Request History", "Index", "ViewEmployeeRequestHistory", null, new { @class = "sidenavlink" })</button>
+                </li>
+            }
+            else if (staff.Department.AuthorityId == staff.StaffId &&
+              staff.Department.DelegationStartDate <= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow) &&
+              staff.Department.DelegationEndDate >= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow))
+            {
+                <li>
+                    <button class="sidemain">@Html.ActionLink("Home", "Index", "ApproveRequest", null, new { @class = "sidenavlink" })</button>
+                    <button class="sidemain">@Html.ActionLink("Manage Collection", "Index", "ManageCollection", null, new { @class = "sidenavlink" })</button>
+                </li>
+            } else if (staff.Role.Description == "Employee")
             {
                 <li>
                     <button class="sidemain">@Html.ActionLink("Home", "Index", "ManageRequest", null, new { @class = "sidenavlink" })</button>
@@ -30,15 +56,9 @@
                         <ul class="sidenavdetails">
                             <li class="sidenavdetails">@Html.ActionLink("Create Request", "CreateRequest", "ManageRequest", null, new { @class = "sidenavlink" })</li>
                             <li class="sidenavdetails">@Html.ActionLink("View Request History", "Index", "ViewRequestHistory", null, new { @class = "sidenavlink" })</li>
+                            <li class="sidenavdetails">@Html.ActionLink("Manage Request Template", "ViewRequestTemplate", "ManageRequestTemplate", null, new { @class = "sidenavlink" })</li>
                         </ul>
                     </div>
-                </li>
-            }
-            else if (role == "Department Head")
-            {
-                <li>
-                    <button class="sidemain">@Html.ActionLink("Home", "Index", "ApproveRequest", null, new { @class = "sidenavlink" })</button>
-                    <button class="sidemain">@Html.ActionLink("Manage Collection", "Index", "ManageCollection", null, new { @class = "sidenavlink" })</button>
                 </li>
             }
         }

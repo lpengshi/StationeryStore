@@ -28,10 +28,10 @@
             <div class="listview">
                 <table class="listview">
                     <tr class="listview">
-                        <td class="listviewheader">Item Code</td>
-                        <td class="listviewheader">Description</td>
-                        <td class="listviewheader">UOM</td>
-                        <td class="listviewheader">Bin</td>
+                        <td class="listviewuom">Item Code</td>
+                        <td class="listviewdescription">Description</td>
+                        <td class="listviewuom">UOM</td>
+                        <td class="listviewuom">Bin</td>
                     </tr>
                     @foreach (var stock in stocks)
                     {
@@ -52,9 +52,9 @@
         }
 
 
-        @if (noOfPages > 1)
+        <br />
+        @if (noOfPages > 0)
         {
-            <br />
             <div class="pagination">
                 @{
                     <span>@Html.ActionLink("«", "ViewAllStocks", "ManageStockCard", new { page = 1, search = search }, null)</span>
@@ -69,6 +69,8 @@
                 }
             </div>
         }
+
+        <br /><br />
 
     </div>
     </div>

@@ -1,47 +1,90 @@
-﻿@model StationeryStore.Models.DepartmentEF
+﻿@model StationeryStore.Models.ManageCollectionDTO
 
 @{
     ViewBag.Title = "Manage Department Collection";
+    var staff = ViewBag.staff;
+    var deptStaff = ViewBag.deptStaff;
+    var department = ViewBag.department;
+    var note = ViewBag.note;
 }
 <div>@Html.Partial("_Department")</div>
 
 <div class="mainview">
     <div class="maindetails">
         <h3 class="title">Manage Department Collection</h3>
-        @{ Html.BeginForm("Index", "ManageCollection", FormMethod.Post)
-    <br />
-    <div class="listview">
-        <table class="listview">
-            <tr class="listview">
-                <td class="listrequestlabel">Current Collection Point:</td>
-                <td class="listrequestvalue">@Model.CollectionPoint.Location</td>
-            </tr>
-
-            <tr class="listview">
-                <td class="listrequestlabel">Request Date:</td>
-                <td class="listrequestvalue">@date</td>
-            </tr>
-        </table>
         <br />
-    </div>
+        @{Html.BeginForm("Index", "ManageCollection", FormMethod.Post);
+        <div class="listview">
+            <div class="listview" style="color:red; font-weight:bold">@note</div>
+            @Html.HiddenFor(a => a.Department)
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listrequestlabel">Current Collection Point:</td>
+                    <td class="listrequestvalue">&emsp; @department.CollectionPoint.Location</td>
+                </tr>
+                <tr class="listview">
+                    <td class="listrequestlabel">
+                        Select Collection Point
+                        @{ for (int i = 0; i < Model.CollectionPoints.Count; i++)
+                            {
+                                <br />
+                            }
+                        }
+                    </td>
+                    <td class="listrequestvalue">
+                        @{
+                            for (int j = 0; j < Model.CollectionPoints.Count; j++)
+                            {
+                                <text>&emsp;</text>
+                                if (Model.CollectionPoints[j].CollectionPointId == department.CollectionPoint.CollectionPointId)
+                                {
+                                    @Html.RadioButtonFor(a => a.CollectionPointId, Model.CollectionPoints[j].CollectionPointId, new { @checked = "checked" });
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(a => a.CollectionPointId, Model.CollectionPoints[j].CollectionPointId);
+                                }
 
-    <br />
+                                <text>&nbsp; @Model.CollectionPoints[j].Location&emsp;</text>
 
-    <div class="listview">
+                                if (j != Model.CollectionPoints.Count - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                        }
+                    </td>
+                </tr>
 
-        <table class="listview">
-            <tr class="listview">
-                <td colspan="2" class="listrequestfield"><textarea name="comment" rows="4" cols="50" placeholder="Please enter reason for approval / rejection"></textarea></td>
-            </tr>
-            <tr class="decision">
-                <td class="decision" colspan="2" align="right">
-                    <input type="hidden" name="requestId" value="@request.RequestId" />
-                    <input type="submit" name="decision" value="Reject" class="reject" />
-                    <input type="submit" name="decision" value="Approve" class="approve" />
-                </td>
-            </tr>
-        </table>
-    </div>
+                <tr class="listview">
+                    <td class="listrequestlabel">Current Department Rep:</td>
+                    <td class="listrequestvalue">&emsp; @department.DepartmentRepresentative.Name</td>
+                </tr>
+
+                <tr class="listview">
+                    <td class="listrequestlabel">Select Department Rep</td>
+                    <td class="listrequestvalue">
+                        &emsp;
+                        @Html.DropDownListFor(a => a.DepartmentRepId, new SelectList(deptStaff, "StaffId", "Name"), "--Please select--", null) <br />
+                    </td>
+                </tr>
+
+                <tr class="decision">
+                    <td class="decision" colspan="2" align="right">
+                        <button onclick="location.href='@Url.Action("Index", "ApproveRequest")'" value="Cancel" class="decision">Cancel</button>
+                        @if (staff.Department.AuthorityId != staff.StaffId)
+                        {
+                            <input type="submit" name="decision" value="Confirm" class="disableddecision" disabled />
+                        }
+                        else
+                        {
+                            <input type="submit" name="decision" value="Confirm" class="decision" />
+                        }
+
+                    </td>
+                </tr>
+            </table>
+        </div>
         }
-</div>
     </div>
+</div>

@@ -36,12 +36,48 @@ namespace StationeryStore.EntityFrameworkFacade
             context.SaveChanges();
         }
 
+        public List<RequestTemplateEF> FindRequestTemplateByStaffId(int staffId)
+        {
+            return context.RequestTemplates
+                .Where(a => a.StaffId == staffId)
+                .ToList<RequestTemplateEF>();
+        }
+
         public List<StationeryRequestEF> FindRequestsByDepartmentAndStatus(string departmentCode, string status)
         {
+            if (status == "all")
+            {
+                return context.StationeryRequests
+               .Where(a => a.RequestId.StartsWith(departmentCode))
+               .OrderBy(a => a.RequestDate)
+               .ToList<StationeryRequestEF>();
+            }
+
             return context.StationeryRequests
                 .Where(a => a.RequestId.StartsWith(departmentCode) && a.Status == status)
                 .OrderBy(a => a.RequestDate)
                 .ToList<StationeryRequestEF>();
+        }
+
+        public void SaveRequestTemplate(RequestTemplateEF requestTemplate)
+        {
+            var existingTemplate = context.RequestTemplates.Find(requestTemplate.TemplateId);
+            if (existingTemplate == null)
+            {
+                context.RequestTemplates.Add(requestTemplate);
+            }
+            else
+            {
+                context.Entry(existingTemplate).CurrentValues.SetValues(requestTemplate);
+            }
+            context.SaveChanges();
+        }
+
+        public List<RequestTemplateDetailsEF> FindRequestTemplateDetailsByTemplateId(int templateId)
+        {
+            return context.RequestTemplateDetails
+                .Where(a => a.RequestTemplateId == templateId)
+                .ToList<RequestTemplateDetailsEF>();
         }
 
         public List<StationeryRequestEF> FindRequestsByStaffIdAndStatus(int staffId, string status)
@@ -50,6 +86,24 @@ namespace StationeryStore.EntityFrameworkFacade
                 .Where(a => a.StaffId == staffId && a.Status == status)
                 .OrderBy(a => a.RequestDate)
                 .ToList<StationeryRequestEF>();
+        }
+
+        public void DeleteRequestTemplate(int templateId)
+        {
+            var existingTemplateDetails = this.FindRequestTemplateDetailsByTemplateId(templateId);
+
+            if (existingTemplateDetails != null)
+            {
+                context.RequestTemplateDetails.RemoveRange(existingTemplateDetails);
+            }
+
+            var existingTemplate = context.RequestTemplates.Find(templateId);
+            if (existingTemplate != null)
+            {
+                context.RequestTemplates.Remove(existingTemplate);
+            }
+
+            context.SaveChanges();
         }
 
         public List<StationeryRequestEF> FindAllStationeryRequestByStaffId(int staffId)
@@ -137,6 +191,13 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.StationeryRequestDetails.Where(a => a.RequestId == requestId).ToList();
         }
 
+        public RequestTemplateDetailsEF FindRequestTemplateDetailsByTemplateIdAndItemCode(int templateId, string itemCode)
+        {
+            return context.RequestTemplateDetails
+           .Where(a => a.RequestTemplateId == templateId && a.ItemCode == itemCode)
+           .SingleOrDefault();
+        }
+
         public StationeryRequestDetailsEF FindRequestDetailsByRequestIdAndItemCode(string requestId, string itemCode)
         {
             return context.StationeryRequestDetails
@@ -149,7 +210,11 @@ namespace StationeryStore.EntityFrameworkFacade
             context.Entry(stationeryRequestDetails).State = EntityState.Deleted;
             context.SaveChanges();
         }
-
+        public void DropRequestTemplateDetails(RequestTemplateDetailsEF requestTemplateDetails)
+        {
+            context.Entry(requestTemplateDetails).State = EntityState.Deleted;
+            context.SaveChanges();
+        }
         public List<StationeryRequestDetailsEF> FindAllRequestDetailsByStatusAndDepartmentCode(string status, string itemCode, string departmentCode)
         {
             return context.StationeryRequestDetails
@@ -159,6 +224,23 @@ namespace StationeryStore.EntityFrameworkFacade
                 .ToList<StationeryRequestDetailsEF>();
         }
 
+        public void SaveRequestTemplateDetails(List<RequestTemplateDetailsEF> requestTemplateList)
+        {
+            foreach (var item in requestTemplateList)
+            {
+                var existingRequestTemplateDetails = FindRequestTemplateDetailsByTemplateIdAndItemCode(item.RequestTemplateId, item.ItemCode);
+                if (existingRequestTemplateDetails == null)
+                {
+                    context.RequestTemplateDetails.Add(item);
+                }
+                else
+                {
+                    context.Entry(existingRequestTemplateDetails).CurrentValues.SetValues(item);
+                }
+
+            }
+            context.SaveChanges();
+        }
 
 
         //RETRIEVAL
@@ -192,6 +274,11 @@ namespace StationeryStore.EntityFrameworkFacade
         public StationeryRetrievalEF FindRetrievalById(int id)
         {
             return context.StationeryRetrievals.Find(id);
+        }
+
+        public StationeryRetrievalEF FindRetrievalByStatus(string status)
+        {
+            return context.StationeryRetrievals.SingleOrDefault(x => x.Status == status);
         }
 
 

@@ -22,11 +22,11 @@
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
-                    <td class="listviewheader">Item Code</td>
-                    <td class="listviewheader">Description</td>
-                    <td class="listviewheader">QuantityOnHand</td>
-                    <td class="listviewheader">ReorderLevel</td>
-                    <td class="listviewheader">ReorderQuantity</td>
+                    <td class="listviewuom">Item Code</td>
+                    <td class="listviewdescription">Description</td>
+                    <td class="listviewquantity">QuantityOnHand</td>
+                    <td class="listviewquantity">ReorderLevel</td>
+                    <td class="listviewquantity">ReorderQuantity</td>
                 </tr>
                 @foreach (var stock in lowStocks)
                 {
@@ -43,9 +43,9 @@
         </div>
     }
 
-    @if (noOfPages > 1)
+    <br />
+    @if (noOfPages > 0)
     {
-        <br />
         <div class="pagination">
             @{
                 <span>@Html.ActionLink("«", "ViewLowStock", "ViewLowStock", new { page = 1 }, null)</span>
@@ -60,5 +60,7 @@
             }
         </div>
     }
+
+    <br /><br />
 
 </div>

@@ -136,20 +136,26 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ApproveRequestController.cs" />
     <Compile Include="Controllers\GenerateDisbursementListController.cs" />
+    <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\GenerateRetrievalListController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\ManageAdjustmentController.cs" />
     <Compile Include="Controllers\ManageCatalogueController.cs" />
     <Compile Include="Controllers\ManageCollectionController.cs" />
+    <Compile Include="Controllers\ManageDelegationController.cs" />
+    <Compile Include="Controllers\ManageCollectionPointController.cs" />
     <Compile Include="Controllers\ManagePurchaseController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\ManageRequestTemplateController.cs" />
     <Compile Include="Controllers\ManageStationeryDisbursementController.cs" />
     <Compile Include="Controllers\ManageStationeryRetrievalController.cs" />
     <Compile Include="Controllers\ManageStockCardController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\ViewCatalogueController.cs" />
     <Compile Include="Controllers\ViewDisbursementController.cs" />
+    <Compile Include="Controllers\ViewEmployeeRequestHistoryController.cs" />
     <Compile Include="Controllers\ViewLowStockController.cs" />
     <Compile Include="Controllers\ViewOutstandingRequestsController.cs" />
     <Compile Include="Controllers\ViewRequestHistoryController.cs" />
@@ -160,6 +166,7 @@
     <Compile Include="EntityFrameworkFacade\StockEFFacade.cs" />
     <Compile Include="EntityFrameworkFacade\StoreContext.cs" />
     <Compile Include="Filters\AuthorizeFilter.cs" />
+    <Compile Include="Filters\StoreManagerFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,13 +178,21 @@
     <Compile Include="Models\CollectionPointEF.cs" />
     <Compile Include="Models\CollectionPointStaffEF.cs" />
     <Compile Include="Models\DepartmentEF.cs" />
+    <Compile Include="Models\InventoryStatusReportDTO.cs" />
     <Compile Include="Models\LoginDTO.cs" />
     <Compile Include="Models\LowStockDTO.cs" />
+    <Compile Include="Models\ManageCollectionDTO.cs" />
+    <Compile Include="Models\ManageDelegationDTO.cs" />
+    <Compile Include="Models\MobileRetrievalItemDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
+    <Compile Include="Models\ReorderReportDTO.cs" />
     <Compile Include="Models\RequestDTO.cs" />
     <Compile Include="Models\RequestListDTO.cs" />
+    <Compile Include="Models\RequestTemplateDetailsEF.cs" />
+    <Compile Include="Models\RequestTemplateDTO.cs" />
+    <Compile Include="Models\RequestTemplateEF.cs" />
     <Compile Include="Models\RetrievalItemDTO.cs" />
     <Compile Include="Models\RoleEF.cs" />
     <Compile Include="Models\StaffEF.cs" />
@@ -248,7 +263,7 @@
     <Content Include="Views\ManageRequest\Index.cshtml" />
     <Content Include="Views\ManageRequest\ViewRequest.cshtml" />
     <Content Include="Views\ManageStationeryDisbursement\ViewDisbursement.cshtml" />
-    <Content Include="Views\ManageStationeryDisbursement\ViewDIsbursementHistory.cshtml" />
+    <Content Include="Views\ManageStationeryDisbursement\ViewDisbursementHistory.cshtml" />
     <Content Include="Views\ManageStationeryRetrieval\ViewRetrieval.cshtml" />
     <Content Include="Views\ManageStationeryRetrieval\ViewRetrievalHistory.cshtml" />
     <Content Include="Views\ManageStockCard\CreateStockCard.cshtml" />
@@ -258,6 +273,8 @@
     <Content Include="Views\ManageSupplier\EditSupplier.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
     <Content Include="Views\ManageSupplier\ViewSupplier.cshtml" />
+	    <Content Include="Views\ManageSupplier\CreateSupplier.cshtml" />
+    <Content Include="Views\ManageSupplier\ViewSupplierDetails.cshtml" />
     <Content Include="Views\Shared\_Department.cshtml" />
     <Content Include="Views\Shared\_RequestDetails.cshtml" />
     <Content Include="Views\Shared\_Store.cshtml" />
@@ -266,8 +283,16 @@
     <Content Include="Views\ViewLowStock\ViewLowStock.cshtml" />
     <Content Include="Views\ViewOutstandingRequests\ViewOutstandingRequests.cshtml" />
     <Content Include="Views\ViewRequestHistory\Index.cshtml" />
-    <Content Include="Views\ManageSupplier\CreateSupplier.cshtml" />
-    <Content Include="Views\ManageSupplier\ViewSupplierDetails.cshtml" />
+    <Content Include="Views\ManageDelegation\Index.cshtml" />
+    <Content Include="Views\ViewEmployeeRequestHistory\Index.cshtml" />
+    <Content Include="Views\ViewEmployeeRequestHistory\ViewRequest.cshtml" />
+    <Content Include="Views\ManageCollectionPoint\ViewAllCollectionPoints.cshtml" />
+    <Content Include="Views\ManageCollectionPoint\UpdateCollectionPoint.cshtml" />
+    <Content Include="Views\GenerateReport\GenerateReorderReport.cshtml" />
+    <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\ManageRequestTemplate.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
+
     <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
@@ -278,6 +303,7 @@
     <Folder Include="Views\GenerateRetrievalList\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\ManageAdjustment\" />
+    <Folder Include="Views\Mobile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

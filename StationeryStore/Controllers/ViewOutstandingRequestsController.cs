@@ -17,7 +17,7 @@ namespace StationeryStore.Controllers
         // GET: ViewOutstandingRequests
         public ActionResult ViewOutstandingRequests(int page)
         {
-            List<StationeryRequestDetailsEF> requests = rndService.FindOutstandingRequestDetails();
+            List<StationeryRequestDetailsEF> requests = rndService.FindOutstandingRequestDetails().OrderByDescending(x => x.FulfilmentStatus).ToList();
             
             // disable retrieval button if there is an ongoing retrieval/disbursement
             bool ongoingRetrieval = rndService.FindOngoingRetrieval();
