@@ -22,14 +22,14 @@
                         <td class="listrequestlabel">Rejected By:</td>
                         <td class="listrequestvalue">@request.DecisionBy.Name</td>
                     }
-                    else if (request.Status != "Submitted")
+                    else if (request.Status != "Submitted" && request.Status != "Deleted")
                     {
                         <td class="listrequestlabel">Approved By:</td>
                         <td class="listrequestvalue">@request.DecisionBy.Name</td>
                     }
                 </tr>
                 <tr>
-                    @if (request.Status != "Submitted")
+                    @if (request.Status != "Submitted" && request.Status != "Deleted")
                     {
                         <td class="listrequestlabel">Designation:</td>
                         <td class="listrequestvalue">@request.Designation</td>
@@ -53,7 +53,7 @@
                         <td class="listrequestlabel">Rejected On:</td>
                         <td class="listrequestvalue">@decisiondate</td>
                     }
-                    else if (request.Status != "Submitted")
+                    else if (request.Status != "Submitted" && request.Status != "Deleted")
                     {
                         <td class="listrequestlabel">Approved On:</td>
                         <td class="listrequestvalue">@decisiondate</td>

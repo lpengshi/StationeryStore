@@ -147,6 +147,7 @@
     <Compile Include="Controllers\ManageCollectionPointController.cs" />
     <Compile Include="Controllers\ManagePurchaseController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\ManageRequestTemplateController.cs" />
     <Compile Include="Controllers\ManageStationeryDisbursementController.cs" />
     <Compile Include="Controllers\ManageStationeryRetrievalController.cs" />
     <Compile Include="Controllers\ManageStockCardController.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\RequestDTO.cs" />
     <Compile Include="Models\RequestListDTO.cs" />
     <Compile Include="Models\RequestTemplateDetailsEF.cs" />
+    <Compile Include="Models\RequestTemplateDTO.cs" />
     <Compile Include="Models\RequestTemplateEF.cs" />
     <Compile Include="Models\RetrievalItemDTO.cs" />
     <Compile Include="Models\RoleEF.cs" />
@@ -285,6 +287,8 @@
     <Content Include="Views\ManageCollectionPoint\UpdateCollectionPoint.cshtml" />
     <Content Include="Views\GenerateReport\GenerateReorderReport.cshtml" />
     <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\ManageRequestTemplate.cshtml" />
+    <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,7 +21,7 @@ namespace StationeryStore.Controllers
         {
 
             StaffEF staff = staffService.FindStaffByUsername(loginDTO.Username);
-
+            
             if (staff == null || staff.Password != loginDTO.Password)
             {
 

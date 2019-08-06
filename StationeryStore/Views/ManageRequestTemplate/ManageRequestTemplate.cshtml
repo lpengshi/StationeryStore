@@ -1,43 +1,21 @@
-﻿@model StationeryStore.Models.RequestListDTO
+﻿@model StationeryStore.Models.RequestTemplateDTO
 
 @{
-
     var catalogueList = ViewBag.catalogueList;
     var note = ViewBag.note;
-    var amend = ViewBag.amend;
-
-    if (amend != null)
-    {
-        ViewBag.Title = "Manage Request Template";
-    }
-    else
-    {
-        ViewBag.Title = "Create Request Template";
-    }
+    ViewBag.Title = "Manage Request Template";
 
 }
 <div>@Html.Partial("_Department")</div>
 
 <div class="mainview">
     <div class="maindetails">
-
-        @if (amend != null)
-        {
-            <h3 class="title">Manage Request Template</h3>
-        }
-        else
-        {
-            <h3 class="title">Create Stationery Request Template</h3>
-        }
+        <h3 class="title">Manage Request Template</h3>
         <br />
-        @{ Html.BeginForm("CreateRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
+        @{ Html.BeginForm("ManageRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
             <div class="searchblock">
-                <div class="addItem">Add Item to Request Template</div>
-                @if (amend != null)
-                {
-                    @Html.HiddenFor(m => m.RequestId, @Model.RequestId)
-                    @Html.HiddenFor(m => m.Status, @Model.Status)
-                }
+                <div class="addItem">Add Item to Request Template</div>  
+                @Html.HiddenFor(m => m.TemplateId, @Model.TemplateId)
                 <input list="items" class="addItem" name="items" id="selectItem" placeholder="search item name">
                 <datalist id="items">
                     @{
@@ -95,18 +73,10 @@
                     <tfoot>
                         <tr class="decision">
                             <td class="decision" colspan="6" align="right">
-                                <button onclick="location.href='@Url.Action("Index", "ManageRequest")'" value="Cancel" class="decision">Cancel</button>
                                 <button onclick="submit()" name="decision" value="Remove Selected Items" class="decision">Remove Selected Items</button>
-                                @if (amend != null)
-                                {
-                                    <button onclick="submit()" name="decision" value="Delete" class="decision">Delete</button>
-                                    <button onclick="submit()" name="decision" value="Update" class="decision">Update</button>
-                                }
-                                else
-                                {
-                                    <button onclick="submit()" name="decision" value="Submit" class="decision">Submit</button>
-                                }
-
+                                <button onclick="submit()" name="decision" value="Delete" class="decision">Delete Template</button>
+                                <button onclick="submit()" name="decision" value="Update" class="decision">Update Template</button>
+                                <button onclick="submit()" name="decision" value="Submit" class="decision">Submit Request</button>
                             </td>
                         </tr>
                     </tfoot>

@@ -24,5 +24,15 @@ namespace StationeryStore.Models
 
         public int RequestQuantity { get; set; }
 
+        public RequestTemplateDetailsEF()
+        {
+
+        }
+        public RequestTemplateDetailsEF(int templateId, string itemCode, int requestQuantity)
+        {
+            RequestTemplateId = templateId;
+            ItemCode = itemCode;
+            RequestQuantity = requestQuantity;
+        }
     }
 }

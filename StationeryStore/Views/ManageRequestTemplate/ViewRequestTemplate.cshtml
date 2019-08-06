@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "View Request Template";
-    var requestDTOList = ViewBag.requestDTOList;
+    var requestTemplate = ViewBag.requestTemplate;
+    var note = ViewBag.note;
 }
 
 <div>@Html.Partial("_Department")</div>
@@ -14,32 +15,33 @@
                 <tr class="listview">
                     <td class="listviewheader" colspan="2">Request Template</td>
                 </tr>
-                @*{
-            for (int i = 0; i < requestDTOList.Count; i++)
+                @{
+            for (int i = 0; i < requestTemplate.Count; i++)
             {
-                string requestNo = requestDTOList[i].RequestId;
+                string templateName = requestTemplate[i].TemplateName;
                 if (i % 2 != 0)
                 {
                     <tr class="listview">
-                        <td class="oddlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                        <td class="oddlistview" colspan="2">@Html.ActionLink(templateName, "ManageRequestTemplate", new { templateId = @requestTemplate[i].TemplateId })</td>
                     </tr>
                 }
                 else if (i % 2 == 0)
                 {
                     <tr class="listview">
-                        <td class="evenlistview">@Html.ActionLink(requestNo, "ViewRequest", new { requestId = @requestDTOList[i].RequestId })</td>
+                        <td class="evenlistview" colspan="2">@Html.ActionLink(templateName, "ManageRequestTemplate", new { templateId = @requestTemplate[i].TemplateId })</td>
                     </tr>
                 }
             }
-        }*@
+        }
                 <tr class="decision">
-                    @{ Html.BeginForm("CreateRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
-                        <td><input type="text" name="templatename" placeholder="enter template name" class="addItem" /></td>
+                    @{ Html.BeginForm("ViewRequestTemplate", "ManageRequestTemplate", FormMethod.Post);
+                        <td><input type="text" name="templateName" placeholder="enter template name" class="addItem" /></td>
                         <td class="decision" align="right">
                             <input type="submit" value="Add New Request Template" class="decision" />
                         </td>
                     }
                 </tr>
+                <tr class="decision"><td colspan="2" style="font-weight:bold; color:red; text-align:left">@note</td></tr>
             </table>
         </div>
     </div>

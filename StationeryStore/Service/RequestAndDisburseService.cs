@@ -42,11 +42,74 @@ namespace StationeryStore.Service
             return dateList;
         }
 
+        public void CreateRequestTemplate(string templateName, int staffId)
+        {
+            RequestTemplateEF requestTemplate = new RequestTemplateEF()
+            {
+                TemplateName = templateName,
+                StaffId = staffId,
+            };
+
+            rndEFF.SaveRequestTemplate(requestTemplate);
+        }
+
         public List<StationeryRequestEF> FindRequestByDepartmentAndStatus(DepartmentEF department, string status)
         {
             List<StationeryRequestEF> pendingList = rndEFF.FindRequestsByDepartmentAndStatus(department.DepartmentCode, status);
 
             return pendingList;
+        }
+
+        public RequestTemplateDTO FindRequestTemplateDetailsByTemplateId(int templateId)
+        {
+            List<RequestTemplateDetailsEF> requestTemplateDetailsList = rndEFF.FindRequestTemplateDetailsByTemplateId(templateId);
+
+            RequestTemplateDTO requestTemplateDTO = new RequestTemplateDTO()
+            {
+                TemplateId = templateId,
+            };
+
+           foreach (var item in requestTemplateDetailsList)
+            {
+                requestTemplateDTO.ItemDescription.Add(item.Stock.Description);
+                requestTemplateDTO.ItemUom.Add(item.Stock.Uom);
+                requestTemplateDTO.Quantity.Add(item.RequestQuantity);
+                requestTemplateDTO.Remove.Add(false);
+            }
+
+            return requestTemplateDTO;
+        }
+
+        public RequestTemplateDTO AddToRequestTemplateDTO(RequestTemplateDTO requestTemplateDTO, string description, string uom)
+        {
+            requestTemplateDTO.ItemDescription.Add(description);
+            requestTemplateDTO.ItemUom.Add(uom);
+            requestTemplateDTO.Quantity.Add(1);
+            requestTemplateDTO.Remove.Add(false);
+
+            return requestTemplateDTO;
+        }
+
+        public RequestTemplateDTO RemoveFromRequestTemplateDTO(RequestTemplateDTO requestTemplateDTO)
+        {
+            for (int i = 0; i < requestTemplateDTO.ItemDescription.Count; i++)
+            {
+                if (requestTemplateDTO.Remove[i] == true)
+                {
+                    requestTemplateDTO.ItemDescription.RemoveAt(i);
+                    requestTemplateDTO.Quantity.RemoveAt(i);
+                    requestTemplateDTO.ItemUom.RemoveAt(i);
+                    requestTemplateDTO.Remove.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            return requestTemplateDTO;
+        }
+
+        public void DeleteRequestTemplate(int templateId)
+        {
+            rndEFF.DeleteRequestTemplate(templateId);
         }
 
         public List<RequestDTO> ConvertToRequestDTO(List<StationeryRequestEF> requestList)
@@ -99,6 +162,60 @@ namespace StationeryStore.Service
             }
 
             rndEFF.SaveRequestAndRequestDetails(request, requestList);
+        }
+
+        public RequestListDTO ConvertToRequestListDTO(RequestTemplateDTO requestTemplateDTO)
+        {
+            RequestListDTO requestListDTO = new RequestListDTO();
+
+            for (int i = 0; i < requestTemplateDTO.ItemDescription.Count; i++)
+            {
+                requestListDTO.ItemDescription.Add(requestTemplateDTO.ItemDescription[i]);
+                requestListDTO.ItemUom.Add(requestTemplateDTO.ItemUom[i]);
+                requestListDTO.Quantity.Add(requestTemplateDTO.Quantity[i]);
+                requestListDTO.Remove.Add(requestTemplateDTO.Remove[i]);
+            }
+
+            return requestListDTO;
+        }
+
+        public void UpdateRequestTemplate(StaffEF staff, RequestTemplateDTO requestTemplateDTO)
+        {
+            RequestTemplateDetailsEF requestTemplateItem; bool existingItem;
+            List<RequestTemplateDetailsEF> requestTemplateList = new List<RequestTemplateDetailsEF>();
+            List <RequestTemplateDetailsEF> requestTemplateDetails = rndEFF.FindRequestTemplateDetailsByTemplateId(requestTemplateDTO.TemplateId);
+                for (int i = 0; i < requestTemplateDetails.Count; i++)
+                {
+                    existingItem = false;
+                    for (int j = 0; j < requestTemplateDTO.ItemDescription.Count; j++)
+                    {
+                        if (requestTemplateDetails[i].Stock.Description == requestTemplateDTO.ItemDescription[j])
+                        {
+                            requestTemplateItem = rndEFF.FindRequestTemplateDetailsByTemplateIdAndItemCode(requestTemplateDTO.TemplateId, requestTemplateDetails[i].Stock.ItemCode);
+                            requestTemplateItem.RequestQuantity = requestTemplateDTO.Quantity[j];
+                            requestTemplateList.Add(requestTemplateItem);
+                            existingItem = true;
+                            requestTemplateDTO.Remove[j] = true;
+                            break;
+                        }
+                    }
+
+                    if (!existingItem)
+                    {
+                        rndEFF.DropRequestTemplateDetails(requestTemplateDetails[i]);
+                    }
+                }
+
+                requestTemplateDTO = RemoveFromRequestTemplateDTO(requestTemplateDTO);
+
+            for (int k = 0; k < requestTemplateDTO.ItemDescription.Count; k++)
+            {
+                string stockId = stockEFF.FindStockByDescription(requestTemplateDTO.ItemDescription[k]).ItemCode;
+                requestTemplateItem = new RequestTemplateDetailsEF(requestTemplateDTO.TemplateId, stockId, requestTemplateDTO.Quantity[k]);
+                requestTemplateList.Add(requestTemplateItem);
+            }
+
+            rndEFF.SaveRequestTemplateDetails(requestTemplateList);
         }
 
         public List<RequestDTO> FindRequestByStaffAndStatus(int staffId, string status)

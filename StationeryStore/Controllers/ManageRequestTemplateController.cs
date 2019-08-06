@@ -16,62 +16,69 @@ namespace StationeryStore.Controllers
         StockService stockService = new StockService();
         RequestAndDisburseService rndService = new RequestAndDisburseService();
 
+        [HttpGet]
         public ActionResult ViewRequestTemplate()
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
 
-            RequestTemplateEF requestTemplate = rndService.FindRequestTemplateByStaffId(staff.StaffId);
+            List<RequestTemplateEF> requestTemplate = rndService.FindRequestTemplateByStaffId(staff.StaffId);
+            ViewBag.requestTemplate = requestTemplate;
 
-            RequestListDTO requestListDTO = null;
 
-            if (TempData["requestListDTO"] != null)
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult ViewRequestTemplate(string templateName, string decision)
+        {
+            StaffEF staff = staffService.GetStaff();
+            ViewBag.staff = staff;
+
+            List<RequestTemplateEF> requestTemplate = rndService.FindRequestTemplateByStaffId(staff.StaffId);
+            ViewBag.requestTemplate = requestTemplate;
+
+            if (templateName == null || templateName == "")
             {
-                requestListDTO = (RequestListDTO)TempData["requestListDTO"];
-                ViewBag.amend = true;
+                ViewBag.note = "Please enter a valid template name";
+            } else
+            {
+                rndService.CreateRequestTemplate(templateName, staff.StaffId);
+                return RedirectToAction("ViewRequestTemplate");
             }
 
-            return View(requestListDTO);
+            return View();
         }
 
 
         [HttpGet]
-        public ActionResult CreateRequestTemplate()
+        public ActionResult ManageRequestTemplate(int templateId)
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
 
+            RequestTemplateDTO requestTemplateDTO = rndService.FindRequestTemplateDetailsByTemplateId(templateId);
+
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             ViewBag.catalogueList = catalogueList;
-            RequestListDTO requestListDTO = null;
 
-            if (TempData["requestListDTO"] != null)
-            {
-                requestListDTO = (RequestListDTO)TempData["requestListDTO"];
-                ViewBag.amend = true;
-            }
-
-            return View(requestListDTO);
+            return View(requestTemplateDTO);
         }
 
         [HttpPost]
-        public ActionResult CreateRequest(RequestListDTO requestListDTO, string items, string decision)
+        public ActionResult ManageRequestTemplate(RequestTemplateDTO requestTemplateDTO, string items, string decision)
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             ViewBag.catalogueList = catalogueList;
 
-            if (requestListDTO.RequestId != null)
-            {
-                ViewBag.amend = true;
-            }
-
             if (decision == "Delete")
             {
-                rndService.DeleteRequest(requestListDTO.RequestId);
+                rndService.DeleteRequestTemplate(requestTemplateDTO.TemplateId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewRequestTemplate");
             }
 
             if (decision == null)
@@ -98,9 +105,9 @@ namespace StationeryStore.Controllers
                     ViewBag.note = "The item is not recognised. Please select another item from the list";
                 }
 
-                if (requestListDTO.ItemDescription.Count > 0 && checkValid == true)
+                if (requestTemplateDTO.ItemDescription.Count > 0 && checkValid == true)
                 {
-                    foreach (var description in requestListDTO.ItemDescription)
+                    foreach (var description in requestTemplateDTO.ItemDescription)
                     {
                         if (description == items)
                         {
@@ -112,15 +119,15 @@ namespace StationeryStore.Controllers
                 }
                 if (checkValid)
                 {
-                    requestListDTO = rndService.AddToRequestListDTO(requestListDTO, newItem.Stock.Description, newItem.Stock.Uom);
+                    requestTemplateDTO = rndService.AddToRequestTemplateDTO(requestTemplateDTO, newItem.Stock.Description, newItem.Stock.Uom);
                 }
             }
 
             if (decision == "Remove Selected Items")
             {
-                int before = requestListDTO.ItemDescription.Count;
-                requestListDTO = rndService.RemoveFromRequestListDTO(requestListDTO);
-                int after = requestListDTO.ItemDescription.Count;
+                int before = requestTemplateDTO.ItemDescription.Count;
+                requestTemplateDTO = rndService.RemoveFromRequestTemplateDTO(requestTemplateDTO);
+                int after = requestTemplateDTO.ItemDescription.Count;
 
                 if (before != after)
                 {
@@ -133,19 +140,34 @@ namespace StationeryStore.Controllers
 
             }
 
-            if (decision == "Submit" || decision == "Update")
+            if (decision == "Update")
             {
-                if (requestListDTO.ItemDescription.Count == 0)
+                if (requestTemplateDTO.ItemDescription.Count == 0)
                 {
                     ViewBag.note = "You will need to have at least one item in the request";
                 }
                 else
                 {
-                    //rndService.CreateRequest(staff, requestListDTO);
-                    return RedirectToAction("Index");
+                    rndService.UpdateRequestTemplate(staff, requestTemplateDTO);
+                    return RedirectToAction("ViewRequestTemplate");
+                }   
+            }
+
+            if (decision == "Submit")
+            {
+                if (requestTemplateDTO.ItemDescription.Count == 0)
+                {
+                    ViewBag.note = "You will need to have at least one item in the request";
+                }
+                else
+                {
+                    RequestListDTO requestListDTO = rndService.ConvertToRequestListDTO(requestTemplateDTO);
+                    rndService.CreateRequest(staff, requestListDTO);
+                    return RedirectToAction("Index","ManageRequest",null);
                 }
             }
-            return View(requestListDTO);
+
+            return View(requestTemplateDTO);
         }
     }
 }
