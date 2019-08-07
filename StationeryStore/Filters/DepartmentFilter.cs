@@ -9,14 +9,14 @@ using System.Web.Routing;
 
 namespace StationeryStore.Filters
 {
-    public class StoreManagerFilter : ActionFilterAttribute, IAuthorizationFilter
+    public class DepartmentFilter : ActionFilterAttribute, IAuthorizationFilter
     {
         StaffService staffService = new StaffService();
         public void OnAuthorization(AuthorizationContext context)
         {
             StaffEF staff = staffService.GetStaff();
 
-            if (staff.Role.Description != "Store Manager")
+            if (staff.RoleId != 1 && staff.RoleId != 2)
             {
                 context.Result = new RedirectToRouteResult(
                     new RouteValueDictionary

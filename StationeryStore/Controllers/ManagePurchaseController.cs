@@ -10,6 +10,8 @@ using StationeryStore.Util;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class ManagePurchaseController : Controller
     {
         PurchaseService purchaseService = new PurchaseService();

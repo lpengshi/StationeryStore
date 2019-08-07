@@ -9,7 +9,7 @@
               <Width>1.865cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.812cm</Width>
+              <Width>5.78567cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.65333cm</Width>
@@ -520,8 +520,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet2</DataSetName>
         <Top>0.3937cm</Top>
+        <Left>0.635cm</Left>
         <Height>1.2cm</Height>
-        <Width>16.51cm</Width>
+        <Width>17.48367cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -529,13 +530,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2in</Height>
+    <Height>0.88077in</Height>
     <Style />
   </Body>
-  <Width>6.5in</Width>
+  <Width>7.33333in</Width>
   <Page>
     <PageHeader>
-      <Height>2.54cm</Height>
+      <Height>1.62983cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -559,8 +560,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Height>1.46191cm</Height>
-          <Width>16.51cm</Width>
+          <Height>0.93274cm</Height>
+          <Width>18.62667cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -593,8 +594,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.49719cm</Top>
-          <Height>1.00753cm</Height>
+          <Top>0.93274cm</Top>
+          <Height>0.66886cm</Height>
           <Width>13.88767cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
@@ -615,7 +616,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.54cm</Height>
+      <Height>0.91017cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -636,9 +637,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>1.94cm</Top>
+          <Top>0.289cm</Top>
           <Height>0.6cm</Height>
-          <Width>16.51cm</Width>
+          <Width>18.62667cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -658,8 +659,8 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>

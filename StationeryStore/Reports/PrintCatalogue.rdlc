@@ -12,7 +12,7 @@
               <Width>9.03344cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.57761cm</Width>
+              <Width>3.50894cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -246,11 +246,8 @@
             <TablixMember>
               <Group Name="Group1">
                 <GroupExpressions>
-                  <GroupExpression>=Ceiling(RowNumber(Nothing)/20)</GroupExpression>
+                  <GroupExpression>=Ceiling(RowNumber(Nothing)/30)</GroupExpression>
                 </GroupExpressions>
-                <PageBreak>
-                  <BreakLocation>Between</BreakLocation>
-                </PageBreak>
               </Group>
               <TablixMembers>
                 <TablixMember>
@@ -261,10 +258,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet3</DataSetName>
-        <Top>0.17639cm</Top>
-        <Left>0.6985cm</Left>
+        <Top>0.49389cm</Top>
+        <Left>1.18533cm</Left>
         <Height>1.2cm</Height>
-        <Width>15.07767cm</Width>
+        <Width>16.00899cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -275,10 +272,10 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>6.51201in</Width>
+  <Width>7.28701in</Width>
   <Page>
     <PageHeader>
-      <Height>2.54cm</Height>
+      <Height>1.778cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -302,8 +299,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Height>1.35353cm</Height>
-          <Width>16.51cm</Width>
+          <Height>0.97253cm</Height>
+          <Width>18.509cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -333,9 +330,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.38881cm</Top>
-          <Height>0.9748cm</Height>
-          <Width>14.77667cm</Width>
+          <Top>1.00781cm</Top>
+          <Height>0.7208cm</Height>
+          <Width>17.59184cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -355,7 +352,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.54cm</Height>
+      <Height>0.84808cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -376,9 +373,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>1.7272cm</Top>
+          <Top>0.03528cm</Top>
           <Height>0.8128cm</Height>
-          <Width>16.51cm</Width>
+          <Width>18.509cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -398,8 +395,8 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>

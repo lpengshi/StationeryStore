@@ -9,6 +9,8 @@ using System.Web.Mvc;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class ManageStockCardController : Controller
     {
         StockService stockService = new StockService();

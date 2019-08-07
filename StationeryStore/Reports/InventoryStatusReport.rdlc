@@ -9,7 +9,7 @@
               <Width>2.45767cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.93234cm</Width>
+              <Width>6.02784cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.45767cm</Width>
@@ -392,7 +392,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ReorderLevel.Value</Value>
+                              <Value>=IIF(Fields!ReorderLevel.Value IS NOTHING, "N.A.", Fields!ReorderLevel.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -439,11 +439,8 @@
             <TablixMember>
               <Group Name="Group1">
                 <GroupExpressions>
-                  <GroupExpression>=Ceiling(RowNumber(Nothing)/20)</GroupExpression>
+                  <GroupExpression>=Ceiling(RowNumber(Nothing)/30)</GroupExpression>
                 </GroupExpressions>
-                <PageBreak>
-                  <BreakLocation>Between</BreakLocation>
-                </PageBreak>
               </Group>
               <TablixMembers>
                 <TablixMember>
@@ -458,7 +455,7 @@
         <Top>0.42305cm</Top>
         <Left>0.30903cm</Left>
         <Height>1.2cm</Height>
-        <Width>16.22069cm</Width>
+        <Width>18.31619cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -466,13 +463,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.425in</Height>
+    <Height>5cm</Height>
     <Style />
   </Body>
-  <Width>6.62535in</Width>
+  <Width>18.75117cm</Width>
   <Page>
     <PageHeader>
-      <Height>2.46832cm</Height>
+      <Height>1.73454cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -496,8 +493,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox15</rd:DefaultName>
-          <Height>1.54658cm</Height>
-          <Width>16.7837cm</Width>
+          <Top>0.03528cm</Top>
+          <Left>0.30903cm</Left>
+          <Height>0.95391cm</Height>
+          <Width>18.31619cm</Width>
           <Style>
             <Border>
               <Color>White</Color>
@@ -531,9 +530,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox16</rd:DefaultName>
-          <Top>1.54658cm</Top>
-          <Height>0.88646cm</Height>
-          <Width>15.59837cm</Width>
+          <Top>0.98919cm</Top>
+          <Left>0.30903cm</Left>
+          <Height>0.74535cm</Height>
+          <Width>15.12001cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -553,7 +553,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.54cm</Height>
+      <Height>0.82578cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -568,14 +568,16 @@
                   <Style />
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox14</rd:DefaultName>
-          <Top>1.94cm</Top>
-          <Left>6.65671cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.5cm</Width>
+          <Top>0.03528cm</Top>
+          <Left>0.30903cm</Left>
+          <Height>0.7905cm</Height>
+          <Width>18.31619cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -595,8 +597,8 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
@@ -654,6 +656,7 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>e27874b8-aacc-43e0-beac-e3b43bca27c1</rd:ReportID>
 </Report>

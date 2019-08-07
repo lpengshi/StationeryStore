@@ -11,6 +11,7 @@ using StationeryStore.Util;
 namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
+    [DepartmentFilter]
     public class ViewEmployeeRequestHistoryController : Controller
     {
         StaffService staffService = new StaffService();

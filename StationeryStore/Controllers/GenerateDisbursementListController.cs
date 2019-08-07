@@ -8,9 +8,12 @@ using System.Web.Mvc;
 using StationeryStore.Util;
 using System.Net.Mail;
 using System.Diagnostics;
+using StationeryStore.Filters;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class GenerateDisbursementListController : Controller
     {
         RequestAndDisburseService rndService = new RequestAndDisburseService();
