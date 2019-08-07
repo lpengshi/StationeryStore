@@ -38,6 +38,19 @@
             }
         </tr>
         <tr>
+            <td>Items received by:</td>
+            @{
+                if (po.Status == "Delivered")
+                {
+                    <td>@po.ReceivedBy.Name</td>
+                }
+                else
+                {
+                    <td>N.A</td>
+                }
+            }
+        </tr>
+        <tr>
             <td>Supplier:</td>
             <td>@po.SupplierCode</td>
         </tr>
@@ -76,6 +89,7 @@
             { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
             }
         }
-        <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back" class="decision">Back</button>
+        <input type="submit" name="choice" value="Print Purchase Order" class="decision" />
     </form>
+    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back" class="decision">Back</button>
 </div>

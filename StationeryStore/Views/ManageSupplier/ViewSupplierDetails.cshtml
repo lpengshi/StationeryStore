@@ -1,0 +1,62 @@
+﻿@using StationeryStore.Models;
+@{
+
+    List<SupplierDetailsEF> supplierDetails = (List<SupplierDetailsEF>)ViewData["supplierDetails"];
+    SupplierEF supplier = (SupplierEF)ViewData["supplier"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Supplier Items(@supplier.SupplierName)</h3>
+    <br />
+
+    @if (supplierDetails.Count == 0)
+    {
+        <h5>Supplier does not have any items.</h5>
+    }
+    else
+    {
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Item Code</td>
+                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Unit Price</td>
+                    <td class="listviewheader">Supplier priority</td>
+                </tr>
+                @foreach (var sd in supplierDetails)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview"><a href="@Url.Action("ViewStockCard", "ManageStockCard", new {itemCode = sd.ItemCode} )">@sd.ItemCode</a></td>
+                        <td class="oddlistview">@sd.Stock.Description</td>
+                        <td class="oddlistview">@sd.UnitPrice</td>
+                        <td class="oddlistview">@sd.SupplierRank</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewSupplierDetails", "ManageSupplier", new { page = 1, supplierCode = supplier.SupplierCode }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewSupplierDetails", "ManageSupplier", new { page = i,  supplierCode = supplier.SupplierCode }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewSupplierDetails", "ManageSupplier", new { page = noOfPages , supplierCode = supplier.SupplierCode }, null)</span>
+            }
+        </div>
+    }
+
+</div>

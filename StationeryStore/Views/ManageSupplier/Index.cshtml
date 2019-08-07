@@ -1,7 +1,8 @@
 ﻿@using StationeryStore.Models
 @{
-    List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["suppliers"];
-    StaffEF staff = (StaffEF)ViewData["staff"];
+    //List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["suppliers"];
+    var staffRole = ViewBag.staffRole;
+    var suppliers = ViewBag.suppliers;
 }
 
 
@@ -10,7 +11,7 @@
 <div class="mainview">
     <h3>Supplier List</h3>
     <br />
-    @if (suppliers.Count() == 0)
+    @if (suppliers == null || suppliers.Count == 0)
     {
         <h5>There are no suppliers.</h5>
     }
@@ -18,7 +19,7 @@
     {
         <div class="listview">
             <table class="listview">
-                @if (staff.Role.Description == "Store Manager")
+                @if (staffRole == "Store Manager")
                 {
                     <tr class="decision">
                         <td class="decision" colspan="2" align="right">
@@ -33,15 +34,18 @@
                 </tr>
                 @foreach (var s in suppliers)
                 {
-                    <tr class="listview">
-                        <td class="oddlistview">@Html.ActionLink(s.SupplierCode, "ViewSupplier", new { supplierCode = s.SupplierCode })</td>
-                        <td class="oddlistview">@s.SupplierName</td>
-                        <td class="oddlistview">Link to view Tender Quotation Form</td>
-                    </tr>
+                <tr class="listview">
+                    <td class="oddlistview"><a href="@Url.Action("ViewSupplier", "ManageSupplier", new {supplierCode = s.SupplierCode} )">@s.SupplierCode</a></td>
+                    <td class="oddlistview">@s.SupplierName</td>
+                    <td class="oddlistview">*View/Print??*</td>
+                </tr>
                 }
             </table>
         </div>
-        
+        <br />
+        <div>
+            <input type="button" onclick="location.href='ManageSupplier/CreateSupplier';" value="Add New Supplier" class="decision"/>
+        </div>
     }
 
 </div>

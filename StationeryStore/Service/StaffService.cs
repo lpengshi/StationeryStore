@@ -64,5 +64,10 @@ namespace StationeryStore.Service
             staffEFF.SaveStaff(staff);
             return sessionId;
         }
+
+        public List<StaffEF> FindStaffByRole(int roleId)
+        {
+            return staffEFF.FindStaffByRoleId(roleId);
+        }
     }
 }

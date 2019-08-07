@@ -1,0 +1,85 @@
+﻿@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    ViewBag.Title = "ViewAdjustmentDetails";
+
+    bool needsManagerAuthority = (bool)ViewData["needsManagerAuthority"];
+    AdjustmentVoucherEF voucher = (AdjustmentVoucherEF)ViewData["adjustmentVoucher"];
+    List<AdjustmentVoucherDetailsEF> voucherDetails = (List<AdjustmentVoucherDetailsEF>)ViewData["voucherDetailsList"];
+    string staffRole = (string)ViewData["staffRole"];
+    int staffId = (int)ViewData["staffId"];
+}
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3 class="title">Adjustment Voucher Details(@voucher.Status)</h3>
+    <div class="maindview">
+        @using (Html.BeginForm("ViewAdjustmentDetails", "ManageAdjustmentVoucher", FormMethod.Post))
+        {
+            <table class="listview">
+                <tr>
+                    <td class="listrequestlabel">Voucher Id:</td>
+                    <td class="listrequestvalue">@voucher.VoucherId</td>
+                </tr>
+                <tr>
+                    <td class="listrequestlabel">Date issued:</td>
+                    <td class="listrequestvalue">@Timestamp.dateFromTimestamp(voucher.DateIssued)</td>
+                </tr>
+                <tr>
+                    <td class="listrequestlabel">Requested By:</td>
+                    <td class="listrequestvalue">@voucher.Requester.Name</td>
+                </tr>
+                @{ if (voucher.ApproverId != null)
+                    {
+                        <tr>
+                            <td class="listrequestlabel">Approved By:</td>
+                            <td class="listrequestvalue">@voucher.Approver.Name</td>
+                        </tr>
+                    }
+                }
+            </table>
+            <br />
+            <p>Stock Adjustment Details</p>
+
+            <table class="listview">
+                <tr>
+                    <th class="listviewheader">Item Code</th>
+                    <th class="listviewheader">Item Description</th>
+                    <th class="listviewheader">Adjustment Quantity</th>
+                    <th class="listviewheader">Reason</th>
+                </tr>
+                @{ foreach (var v in voucherDetails)
+                    {
+                        <tr class="oddlistview">
+                            <td class="oddlistview">@v.ItemCode</td>
+                            <td class="oddlistview">@v.Stock.Description</td>
+                            <td class="oddlistview">@v.Quantity</td>
+                            <td class="oddlistview">@v.Reason</td>
+                        </tr>
+                    }
+                }
+            </table>
+            <br />
+            if (voucher.Status == "Pending Approval")
+            {
+                <input type="hidden" name="voucherId" value="@voucher.VoucherId" />
+                if (staffRole == "Store Clerk" && staffId == voucher.RequesterId)
+                {
+                    <button onclick="submit()" class="decision" name="choice" value="Edit">Edit</button>
+                }
+                else if (needsManagerAuthority == false && (staffRole == "Store Supervisor" || staffRole == "Store Manager"))
+                {
+                    <button onclick="submit()" class="decision" name="choice" value="Approve">Approve</button>
+                    <button onclick="submit()" class="decision" name="choice" value="Reject">Reject</button>
+                }
+                else if (needsManagerAuthority == true && staffRole == "Store Manager")
+                {
+                    <button onclick="submit()" class="decision" name="choice" value="Approve">Approve</button>
+                    <button onclick="submit()" class="decision" name="choice" value="Reject">Reject</button>
+                }
+            }
+        }
+    </div>
+</div>
+

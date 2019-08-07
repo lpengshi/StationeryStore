@@ -16,11 +16,12 @@ namespace StationeryStore.Controllers
     {
         PurchaseService purchaseService = new PurchaseService();
         StaffService staffService = new StaffService();
+        StockService stockService = new StockService();
 
         //Purchase Order
         public ActionResult PurchaseOrderHistory(string search, string startDate, string endDate)
         {
-            //PO status : PENDING DELIVERY, DELIVERED, DELETED
+            //PO status : PENDING DELIVERY, DELIVERED, CANCELLED
             List<PurchaseOrderEF> poList = purchaseService.getAllPurchaseOrders();
 
             bool dateOkay = false;
@@ -87,7 +88,7 @@ namespace StationeryStore.Controllers
             ViewData["supplierList"] = supplierList;
 
             StaffEF createdBy = staffService.GetStaff();
-            //StaffEF createdBy = staffService.FindStaffByUsername("scienceemp1");
+
             if (supplier == null)
                 supplierItems = null;
             else
@@ -187,12 +188,25 @@ namespace StationeryStore.Controllers
 
             if(choice == "Confirm Delivery" && po.Status == "Pending Delivery")
             {
+                //set PO status to Delivered.
                 purchaseService.UpdatePurchaseOrderToDelivered(receivedBy, po);
+
+                //update stock transaction
+                stockService.LogTransactionsForDeliveryOrder(po.OrderId);           
                 return RedirectToAction("PurchaseOrderHistory", "ManagePurchase");
+            }
+            if(choice == "Print Purchase Order")
+            {
+                PurchaseOrderPrinter(po.OrderId);
             }
 
             return View();
         }
 
+        //PRINTER SERVICE6
+        public void PurchaseOrderPrinter(int purchaseOrderId)
+        {
+
+        }
     }
 }

@@ -66,10 +66,16 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.PurchaseOrderDetails.Count();
         }
 
-        public void AddToSupplier(SupplierEF supplier)
+        public bool AddToSupplier(SupplierEF supplier)
         {
-            context.Suppliers.Add(supplier);
-            context.SaveChanges();
+            var existingRecord = context.Suppliers.Find(supplier.SupplierCode);
+            if (existingRecord == null)
+            {
+                context.Suppliers.Add(supplier);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public void UpdateSupplier(SupplierEF supplier)

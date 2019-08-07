@@ -1,0 +1,83 @@
+﻿@using StationeryStore.Models
+@using StationeryStore.Util
+@{
+    List<AdjustmentVoucherEF> voucherList = (List<AdjustmentVoucherEF>)ViewData["voucherList"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+    string search = (string)ViewData["search"];
+    List<string> status = (List<string>)ViewData["statusList"];
+}
+
+
+<div>@Html.Partial("_Store")</div>
+
+<div class="mainview">
+    <h3>Supplier List</h3>
+    <br />
+
+    @if (voucherList.Count == 0)
+    {
+        <h5>There are no adjustment vouchers</h5>
+    }
+    else
+    {
+        <form action="~/ManageAdjustmentVoucher/Index" method="post">
+            <p>
+                Sort by status:
+                <select id="status" name="search">
+                    @foreach(var s in status)
+                    {
+                        if(search != null && search == s)
+                        {
+                            <option selected="selected" value="@s">@s</option>
+                        }
+                        else
+                        {
+                            <option value="@s">@s</option>
+                        }
+                    }
+                </select>
+                <input type="submit">
+                <input type="hidden" name="page" value="@page"/>
+            </p>
+        </form>
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listviewheader">Voucher No.</td>
+                    <td class="listviewheader">Date requested</td>
+                    <td class="listviewheader">Requester</td>
+                    <td class="listviewheader">Status</td>
+                </tr>
+                @foreach (var ad in voucherList)
+                {
+                    <tr class="listview">
+                        <td class="oddlistview"><a href="@Url.Action("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new {voucherId = ad.VoucherId} )">@ad.VoucherId</a></td>
+                        <td class="oddlistview">@Timestamp.dateFromTimestamp(ad.DateIssued)</td>
+                        <td class="oddlistview">@ad.Requester.Name</td>
+                        <td class="oddlistview">@ad.Status</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "ViewSupplierDetails", "ManageSupplier", new { page = 1 }, null)</span>
+
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "ViewSupplierDetails", "ManageSupplier", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "ViewSupplierDetails", "ManageSupplier", new { page = noOfPages }, null)</span>
+            }
+        </div>
+    }
+
+</div>

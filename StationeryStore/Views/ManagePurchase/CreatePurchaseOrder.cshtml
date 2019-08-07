@@ -21,8 +21,8 @@
         <br />
         @using (Html.BeginForm("CreatePurchaseOrder", "ManagePurchase", FormMethod.Post))
         {
-            <div>
-                <div>
+            <div align="left">
+                <div align ="left">
                     <table class="listview">
                         <tr>
                             <td>Date:</td>
@@ -72,9 +72,6 @@
                         </tr>
                         <tr>
                             <td>Select Items to order:</td>
-                        </tr>
-                        <tr>
-                            <td></td>
                             <td>
                                 <select id="items" name="items">
                                     @{ if (supplierItemList != null)
@@ -87,7 +84,7 @@
                                         }
                                     }
                                 </select>
-                                <input type="submit" onclick="submit()" value="AddItem" name="choice" />
+                                <input class="decision" type="submit" onclick="submit()" value="AddItem" name="choice" />
                             </td>
                         </tr>
                     </table>
@@ -134,19 +131,12 @@
                                 }
                             }
                         }
-
-                        <tr>
-                            <td>
-                                <button onclick="warning()" name="choice" value="CreatePO" class="decision">Submit</button>
-                            </td>
-                            <td>
-                                <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
-                            </td>
-                            <td>
-                                <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back"></button>
-                            </td>
-                        </tr>
                     </table>
+                    <br />
+                    <br />
+                    <button onclick="warning()" name="choice" value="CreatePO" class="decision">Submit</button>
+                    <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
+                    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="Cancel" class="decision">Cancel</button>
                 </div>
             </div>
         }

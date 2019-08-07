@@ -68,6 +68,11 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.Staff.Where(a => a.DepartmentCode == departmentid).ToList<StaffEF>();
         }
 
+        public List<StaffEF> FindStaffByRoleId(int id)
+        {
+            return context.Staff.Where(a => a.RoleId == id).ToList();
+        }
+
 
         //ROLES
 
