@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class ManageSupplierController : Controller
     {
         PurchaseService purchaseService = new PurchaseService();

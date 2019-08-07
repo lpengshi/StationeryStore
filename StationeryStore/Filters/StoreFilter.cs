@@ -9,20 +9,20 @@ using System.Web.Routing;
 
 namespace StationeryStore.Filters
 {
-    public class StoreManagerFilter : ActionFilterAttribute, IAuthorizationFilter
+    public class StoreFilter : ActionFilterAttribute, IAuthorizationFilter
     {
         StaffService staffService = new StaffService();
         public void OnAuthorization(AuthorizationContext context)
         {
             StaffEF staff = staffService.GetStaff();
 
-            if (staff.Role.Description != "Store Manager")
+            if (staff.RoleId != 3 && staff.RoleId != 4 && staff.RoleId != 5)
             {
                 context.Result = new RedirectToRouteResult(
                     new RouteValueDictionary
                     {
                         { "controller", "Error" },
-                        { "action", "StoreRoleError" }
+                        { "action", "DepartmentRoleError" }
                     }
                 );
             }

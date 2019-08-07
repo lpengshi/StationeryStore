@@ -10,6 +10,7 @@ using StationeryStore.Service;
 namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
+    [DepartmentFilter]
     public class ViewDisbursementController : Controller
     {
         StaffService staffService = new StaffService();

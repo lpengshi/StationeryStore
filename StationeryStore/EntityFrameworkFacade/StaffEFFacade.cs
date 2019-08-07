@@ -69,7 +69,6 @@ namespace StationeryStore.EntityFrameworkFacade
         }
 
 
-
         //ROLES
 
         public void SaveRole(RoleEF role)

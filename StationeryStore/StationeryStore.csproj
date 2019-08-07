@@ -149,6 +149,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="DataSets\CatalogueDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,7 +187,10 @@
     <Compile Include="EntityFrameworkFacade\StockEFFacade.cs" />
     <Compile Include="EntityFrameworkFacade\StoreContext.cs" />
     <Compile Include="Filters\AuthorizeFilter.cs" />
+    <Compile Include="Filters\DepartmentFilter.cs" />
+    <Compile Include="Filters\StoreFilter.cs" />
     <Compile Include="Filters\StoreManagerFilter.cs" />
+    <Compile Include="Filters\StoreSupervisorFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -424,6 +428,8 @@
     <Content Include="Views\ViewDisbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\GenerateReport\GenerateOrderTrendAnalysis.cshtml" />
     <Content Include="Views\GenerateReport\GenerateRequestTrendAnalysis.cshtml" />
+    <Content Include="Views\Error\StoreRoleError.cshtml" />
+    <Content Include="Views\Error\DepartmentRoleError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

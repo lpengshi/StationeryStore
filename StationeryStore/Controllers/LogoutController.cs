@@ -18,6 +18,8 @@ namespace StationeryStore.Controllers
         {
             StaffEF staff = staffService.GetStaff();
             staffService.Logout(staff);
+            Session["sessionId"] = null;
+            Session["staff"] = null;
 
             return RedirectToAction("Index", "Login");
         }

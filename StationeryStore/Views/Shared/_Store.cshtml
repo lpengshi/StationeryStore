@@ -1,23 +1,21 @@
 ﻿@*Janel*@
-@using StationeryStore.Service
+@using StationeryStore.Models
 
 @{
-    StaffService staff = new StaffService();
-    var name = staff.GetStaff().Name;
-    var role = staff.GetStaff().Role.Description;
+    StaffEF staff = (StaffEF)Session["staff"];
 }
 
 <div class="mainheaderbar">
     <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
     <div class="mainheaderlink">@Html.ActionLink("Logout", "Index", "Logout", null, new { @class = "topnavlink" })</div>
     <div class="mainheaderlink">@Html.ActionLink("Help", "Index", "Logout", null, new { @class = "topnavlink" })</div>
-    <div class="mainheaderdetail">@name (@role)</div>
+    <div class="mainheaderdetail">@staff.Name (@staff.Role.Description)</div>
 </div>
 
 <div class="sidenavbar">
     <ul class="sidenavbar">
 
-        @if (role == "Store Clerk")
+        @if (staff.Role.Description == "Store Clerk")
         {
             <li>
                 <button class="sidemain">@Html.ActionLink("Home", "ViewLowStock", "ViewLowStock", new { page = 1 }, new { @class = "sidenavlink" })</button>
@@ -79,14 +77,12 @@
                     <ul class="sidenavdetails">
                         <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", null, new { @class = "sidenavlink" })</li>
                         <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", null, new { @class = "sidenavlink" })</li>
-                        <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
-                        <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
             </li>
         }
 
-        else if (role == "Store Supervisor")
+        else if (staff.Role.Description == "Store Supervisor")
         {
             <li>
                 <button class="sidemain">@Html.ActionLink("Home", "ViewLowStock", "ViewLowStock", new { page = 1 }, new { @class = "sidenavlink" })</button>
@@ -144,7 +140,7 @@
                 </div>
             </li>
         }
-        else if (role == "Store Manager")
+        else if (staff.Role.Description == "Store Manager")
         {
             <li>
                 <button class="sidemain">@Html.ActionLink("Home", "ViewAllStocks", "ManageStockCard", new { page = 1 }, new { @class = "sidenavlink" })</button>
@@ -181,15 +177,6 @@
                 <div class="content">
                     <ul class="sidenavdetails">
                         <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
-                    </ul>
-                </div>
-                <button class="collapsible">Report</button>
-                <div class="content">
-                    <ul class="sidenavdetails">
-                        <li class="sidenavdetails">@Html.ActionLink("Reorder Report", "GenerateReorderReport", "GenerateReport", null, new { @class = "sidenavlink" })</li>
-                        <li class="sidenavdetails">@Html.ActionLink("Inventory Status Report", "GenerateInventoryStatusReport", "GenerateReport", null, new { @class = "sidenavlink" })</li>
-                        <li class="sidenavdetails">@Html.ActionLink("Order Trend Analysis", "GenerateOrderTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
-                        <li class="sidenavdetails">@Html.ActionLink("Request Trend Analysis", "GenerateRequestTrendAnalysis", "GenerateReport", null, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
             </li>

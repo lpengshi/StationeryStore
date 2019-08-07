@@ -1,5 +1,6 @@
-﻿@{
-    var staff = ViewBag.staff;
+﻿@using StationeryStore.Models
+@{
+    StaffEF staff = (StaffEF)Session["staff"];
 }
 
 <div class="mainheaderbar">
