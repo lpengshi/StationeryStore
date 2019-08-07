@@ -14,16 +14,15 @@ namespace StationeryStore.Filters
         StaffService staffService = new StaffService();
         public void OnAuthorization(AuthorizationContext context)
         {
-            string sessionId = HttpContext.Current.Request["sessionId"];
             StaffEF staff = staffService.GetStaff();
 
-            if (context.HttpContext.Session["sessionId"] == null || staff.Role.Description != "Store Manager")
+            if (staff.Role.Description != "Store Manager")
             {
                 context.Result = new RedirectToRouteResult(
                     new RouteValueDictionary
                     {
-                        { "controller", "Login" },
-                        { "action", "Index" }
+                        { "controller", "Error" },
+                        { "action", "StoreRoleError" }
                     }
                 );
             }

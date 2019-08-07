@@ -18,10 +18,11 @@
             {
                 <br />
                 <input type="text" name="search" size="50" value="@search" placeholder="Search by Item Code or Description...">
-                <input type="submit" class="decision" value="Filter" />
-                <input type="hidden" name="page" value="1" />
+                <input type="submit" class="decision" value="Filter" /> <input type="button" class="decision" value="Download All" onclick="location.href='../WebForms/PrintCatalogueForm.aspx'" />
+                <input type="hidden" name="page" value="1" /> 
                 <br /><br />
             }
+            
             @if (catalogue.Count() != 0)
             {
                 <table class="listview">

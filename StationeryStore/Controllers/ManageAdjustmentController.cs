@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StationeryStore.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ using StationeryStore.Filters;
 namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
+    [StoreFilter]
     public class ManageAdjustmentVoucherController : Controller
     {
         StockService stockService = new StockService();

@@ -31,6 +31,7 @@ namespace StationeryStore.Controllers
             else {
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
+                Session["staff"] = staff;
 
                 if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
                 {

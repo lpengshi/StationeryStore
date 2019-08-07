@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "View Disbursement";
+    var disbursement = ViewBag.disbursement;
+    var disbursementDetails = ViewBag.disbursementDetails;
+}
+<div>@Html.Partial("_Department")</div>
+
+<div class="mainview">
+    <div class="maindetails">
+        <h3 class="title">View Disbursement (Status: @disbursement.Status)</h3>
+        <br />
+        <div class="listview">
+            <table class="listview">
+                <tr class="listview">
+                    <td class="listrequestlabel">Disbursement Id:</td>
+                    <td class="listrequestvalue">@disbursement.DisbursementId</td>
+                </tr>
+                <tr>
+                    <td class="listrequestlabel">Disbursement Date:</td>
+                    <td class="listrequestvalue">@StationeryStore.Util.Timestamp.dateFromTimestamp(disbursement.DateDisbursed)</td>
+
+                </tr>
+                <tr>
+                    <td class="listrequestlabel">Store Clerk:</td>
+                    <td class="listrequestvalue">@disbursement.StoreClerk.Name</td>
+                </tr>
+                <tr>
+                    <td class="listrequestlabel">Department Rep:</td>
+                    <td class="listrequestvalue">@disbursement.Staff.Name</td>
+                </tr>
+            </table>
+            <br />
+        </div>
+
+        <div>
+            <table class="listview" id="requestTable">
+                <tr class="listview">
+                    <td class="listviewuom">Item Code</td>
+                    <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Total Retrieved Quantity</td>
+                    <td class="listviewheader">Total Disbursed Quantity</td>
+                </tr>
+                @{
+                    for (int i = 0; i < disbursementDetails.Count; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            <tr class="listview">
+                                <td class="evenlistview">@disbursementDetails[i].Stock.Description</td>
+                                <td class="evenlistview">@disbursementDetails[i].RequestQuantity</td>
+                                <td class="evenlistview">@disbursementDetails[i].DisbursedQuantity</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@disbursementDetails[i].Stock.Description</td>
+                                <td class="oddlistview">@disbursementDetails[i].RequestQuantity</td>
+                                <td class="oddlistview">@disbursementDetails[i].RequestQuantity</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
