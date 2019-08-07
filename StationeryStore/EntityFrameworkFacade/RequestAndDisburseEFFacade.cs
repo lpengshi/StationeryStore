@@ -244,6 +244,11 @@ namespace StationeryStore.EntityFrameworkFacade
                 .ToList<StationeryDisbursementEF>();
         }
 
+        public List<StationeryDisbursementEF> FindDisbursementByStatus(string status)
+        {
+            return context.StationeryDisbursements.Where(a => a.Status == "Retrieved").ToList();
+        }
+
         public void AddToDisbursementDetails(StationeryDisbursementDetailsEF details)
         {
             context.StationeryDisbursementDetails.Add(details);

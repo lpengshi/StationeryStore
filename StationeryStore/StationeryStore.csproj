@@ -52,6 +52,21 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.3.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1358.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1358.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1358.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -134,6 +149,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="DataSets\CatalogueDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CatalogueDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\ApproveRequestController.cs" />
     <Compile Include="Controllers\GenerateDisbursementListController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
@@ -169,6 +189,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="DataSets\InventoryDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Models\AdjustmentVoucherDetailsEF.cs" />
     <Compile Include="Models\AdjustmentVoucherEF.cs" />
     <Compile Include="Models\CatalogueItemDTO.cs" />
@@ -176,16 +201,15 @@
     <Compile Include="Models\CollectionPointEF.cs" />
     <Compile Include="Models\CollectionPointStaffEF.cs" />
     <Compile Include="Models\DepartmentEF.cs" />
-    <Compile Include="Models\InventoryStatusReportDTO.cs" />
     <Compile Include="Models\LoginDTO.cs" />
     <Compile Include="Models\LowStockDTO.cs" />
     <Compile Include="Models\ManageCollectionDTO.cs" />
     <Compile Include="Models\ManageDelegationDTO.cs" />
+    <Compile Include="Models\MobileDisbursementDTO.cs" />
     <Compile Include="Models\MobileRetrievalItemDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
-    <Compile Include="Models\ReorderReportDTO.cs" />
     <Compile Include="Models\RequestDTO.cs" />
     <Compile Include="Models\RequestListDTO.cs" />
     <Compile Include="Models\RequestTemplateDetailsEF.cs" />
@@ -204,13 +228,59 @@
     <Compile Include="Models\SupplierDetailsEF.cs" />
     <Compile Include="Models\SupplierDTO.cs" />
     <Compile Include="Models\SupplierEF.cs" />
+    <Compile Include="DataSets\OrderDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrderDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataSets\ReorderDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReorderDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Service\DepartmentService.cs" />
     <Compile Include="Service\PurchaseService.cs" />
     <Compile Include="Service\RequestAndDisburseService.cs" />
     <Compile Include="Service\StaffService.cs" />
     <Compile Include="Service\StockService.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Util\Timestamp.cs" />
+    <Compile Include="WebForms\InventoryStatusReportForm.aspx.cs">
+      <DependentUpon>InventoryStatusReportForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\InventoryStatusReportForm.aspx.designer.cs">
+      <DependentUpon>InventoryStatusReportForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\OrderTrendAnalysis.aspx.cs">
+      <DependentUpon>OrderTrendAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\OrderTrendAnalysis.aspx.designer.cs">
+      <DependentUpon>OrderTrendAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\PrintCatalogueForm.aspx.cs">
+      <DependentUpon>PrintCatalogueForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\PrintCatalogueForm.aspx.designer.cs">
+      <DependentUpon>PrintCatalogueForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\ReorderReportForm.aspx.cs">
+      <DependentUpon>ReorderReportForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\ReorderReportForm.aspx.designer.cs">
+      <DependentUpon>ReorderReportForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\RequisitionTrendAnalysis.aspx.cs">
+      <DependentUpon>RequisitionTrendAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\RequisitionTrendAnalysis.aspx.designer.cs">
+      <DependentUpon>RequisitionTrendAnalysis.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -223,6 +293,55 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="WebForms\InventoryStatusReportForm.aspx" />
+    <Content Include="DataSets\InventoryDataSet.xsc">
+      <DependentUpon>InventoryDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="WebForms\OrderTrendAnalysis.aspx" />
+    <Content Include="WebForms\PrintCatalogueForm.aspx" />
+    <Content Include="WebForms\ReorderReportForm.aspx" />
+    <Content Include="DataSets\CatalogueDataSet.xsc">
+      <DependentUpon>CatalogueDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="WebForms\RequisitionTrendAnalysis.aspx" />
+    <None Include="DataSets\CatalogueDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CatalogueDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSets\CatalogueDataSet.xss">
+      <DependentUpon>CatalogueDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\InventoryDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InventoryDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSets\InventoryDataSet.xss">
+      <DependentUpon>InventoryDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSets\ReorderDataSet.xsc">
+      <DependentUpon>ReorderDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\ReorderDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReorderDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSets\ReorderDataSet.xss">
+      <DependentUpon>ReorderDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSets\OrderDataSet.xsc">
+      <DependentUpon>OrderDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\OrderDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OrderDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSets\OrderDataSet.xss">
+      <DependentUpon>OrderDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -234,6 +353,19 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -285,6 +417,8 @@
     <Content Include="Views\ManageCollectionPoint\UpdateCollectionPoint.cshtml" />
     <Content Include="Views\GenerateReport\GenerateReorderReport.cshtml" />
     <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
+    <Content Include="Views\GenerateReport\GenerateOrderTrendAnalysis.cshtml" />
+    <Content Include="Views\GenerateReport\GenerateRequestTrendAnalysis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -306,6 +440,13 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\InventoryStatusReport.rdlc" />
+    <EmbeddedResource Include="Reports\OrderTrendAnalysis.rdlc" />
+    <EmbeddedResource Include="Reports\PrintCatalogue.rdlc" />
+    <EmbeddedResource Include="Reports\ReorderReport.rdlc" />
+    <EmbeddedResource Include="Reports\RequisitionTrendAnalysis.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
