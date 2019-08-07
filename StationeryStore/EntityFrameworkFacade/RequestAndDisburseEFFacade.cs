@@ -36,6 +36,13 @@ namespace StationeryStore.EntityFrameworkFacade
             context.SaveChanges();
         }
 
+        public List<StationeryDisbursementEF> FindDisbursementByDepartmentCode(string departmentCode)
+        {
+           return context.StationeryDisbursements
+                .Where(a => a.DepartmentCode == departmentCode)
+                .ToList<StationeryDisbursementEF>();
+        }
+
         public List<RequestTemplateEF> FindRequestTemplateByStaffId(int staffId)
         {
             return context.RequestTemplates

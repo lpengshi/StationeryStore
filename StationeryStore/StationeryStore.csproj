@@ -289,6 +289,7 @@
     <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ManageRequestTemplate.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
+    <Content Include="Views\ViewDisbursement\ViewDisbursement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

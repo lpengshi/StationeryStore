@@ -22,6 +22,13 @@ namespace StationeryStore.Service
             return unfulfilledRequests;
         }
 
+        public List<StationeryDisbursementEF> FindDisbursementByDepartmentCode(string departmentCode)
+        {
+            List<StationeryDisbursementEF> disbursementList = rndEFF.FindDisbursementByDepartmentCode(departmentCode);
+
+            return disbursementList;
+        }
+
         public List<RequestTemplateEF> FindRequestTemplateByStaffId(int staffId)
         {
             List<RequestTemplateEF> requestTemplate = rndEFF.FindRequestTemplateByStaffId(staffId);
