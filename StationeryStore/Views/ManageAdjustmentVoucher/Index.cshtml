@@ -4,6 +4,8 @@
     List<AdjustmentVoucherEF> voucherList = (List<AdjustmentVoucherEF>)ViewData["voucherList"];
     int page = (int)ViewData["page"];
     int noOfPages = (int)ViewData["noOfPages"];
+    string search = (string)ViewData["search"];
+    List<string> status = (List<string>)ViewData["statusList"];
 }
 
 
@@ -19,13 +21,21 @@
     }
     else
     {
-        <form action="ManageAdjustmentVoucher/Index" method="get">
+        <form action="~/ManageAdjustmentVoucher/Index" method="post">
             <p>
                 Sort by status:
                 <select id="status" name="search">
-                    <option value="Pending Approval">Pending Approval</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
+                    @foreach(var s in status)
+                    {
+                        if(search != null && search == s)
+                        {
+                            <option selected="selected" value="@s">@s</option>
+                        }
+                        else
+                        {
+                            <option value="@s">@s</option>
+                        }
+                    }
                 </select>
                 <input type="submit">
                 <input type="hidden" name="page" value="@page"/>

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "ViewAdjustmentDetails";
 
+    bool needsManagerAuthority = (bool)ViewData["needsManagerAuthority"];
     AdjustmentVoucherEF voucher = (AdjustmentVoucherEF)ViewData["adjustmentVoucher"];
     List<AdjustmentVoucherDetailsEF> voucherDetails = (List<AdjustmentVoucherDetailsEF>)ViewData["voucherDetailsList"];
     string staffRole = (string)ViewData["staffRole"];
@@ -62,18 +63,23 @@
             <br />
             if (voucher.Status == "Pending Approval")
             {
-                <input type="hidden" name="voucherId" value="@voucher.VoucherId"/>
+                <input type="hidden" name="voucherId" value="@voucher.VoucherId" />
                 if (staffRole == "Store Clerk" && staffId == voucher.RequesterId)
                 {
                     <button onclick="submit()" class="decision" name="choice" value="Edit">Edit</button>
                 }
-                else if (staffRole == "Store Supervisor" || staffRole == "Store Manager")
+                else if (needsManagerAuthority == false && (staffRole == "Store Supervisor" || staffRole == "Store Manager"))
+                {
+                    <button onclick="submit()" class="decision" name="choice" value="Approve">Approve</button>
+                    <button onclick="submit()" class="decision" name="choice" value="Reject">Reject</button>
+                }
+                else if (needsManagerAuthority == true && staffRole == "Store Manager")
                 {
                     <button onclick="submit()" class="decision" name="choice" value="Approve">Approve</button>
                     <button onclick="submit()" class="decision" name="choice" value="Reject">Reject</button>
                 }
             }
-        }        
+        }
     </div>
 </div>
 

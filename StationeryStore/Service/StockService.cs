@@ -262,6 +262,23 @@ namespace StationeryStore.Service
             return valueExceeded;
         }
 
+        public bool VoucherExceedsSetValue(List<AdjustmentVoucherDetailsEF> detailsList)
+        {
+            double minValPerLineItem = 250;
+            bool valueExceeded = false;
+            foreach (var d in detailsList)
+            {
+                //Derived the cost flag by averaging stock cost across suppliers.
+                List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
+                double unitAvgCost = items.Average(x => x.UnitPrice);
+                double sumPrice = unitAvgCost * d.Quantity;
+                if (sumPrice >= minValPerLineItem || sumPrice <= (-1 * minValPerLineItem))
+                {
+                    valueExceeded = true;
+                }
+            }
+            return valueExceeded;
+        }
 
         //ReorderReport
         public List<ReorderReportDTO> GenerateReorderReport()

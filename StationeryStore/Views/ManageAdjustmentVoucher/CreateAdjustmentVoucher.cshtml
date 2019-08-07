@@ -65,8 +65,8 @@
                         int count = i + 1;
                         <tr class="oddlistview">
                             <td class="oddlistview">@count</td>
-                            <td class="oddlistview">@Model[i].ItemCode</td>
-                            <td class="oddlistview">@Model[i].Description</td>
+                            <td class="oddlistview">@Html.Raw(Model[i].ItemCode)</td>
+                            <td class="oddlistview">@Html.Raw(Model[i].Description)</td>
                             <td class="oddlistview">@Html.EditorFor(x => x[i].Quantity)<br />@Html.ValidationMessageFor(x => Model[i].Quantity)</td>
                             <td class="oddlistview">@Html.EditorFor(x => x[i].Reason)<br />@Html.ValidationMessageFor(x => Model[i].Reason)</td>
                             <td class="oddlistview">@Html.CheckBoxFor(x => x[i].Remove)</td>

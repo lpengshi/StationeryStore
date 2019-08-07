@@ -57,7 +57,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var stockList = context.Stocks.Where(a => a.Category == category).ToList();
             return stockList;
         }
-            
+
         public List<CatalogueItemEF> FindAllCatalogueItems()
         {
             var catalogueList = context.CatalogueItems.ToList();
@@ -153,7 +153,17 @@ namespace StationeryStore.EntityFrameworkFacade
 
         public List<AdjustmentVoucherEF> FindAllAdjustmentVouchers()
         {
-            return context.AdjustmentVouchers.OrderBy(x => x.VoucherId).ToList();
+            List<AdjustmentVoucherEF> finalList = new List<AdjustmentVoucherEF>();
+            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status == "Pending Approval").OrderByDescending(x => x.VoucherId).ToList())
+            {
+                finalList.Add(v);
+            }
+            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status != "Pending Approval").OrderByDescending(x => x.VoucherId).ToList())
+            {
+                finalList.Add(v);
+            }
+
+            return finalList;
         }
 
         public AdjustmentVoucherEF FindAdjustmentVoucherById(string voucherId)
@@ -184,7 +194,7 @@ namespace StationeryStore.EntityFrameworkFacade
             if (existingRecord == null)
             {
                 context.AdjustmentVouchers.Add(voucher);
-                foreach(AdjustmentVoucherDetailsDTO newItem in voucherDetailsList)
+                foreach (AdjustmentVoucherDetailsDTO newItem in voucherDetailsList)
                 {
                     AdjustmentVoucherDetailsEF d = new AdjustmentVoucherDetailsEF();
                     d.ItemCode = newItem.ItemCode;
