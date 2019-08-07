@@ -1,4 +1,5 @@
-﻿using StationeryStore.Models;
+﻿using StationeryStore.Filters;
+using StationeryStore.Models;
 using StationeryStore.Service;
 using StationeryStore.Util;
 using System;
@@ -9,6 +10,8 @@ using System.Web.Mvc;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class GenerateRetrievalListController : Controller
     {
         // GET: GenerateRetrievalList

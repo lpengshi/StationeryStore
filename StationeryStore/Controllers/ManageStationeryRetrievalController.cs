@@ -6,9 +6,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Util;
+using StationeryStore.Filters;
 
 namespace StationeryStore.Controllers
 {
+    [AuthorizeFilter]
+    [StoreFilter]
     public class ManageStationeryRetrievalController : Controller
     {
         // GET: ManageStationeryRetrieval

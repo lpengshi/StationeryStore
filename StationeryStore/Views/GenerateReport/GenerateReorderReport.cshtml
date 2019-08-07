@@ -1,88 +1,10 @@
 ﻿@*Janel*@
-@using StationeryStore.Util
-@using StationeryStore.Models
-@{
-    List<ReorderReportDTO> reorderReport = (List<ReorderReportDTO>)ViewData["reorderReport"];
-    int page = (int)ViewData["page"];
-    int noOfPages = (int)ViewData["noOfPages"];
-}
 
 
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
     <h3>Reorder Report</h3>
-    @if (reorderReport.Count() == 0)
-    {
-        <br />
-        <h5>The quantity on hand for all stocks are above reorder level</h5>
-    }
-    else
-    {
-    <div class="listview">
-        <table class="listview">
-            <tr>
-                <td class="decision" colspan="7" align="right">
-                    <input type="button" class="decision" value="Download" onclick="location.href='@Url.Action("DownloadReorderReport", "GenerateReport")'" />
-                </td>
-            </tr>
-            <tr class="listview">
-                <td class="listviewuom">Item Code</td>
-                <td class="listviewdescription">Description</td>
-                <td class="listviewquantity">Quantity On Hand</td>
-                <td class="listviewquantity">Reorder Level</td>
-                <td class="listviewquantity">Reorder Quantity</td>
-                <td class="listviewuom">Order Id</td>
-                <td class="listviewheader">Expected Delivery</td>
-            </tr>
-            @foreach (var item in reorderReport)
-            {
-                string orderList = "";
-                string deliveryList = "";
-                for (int i = 0; i < item.Order.Count(); i++)
-                {
-                    if (i != 0)
-                    {
-                        orderList += ", ";
-                        deliveryList += ", ";
-                    }
-                    orderList += item.Order[i].OrderId;
-                    deliveryList += Timestamp.dateFromTimestamp(item.Order[i].DeliverByDate);
-                }
-                
-                <tr class="listview">
-                    <td class="oddlistview">@item.LowStockDTO.ItemCode</td>
-                    <td class="oddlistview">@item.LowStockDTO.Description</td>
-                    <td class="oddlistview">@item.LowStockDTO.QuantityOnHand</td>
-                    <td class="oddlistview">@item.LowStockDTO.ReorderLevel</td>
-                    <td class="oddlistview">@item.LowStockDTO.ReorderQuantity</td>
-                    <td class="oddlistview">@orderList</td>
-                    <td class="oddlistview">@deliveryList</td>
-                </tr>
-            }
-        </table>
-
-    </div>
-    }
-
-    <br />
-    @if (noOfPages > 0)
-    {
-        <div class="pagination">
-            @{
-                <span>@Html.ActionLink("«", "GenerateReorderReport", "ManageReport", new { page = 1 }, null)</span>
-
-                for (int i = 1; i <= noOfPages; i++)
-                {
-                    string num = i.ToString();
-                    <span>@Html.ActionLink(num, "GenerateReorderReport", "ManageReport", new { page = i }, null)</span>
-                }
-
-                <span>@Html.ActionLink("»", "GenerateReorderReport", "ManageReport", new { page = noOfPages }, null)</span>
-            }
-        </div>
-    }
-
+    <iframe width="750" height="600" runat="server" id="ReportViewer2" src="~/WebForms/ReorderReportForm.aspx"></iframe>
     <br /><br />
-
 </div>

@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "View Disbursement";
+    var disbursementList = ViewBag.disbursementList;
+    var disbursementDate = ViewBag.disbursementDate;
 }
 
 <div>@Html.Partial("_Department")</div>
@@ -16,21 +18,28 @@
                     <td class="listviewheader">Disbursement Date</td>
                     <td class="listviewheader">Status</td>
                 </tr>
-                <tr class="listview">
-                    <td class="oddlistview">@Html.ActionLink("DIS3", "ViewDisbursement", new { requestId = "DIS1" })</td>
-                    <td class="oddlistview">13 Jul 19</td>
-                    <td class="oddlistview">Processing</td>
-                </tr>
-                <tr class="listview">
-                    <td class="evenlistview">@Html.ActionLink("DIS2", "ViewDisbursement", new { requestId = "DIS2" })</td>
-                    <td class="evenlistview">12 Jul 19</td>
-                    <td class="evenlistview">Processing</td>
-                </tr>
-                <tr class="listview">
-                    <td class="oddlistview">@Html.ActionLink("DIS1", "ViewDisbursement", new { requestId = "DIS3" })</td>
-                    <td class="oddlistview">10 Jul 19</td>
-                    <td class="oddlistview">Processed</td>
-                </tr>
+                @{
+                    for (int i = 0; i < disbursementList.Count; i++)
+                    {
+                        string disbursementId = disbursementList[i].DisbursementId.ToString();
+                        if (i % 2 != 0)
+                        {
+                            <tr class="listview">
+                                <td class="oddlistview">@Html.ActionLink(disbursementId, "ViewDisbursement", new { disbursementId = disbursementList[i].DisbursementId })</td>
+                                <td class="oddlistview">@disbursementDate[i]</td>
+                                <td class="oddlistview">@disbursementList[i].Status</td>
+                            </tr>
+                        }
+                        else if (i % 2 == 0)
+                        {
+                            <tr class="listview">
+                                <td class="evenlistview">@Html.ActionLink(disbursementId, "ViewDisbursement", new { disbursementId = disbursementList[i].DisbursementId })</td>
+                                <td class="evenlistview">@disbursementDate[i]</td>
+                                <td class="evenlistview">@disbursementList[i].Status</td>
+                            </tr>
+                        }
+                    }
+                }
             </table>
         </div>
     </div>

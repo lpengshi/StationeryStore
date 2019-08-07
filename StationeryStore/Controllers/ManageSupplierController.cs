@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
 using StationeryStore.Filters;
@@ -10,6 +11,7 @@ using StationeryStore.Filters;
 namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
+    [StoreFilter]
     public class ManageSupplierController : Controller
     {
         PurchaseService purchaseService = new PurchaseService();

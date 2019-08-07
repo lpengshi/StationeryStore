@@ -134,11 +134,6 @@ namespace StationeryStore.EntityFrameworkFacade
             context.SaveChanges();
         }
 
-        public List<CatalogueItemEF> FindAllCatalogueItem()
-        {
-            return context.CatalogueItems.ToList();
-        }
-
         public CatalogueItemEF FindCatalogueItemById(int catalogueId)
         {
             return context.CatalogueItems.Find(catalogueId);

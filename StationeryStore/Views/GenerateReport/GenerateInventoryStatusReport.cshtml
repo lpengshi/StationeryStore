@@ -1,81 +1,13 @@
 ﻿@*Janel*@
 
 @using StationeryStore.Models
-@{
-    List<InventoryStatusReportDTO> inventoryStatusReport = (List<InventoryStatusReportDTO>)ViewData["inventoryStatusReport"];
-    int page = (int)ViewData["page"];
-    int noOfPages = (int)ViewData["noOfPages"];
-}
 
 
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
     <h3>Inventory Status Report</h3>
-    @if (inventoryStatusReport.Count() == 0)
-    {
-        <br />
-        <h5>No records exist</h5>
-    }
-    else
-    {
-        <div class="listview">
-            <table class="listview">
-                <tr>
-                    <td class="decision" colspan="7" align="right">
-                        <input type="button" class="decision" value="Download" onclick="location.href='@Url.Action("DownloadReorderReport", "GenerateReport")'" />
-                    </td>
-                </tr>
-                <tr class="listview">
-                    <td class="listviewuom">Item Code</td>
-                    <td class="listviewdescription">Description</td>
-                    <td class="listviewuom">Location</td>
-                    <td class="listviewquantity">UOM</td>
-                    <td class="listviewquantity">Quantity On Hand</td>
-                    <td class="listviewquantity">Reorder Level</td>
-                </tr>
-                @foreach (var item in inventoryStatusReport)
-                {
-                <tr class="listview">
-                    <td class="oddlistview">@item.Stock.ItemCode</td>
-                    <td class="oddlistview">@item.Stock.Description</td>
-                    <td class="oddlistview">@item.Stock.Bin</td>
-                    <td class="oddlistview">@item.Stock.Uom</td>
-                    <td class="oddlistview">@item.Stock.QuantityOnHand</td>
-                    <td class="oddlistview">
-                        @if (item.CatalogueItem != null)
-                        {
-                            @item.CatalogueItem.ReorderLevel
-                        }
-                        else
-                        {
-                            @:N.A.
-                        }
-                    </td>
-                </tr>
-                }
-            </table>
-
-        </div>
-    }
-
-    <br />
-    @if (noOfPages > 0)
-    {
-        <div class="pagination">
-            @{
-                <span>@Html.ActionLink("«", "GenerateInventoryStatusReport", "GenerateReport", new { page = 1 }, null)</span>
-
-                for (int i = 1; i <= noOfPages; i++)
-                {
-                    string num = i.ToString();
-                    <span>@Html.ActionLink(num, "GenerateInventoryStatusReport", "GenerateReport", new { page = i }, null)</span>
-                }
-
-                <span>@Html.ActionLink("»", "GenerateInventoryStatusReport", "GenerateReport", new { page = noOfPages }, null)</span>
-            }
-        </div>
-    }
+    <iframe width="750" height="600" runat="server" id="ReportViewer1" src="~/WebForms/InventoryStatusReportForm.aspx"></iframe>
 
     <br /><br />
 
