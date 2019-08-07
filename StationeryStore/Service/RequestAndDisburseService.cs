@@ -738,5 +738,10 @@ namespace StationeryStore.Service
                 rndEFF.SaveDisbursement(d);
             }
         }
+
+        public List<StationeryDisbursementEF> FindDisbursementsByStatus(string status)
+        {
+            return rndEFF.FindDisbursementByStatus(status);
+        }
     }
 }

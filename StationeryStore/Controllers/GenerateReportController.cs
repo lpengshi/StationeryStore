@@ -12,43 +12,13 @@ namespace StationeryStore.Controllers
     {
         StockService stockService = new StockService();
         
-        public ActionResult GenerateReorderReport(int page)
+        public ActionResult GenerateReorderReport()
         {
-            int pageSize = 8;
-            List<ReorderReportDTO> reorderReport = stockService.GenerateReorderReport()
-                .OrderBy(x => x.LowStockDTO.ItemCode)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList(); 
-
-            int noOfPages = (int)Math.Ceiling((double)reorderReport.Count() / pageSize);
-            ViewData["page"] = page;
-            ViewData["reorderReport"] = reorderReport;
-            ViewData["noOfPages"] = noOfPages;
             return View();
         }
 
-        public ActionResult DownloadReorderReport()
+        public ActionResult GenerateInventoryStatusReport()
         {
-
-            return RedirectToAction("GenerateReorderReport");
-        }
-
-        public ActionResult GenerateInventoryStatusReport(int page)
-        {
-            List<InventoryStatusReportDTO> fullInventoryStatusReport = stockService.GenerateInventoryStatusReport();
-
-            int pageSize = 8;
-            List<InventoryStatusReportDTO> inventoryStatusReport = stockService.GenerateInventoryStatusReport()
-                .OrderBy(x => x.Stock.Category)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            int noOfPages = (int)Math.Ceiling((double)fullInventoryStatusReport.Count() / pageSize);
-            ViewData["page"] = page;
-            ViewData["inventoryStatusReport"] = inventoryStatusReport;
-            ViewData["noOfPages"] = noOfPages;
             return View();
         }
 

@@ -58,30 +58,49 @@ namespace StationeryStore.Controllers
             return Json(new { status = "fail" });
         }
 
-        // Send disbursement details to android
-        //public JsonResult GetDisbursement()
-        //{
-        //    // Create a DTO for disbursement which includes storeClerkId/Name and EmployeeId/Name
-        //    // send a list of disbursements 
+        //Send list of ongoing disbursements (without disbursement details) to android
+        public JsonResult GetDisbursement()
+        {
+            List<StationeryDisbursementEF> disbursements = rndService.FindDisbursementsByStatus("Retrieved");
+            return Json(disbursements, JsonRequestBehavior.AllowGet);
+        }
 
+        //Send disbursement details of a specific disbursement to android
+        public JsonResult GetDisbursementDetails(int disbursementId)
+        {
+            StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
+            List<StationeryDisbursementDetailsEF> details = rndService.FindDisbursementDetailsByDisbursementId(disbursementId);
+            // store clerk id, collection rep id
+            MobileDisbursementDTO mDisbursement = new MobileDisbursementDTO()
+            {
+                Disbursement = disbursement,
+                DisbursementDetails = details
+            };
+            return Json(mDisbursement, JsonRequestBehavior.AllowGet);
+        }
 
-        //}
+        //Get disbursement details from android
+        public JsonResult SetDisbursement(MobileDisbursementDTO mDisbursement)
+        {
+            if(mDisbursement != null)
+            {
+                //update disbursement details' Disbursed Quantity and disbursement status to disbursed
+                rndService.UpdateDisbursedQuantities(mDisbursement.DisbursementDetails, mDisbursement.Disbursement.DisbursementId,
+                    (int)mDisbursement.Disbursement.CollectionRepId, (int)mDisbursement.Disbursement.StoreClerkId);
 
-        //    //Get disbursement details from android
-        //public JsonResult SetDisbursement()
-        //{
-        //    // update disbursement details' Disbursed Quantity and disbursement status to disbursed
-        //    // rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId, storeClerkId);
+                // update request details
+                rndService.UpdateRequestAfterDisbursement(mDisbursement.DisbursementDetails, mDisbursement.Disbursement.DisbursementId);
 
-        //    // update request details
-        //    // rndService.UpdateRequestAfterDisbursement(details, disbursementId);
+                // log any stock transaction (damaged goods) - compare retrievedQty with disbursedqty
+                stockService.LogTransactionsForActualDisbursement(mDisbursement.Disbursement.DisbursementId);
 
-        //    // log any stock transaction (damaged goods) - compare retrievedQty with disbursedqty
-        //    // stockService.LogTransactionsForActualDisbursement(disbursementId);
+                // android side to send a notification to department rep?
 
-        //    // android side to send a notification to department rep
+                return Json(new { status = "ok" });
+            }
+            return Json(new { status = "fail" });
 
-        //}
+        }
 
         //public JsonResult SendEmailForAcknowledgment()
         //{
