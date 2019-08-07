@@ -40,19 +40,19 @@
                 </div>
             </li>
             <li>
+                <button class="collapsible">Catalogue</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <button class="collapsible">Purchase Order</button>
                 <div class="content">
                     <ul class="sidenavdetails">
                         <li class="sidenavdetails">@Html.ActionLink("Purchase Order History", "PurchaseOrderHistory", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
                         <li class="sidenavdetails">@Html.ActionLink("Create Purchase Order", "CreatePurchaseOrder", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <button class="collapsible">Catalogue</button>
-                <div class="content">
-                    <ul class="sidenavdetails">
-                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
             </li>
@@ -72,6 +72,8 @@
                         <li class="sidenavdetails">@Html.ActionLink("Create Adjustment Voucher", "CreateAdjustmentVoucher", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
+            </li>
+            <li>
                 <button class="collapsible">Report</button>
                 <div class="content">
                     <ul class="sidenavdetails">
@@ -96,6 +98,14 @@
                 </div>
             </li>
             <li>
+                <button class="collapsible">Catalogue</button>
+                <div class="content">
+                    <ul class="sidenavdetails">
+                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
+                    </ul>
+                </div>
+            </li>
+            <li>
                 <button class="collapsible">Disbursement</button>
                 <div class="content">
                     <ul class="sidenavdetails">
@@ -103,14 +113,6 @@
                         <li class="sidenavdetails">@Html.ActionLink("Retrieval History", "ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 }, new { @class = "sidenavlink" })</li>
                         <li class="sidenavdetails">@Html.ActionLink("Disbursement History", "ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 }, new { @class = "sidenavlink" })</li>
                         <li class="sidenavdetails">@Html.ActionLink("Collection Points", "ViewAllCollectionPoints", "ManageCollectionPoint", null, new { @class = "sidenavlink" })</li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <button class="collapsible">Catalogue</button>
-                <div class="content">
-                    <ul class="sidenavdetails">
-                        <li class="sidenavdetails">@Html.ActionLink("View Catalogue Items", "ViewCatalogue", "ManageCatalogue", new { page = 1 }, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
             </li>
@@ -129,6 +131,8 @@
                         <li class="sidenavdetails">@Html.ActionLink("Adjustment Voucher History", "Index", "ManageAdjustmentVoucher", null, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>
+            </li>
+            <li>
                 <button class="collapsible">Report</button>
                 <div class="content">
                     <ul class="sidenavdetails">
