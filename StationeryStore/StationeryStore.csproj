@@ -199,6 +199,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdjustmentVoucherDetailsDTO.cs" />
     <Compile Include="Models\AdjustmentVoucherDetailsEF.cs" />
     <Compile Include="Models\AdjustmentVoucherEF.cs" />
     <Compile Include="Models\CatalogueItemDTO.cs" />
@@ -408,7 +409,7 @@
     <Content Include="Views\ManageSupplier\EditSupplier.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
     <Content Include="Views\ManageSupplier\ViewSupplier.cshtml" />
-	    <Content Include="Views\ManageSupplier\CreateSupplier.cshtml" />
+    <Content Include="Views\ManageSupplier\CreateSupplier.cshtml" />
     <Content Include="Views\ManageSupplier\ViewSupplierDetails.cshtml" />
     <Content Include="Views\Shared\_Department.cshtml" />
     <Content Include="Views\Shared\_RequestDetails.cshtml" />
@@ -432,7 +433,6 @@
     <Content Include="Views\GenerateReport\GenerateRequestTrendAnalysis.cshtml" />
     <Content Include="Views\Error\StoreRoleError.cshtml" />
     <Content Include="Views\Error\DepartmentRoleError.cshtml" />
-
     <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />

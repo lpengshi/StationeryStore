@@ -6,7 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Service;
 using StationeryStore.Models;
-using StationeryStore.Filters;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace StationeryStore.Controllers
 {
@@ -175,12 +176,12 @@ namespace StationeryStore.Controllers
                 string newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList);
                 if (stockService.VoucherExceedsSetValue(detailsList))
                 {
-                    System.Diagnostics.Debug.Print("Pending appr sent to manager");
+                    Debug.Print("Pending appr sent to manager email");
                     SendEmailToAuthority(voucher.VoucherId, "Manager");
                 }
                 else
                 {
-                    System.Diagnostics.Debug.Print("Pending appr sent to supervisor");
+                    Debug.Print("Pending appr sent to supervisor email");
                     SendEmailToAuthority(voucher.VoucherId, "Supervisor");
                 }
                 return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId});
@@ -192,7 +193,54 @@ namespace StationeryStore.Controllers
 
         public void SendEmailToAuthority(string voucherId, string authorityLevel)
         {
+            List<string> recepientEmailAdd = new List<string>();
 
+            if(authorityLevel == "Manager")
+            {
+                List<StaffEF> managers = staffService.FindStaffByRole(5);
+                foreach(var manager in managers)
+                {
+                    recepientEmailAdd.Add(manager.Email);
+                }
+
+            }else if(authorityLevel == "Supervisor")
+            {
+                List<StaffEF> sups = staffService.FindStaffByRole(4);
+                foreach (var s in sups)
+                {
+                    recepientEmailAdd.Add(s.Email);
+                }
+            }
+
+            System.Net.NetworkCredential credentials =
+                    new System.Net.NetworkCredential("sa48team5@gmail.com", "passTeam5word");
+            SmtpClient client = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = credentials
+            };
+
+            foreach (string recepientEmail in recepientEmailAdd)
+            {
+                MailMessage mm = new MailMessage("sa48team5@gmail.com", recepientEmail)
+                {
+                    Subject = "Adjustment Voucher#" + voucherId + " : Pending Review",
+                    Body = "Adjustment Voucher" + voucherId + " requires review."
+                };
+                mm.IsBodyHtml = true;
+                try
+                {
+                    client.Send(mm);
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.Message);
+                }
+            }
         }
     }
 }

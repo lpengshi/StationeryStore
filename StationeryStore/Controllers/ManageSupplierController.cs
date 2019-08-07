@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
-using StationeryStore.Filters;
+
 
 namespace StationeryStore.Controllers
 {
@@ -20,8 +20,11 @@ namespace StationeryStore.Controllers
         //Supplier List
         public ActionResult Index()
         {
+            StaffEF staff = staffService.GetStaff();
+            string staffRole = staff.Role.Description;
             List<SupplierEF> suppliers = purchaseService.FindAllSuppliers();
             ViewBag.suppliers = suppliers;
+            ViewBag.staffRole = staffRole;
             return View();
         }
 
@@ -58,7 +61,7 @@ namespace StationeryStore.Controllers
             return View();
         }
 
-
+        [StoreManagerFilter]
         public ActionResult CreateSupplier(SupplierDTO supplierForm, string decision)
         {
 
@@ -79,7 +82,7 @@ namespace StationeryStore.Controllers
             return View();
         }
 
-
+        [StoreManagerFilter]
         public ActionResult EditSupplier(string supplierCode, SupplierDTO supplierForm, string decision)
         {
             SupplierEF baseSupplier = purchaseService.FindSupplierBySupplierCode(supplierCode);

@@ -1,6 +1,7 @@
 ﻿@using StationeryStore.Models
 @{
     //List<SupplierEF> suppliers = (List<SupplierEF>)ViewData["suppliers"];
+    var staffRole = ViewBag.staffRole;
     var suppliers = ViewBag.suppliers;
 }
 
@@ -18,7 +19,7 @@
     {
         <div class="listview">
             <table class="listview">
-                @if (staff.Role.Description == "Store Manager")
+                @if (staffRole == "Store Manager")
                 {
                     <tr class="decision">
                         <td class="decision" colspan="2" align="right">
