@@ -246,6 +246,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReorderDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSets\RequisitionDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Service\DepartmentService.cs" />
     <Compile Include="Service\PurchaseService.cs" />
     <Compile Include="Service\RequestAndDisburseService.cs" />
@@ -348,6 +353,17 @@
     </None>
     <Content Include="DataSets\OrderDataSet.xss">
       <DependentUpon>OrderDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSets\RequisitionDataSet.xsc">
+      <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\RequisitionDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RequisitionDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSets\RequisitionDataSet.xss">
+      <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

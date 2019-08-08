@@ -13,8 +13,6 @@ namespace StationeryStore.Controllers
     [StoreFilter]
     public class GenerateReportController : Controller
     {
-        StockService stockService = new StockService();
-        
         public ActionResult GenerateReorderReport()
         {
             return View();

@@ -796,7 +796,6 @@
           <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AdjustmentVoucher" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" FromRole="AdjustmentVoucherDetails" ToRole="AdjustmentVoucher" />
           <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" FromRole="AdjustmentVoucherDetails" ToRole="Stock" />
         </EntityType>
@@ -1176,7 +1175,7 @@
         </Association>
         <Association Name="FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentCode" />
@@ -1304,7 +1303,7 @@
         </Association>
         <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId">
           <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1316,7 +1315,7 @@
         </Association>
         <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId">
           <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1356,7 +1355,7 @@
           <End Role="StationeryRetrieval" Type="Self.StationeryRetrieval" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StationeryRetrieval">
               <PropertyRef Name="RetrievalId" />
@@ -1367,7 +1366,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId">
-          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="1">
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="StationeryDisbursementDetails" Type="Self.StationeryDisbursementDetails" Multiplicity="*" />
@@ -1464,7 +1463,7 @@
           <EntitySet Name="RequestTemplateDetails" EntityType="Self.RequestTemplateDetails" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Staff" EntityType="Self.Staff" />
-          <EntitySet Name="StationeryDisbursement" EntityType="Self.StationeryDisbursement" />
+          <EntitySet Name="StationeryDisbursement" EntityType="StationeryStoreModel.StationeryDisbursement" />
           <EntitySet Name="StationeryDisbursementDetails" EntityType="Self.StationeryDisbursementDetails" />
           <EntitySet Name="StationeryRequest" EntityType="Self.StationeryRequest" />
           <EntitySet Name="StationeryRequestDetails" EntityType="Self.StationeryRequestDetails" />
@@ -1627,7 +1626,6 @@
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
