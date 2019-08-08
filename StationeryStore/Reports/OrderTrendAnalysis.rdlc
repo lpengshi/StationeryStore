@@ -63,12 +63,12 @@
                           <GroupExpression>=Fields!Category.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
-                      <Label>=Fields!Category.Value</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Category.Value</Value>
                         </SortExpression>
                       </SortExpressions>
+                      <Label>=Fields!Category.Value</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartCategoryHierarchy>
@@ -80,12 +80,12 @@
                           <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                         </GroupExpressions>
                       </Group>
-                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Date.Value</Value>
                         </SortExpression>
                       </SortExpressions>
+                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartSeriesHierarchy>
@@ -426,6 +426,45 @@
                     <TablixCornerRow>
                       <TablixCornerCell>
                         <CellContents>
+                          <Textbox Name="Textbox1">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value />
+                                    <Style>
+                                      <FontSize>12pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
+                                      <TextDecoration>Underline</TextDecoration>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style>
+                                  <TextAlign>Center</TextAlign>
+                                </Style>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Textbox1</rd:DefaultName>
+                            <Style>
+                              <Border>
+                                <Style>Solid</Style>
+                              </Border>
+                              <BackgroundColor>LightBlue</BackgroundColor>
+                              <VerticalAlign>Middle</VerticalAlign>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixCornerCell>
+                    </TablixCornerRow>
+                    <TablixCornerRow>
+                      <TablixCornerCell>
+                        <CellContents>
                           <Textbox Name="Textbox14">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
@@ -433,7 +472,7 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>Category/Month</Value>
+                                    <Value>Category</Value>
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
@@ -449,7 +488,6 @@
                             <rd:DefaultName>Textbox14</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
                                 <Style>Solid</Style>
                               </Border>
                               <BackgroundColor>LightBlue</BackgroundColor>
@@ -498,7 +536,6 @@
                               <rd:DefaultName>Textbox39</rd:DefaultName>
                               <Style>
                                 <Border>
-                                  <Color>LightGrey</Color>
                                   <Style>Solid</Style>
                                 </Border>
                                 <VerticalAlign>Middle</VerticalAlign>
@@ -517,30 +554,21 @@
                 <TablixColumnHierarchy>
                   <TablixMembers>
                     <TablixMember>
-                      <Group Name="Date">
-                        <GroupExpressions>
-                          <GroupExpression>=MonthName(Month(Fields!Date.Value))</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <SortExpressions>
-                        <SortExpression>
-                          <Value>=Fields!Date.Value</Value>
-                        </SortExpression>
-                      </SortExpressions>
                       <TablixHeader>
-                        <Size>0.75085cm</Size>
+                        <Size>0.6cm</Size>
                         <CellContents>
-                          <Textbox Name="Date1">
+                          <Textbox Name="Textbox2">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=MonthName(Month(Fields!Date.Value))</Value>
+                                    <Value>Month</Value>
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
+                                      <TextDecoration>Underline</TextDecoration>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -549,10 +577,9 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Date1</rd:DefaultName>
+                            <rd:DefaultName>Textbox2</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
                                 <Style>Solid</Style>
                               </Border>
                               <BackgroundColor>LightBlue</BackgroundColor>
@@ -566,7 +593,58 @@
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
-                        <TablixMember />
+                        <TablixMember>
+                          <Group Name="Date">
+                            <GroupExpressions>
+                              <GroupExpression>=MonthName(Month(Fields!Date.Value))</GroupExpression>
+                            </GroupExpressions>
+                          </Group>
+                          <SortExpressions>
+                            <SortExpression>
+                              <Value>=Fields!Date.Value</Value>
+                            </SortExpression>
+                          </SortExpressions>
+                          <TablixHeader>
+                            <Size>0.75085cm</Size>
+                            <CellContents>
+                              <Textbox Name="Date1">
+                                <CanGrow>true</CanGrow>
+                                <KeepTogether>true</KeepTogether>
+                                <Paragraphs>
+                                  <Paragraph>
+                                    <TextRuns>
+                                      <TextRun>
+                                        <Value>=MonthName(Month(Fields!Date.Value))</Value>
+                                        <Style>
+                                          <FontSize>12pt</FontSize>
+                                          <FontWeight>Bold</FontWeight>
+                                        </Style>
+                                      </TextRun>
+                                    </TextRuns>
+                                    <Style>
+                                      <TextAlign>Center</TextAlign>
+                                    </Style>
+                                  </Paragraph>
+                                </Paragraphs>
+                                <rd:DefaultName>Date1</rd:DefaultName>
+                                <Style>
+                                  <Border>
+                                    <Style>Solid</Style>
+                                  </Border>
+                                  <BackgroundColor>LightBlue</BackgroundColor>
+                                  <VerticalAlign>Middle</VerticalAlign>
+                                  <PaddingLeft>2pt</PaddingLeft>
+                                  <PaddingRight>2pt</PaddingRight>
+                                  <PaddingTop>2pt</PaddingTop>
+                                  <PaddingBottom>2pt</PaddingBottom>
+                                </Style>
+                              </Textbox>
+                            </CellContents>
+                          </TablixHeader>
+                          <TablixMembers>
+                            <TablixMember />
+                          </TablixMembers>
+                        </TablixMember>
                       </TablixMembers>
                     </TablixMember>
                   </TablixMembers>
@@ -609,7 +687,6 @@
                             <rd:DefaultName>Category1</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
                                 <Style>Solid</Style>
                               </Border>
                               <BackgroundColor>LightBlue</BackgroundColor>
@@ -631,7 +708,7 @@
                 <DataSetName>DataSet4</DataSetName>
                 <Top>9.63783cm</Top>
                 <Left>1.60867cm</Left>
-                <Height>1.54403cm</Height>
+                <Height>2.14403cm</Height>
                 <Width>8.21267cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
