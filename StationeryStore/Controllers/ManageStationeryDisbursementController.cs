@@ -1,6 +1,7 @@
 ﻿using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
+using StationeryStore.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,9 +22,8 @@ namespace StationeryStore.Controllers
 
         public ActionResult ViewDisbursementHistory(int page)
         {
-           List<StationeryDisbursementEF> fullDisbursements = rndService.FindAllDisbursements();
+            List<StationeryDisbursementEF> fullDisbursements = rndService.FindAllDisbursements();
             
-
             int pageSize = 8;
             List<StationeryDisbursementEF> disbursements = fullDisbursements
                 .OrderByDescending(x => x.DateDisbursed)
@@ -68,43 +68,13 @@ namespace StationeryStore.Controllers
             // log any stock transaction (damaged goods) - compare retrievedQty with disbursedqty
             stockService.LogTransactionsForActualDisbursement(disbursementId);
 
-            return RedirectToAction("SendEmailForAcknowledgement", new { disbursementId });
-        }
-
-        public ActionResult SendEmailForAcknowledgement(int disbursementId)
-        {
-            ////get the collection rep for this disbursement
-            //StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
-            //string collectionRepEmail = disbursement.Staff.Email;
-            //System.Net.NetworkCredential credentials =
-            //    new System.Net.NetworkCredential("sa48team5@gmail.com", "passTeam5word");
-            //SmtpClient client = new SmtpClient()
-            //{
-            //    Host = "smtp.gmail.com",
-            //    Port = 587,
-            //    EnableSsl = true,
-            //    UseDefaultCredentials = false,
-            //    DeliveryMethod = SmtpDeliveryMethod.Network,
-            //    Credentials = credentials
-            //};
-
-            //MailMessage mm = new MailMessage("sa48team5@gmail.com", collectionRepEmail)
-            //{
-            //    // change the link once published
-            //    Subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement",
-            //    Body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
-            //    "<a href='localhost:56415/ManageStationeryDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
-            //    "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s)."
-            //};
-            //mm.IsBodyHtml = true;
-            //try
-            //{
-            //    client.Send(mm);
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.Print(e.Message);
-            //}
+            // email collection rep for acknowledgement of disbursement
+            string collectionRepEmail = staffService.FindStaffById(collectionRepId).Email;
+            string subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement";
+            string body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
+                "<a href='http://localhost:56415/ManageStationeryDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
+                "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s).";
+            Email.SendEmail(collectionRepEmail, subject, body);
 
             return RedirectToAction("ViewDisbursement", new { disbursementId });
         }
