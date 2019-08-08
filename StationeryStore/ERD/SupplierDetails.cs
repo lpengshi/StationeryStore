@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CatalogueItem
+    public partial class SupplierDetails
     {
-        public int CatalogueId { get; set; }
+        public int SupplierDetailsId { get; set; }
+        public string SupplierCode { get; set; }
         public string ItemCode { get; set; }
-        public int ReorderLevel { get; set; }
-        public int ReorderQty { get; set; }
+        public double UnitPrice { get; set; }
+        public Nullable<int> SupplierRank { get; set; }
     
         public virtual Stock Stock { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

@@ -7,26 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AdjustmentVoucher
+    public partial class CollectionPoint
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AdjustmentVoucher()
+        public CollectionPoint()
         {
-            this.AdjustmentVoucherDetails = new HashSet<AdjustmentVoucherDetails>();
+            this.Department = new HashSet<Department>();
         }
     
-        public string VoucherId { get; set; }
-        public Nullable<int> ApproverId { get; set; }
-        public long DateIssued { get; set; }
-        public string Status { get; set; }
+        public int CollectionPointId { get; set; }
+        public string Location { get; set; }
+        public string CollectionTime { get; set; }
     
-        public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdjustmentVoucherDetails> AdjustmentVoucherDetails { get; set; }
+        public virtual ICollection<Department> Department { get; set; }
     }
 }

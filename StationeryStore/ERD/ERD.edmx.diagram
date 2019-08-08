@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6af7621a964848f5a9f211ea54318158" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="StationeryStoreModel.AdjustmentVoucher" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.AdjustmentVoucherDetails" Width="2.125" PointX="9.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.CatalogueItem" Width="1.5" PointX="12.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.CollectionPoint" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.Department" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.PurchaseOrderDetails" Width="1.5" PointX="12.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.RequestTemplate" Width="1.5" PointX="7.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.RequestTemplateDetails" Width="1.5" PointX="9.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.Role" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.Staff" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryDisbursement" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryDisbursementDetails" Width="1.5" PointX="12.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryRequest" Width="1.5" PointX="7.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryRequestDetails" Width="1.5" PointX="9.75" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryRetrieval" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.Stock" Width="1.5" PointX="10.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StockTransactionDetails" Width="1.5" PointX="12.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.Supplier" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.SupplierDetails" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_CatalogueItem_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Department_dbo_CollectionPoint_CollectionPointId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Department_dbo_Staff_AuthorityId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Department_dbo_Staff_ContactNameId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Staff_dbo_Department_DepartmentCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_PurchaseOrder_dbo_Staff_CreatedById" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_RequestTemplate_dbo_Staff_StaffId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_Staff_dbo_Role_RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryRequest_dbo_Staff_DecisionById" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryRequest_dbo_Staff_StaffId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_SupplierDetails_dbo_Stock_ItemCode" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryStoreModel.FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
