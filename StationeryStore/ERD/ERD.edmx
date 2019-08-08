@@ -1,0 +1,1866 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StationeryStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdjustmentVoucher">
+          <Key>
+            <PropertyRef Name="VoucherId" />
+          </Key>
+          <Property Name="VoucherId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ApproverId" Type="int" />
+          <Property Name="RequesterId" Type="int" Nullable="false" />
+          <Property Name="DateIssued" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AdjustmentVoucherDetails">
+          <Key>
+            <PropertyRef Name="AdjustmentId" />
+          </Key>
+          <Property Name="AdjustmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VoucherId" Type="nvarchar" MaxLength="128" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CatalogueItem">
+          <Key>
+            <PropertyRef Name="CatalogueId" />
+          </Key>
+          <Property Name="CatalogueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="ReorderLevel" Type="int" Nullable="false" />
+          <Property Name="ReorderQty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CollectionPoint">
+          <Key>
+            <PropertyRef Name="CollectionPointId" />
+          </Key>
+          <Property Name="CollectionPointId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="CollectionTime" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentCode" />
+          </Key>
+          <Property Name="DepartmentCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ContactNameId" Type="int" />
+          <Property Name="AuthorityId" Type="int" />
+          <Property Name="DepartmentRepresentativeId" Type="int" />
+          <Property Name="DelegationStartDate" Type="bigint" />
+          <Property Name="DelegationEndDate" Type="bigint" />
+          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="FaxNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="CollectionPointId" Type="int" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="bigint" Nullable="false" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="SupplierCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="DeliveryAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="DeliverByDate" Type="bigint" Nullable="false" />
+          <Property Name="DateDeliveredOn" Type="bigint" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReceivedById" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+          </Key>
+          <Property Name="OrderDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="QuantityOrdered" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestTemplate">
+          <Key>
+            <PropertyRef Name="TemplateId" />
+          </Key>
+          <Property Name="TemplateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TemplateName" Type="nvarchar(max)" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestTemplateDetails">
+          <Key>
+            <PropertyRef Name="TemplateDetailsId" />
+          </Key>
+          <Property Name="TemplateDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestTemplateId" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="RequestQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="StaffId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="SessionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StationeryDisbursement">
+          <Key>
+            <PropertyRef Name="DisbursementId" />
+          </Key>
+          <Property Name="DisbursementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RetrievalId" Type="int" Nullable="false" />
+          <Property Name="DepartmentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateDisbursed" Type="bigint" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CollectionRepId" Type="int" />
+          <Property Name="StoreClerkId" Type="int" />
+        </EntityType>
+        <EntityType Name="StationeryDisbursementDetails">
+          <Key>
+            <PropertyRef Name="DisbursementDetailsId" />
+          </Key>
+          <Property Name="DisbursementDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisbursementId" Type="int" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="RequestQuantity" Type="int" Nullable="false" />
+          <Property Name="RetrievedQuantity" Type="int" Nullable="false" />
+          <Property Name="DisbursedQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StationeryRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="RequestDate" Type="bigint" Nullable="false" />
+          <Property Name="DecisionById" Type="int" />
+          <Property Name="DecisionDate" Type="bigint" />
+          <Property Name="Designation" Type="nvarchar(max)" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="StationeryRequestDetails">
+          <Key>
+            <PropertyRef Name="RequestDetailsId" />
+          </Key>
+          <Property Name="RequestDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="RequestQuantity" Type="int" Nullable="false" />
+          <Property Name="FulfilmentStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="FulfilledQuantity" Type="int" Nullable="false" />
+          <Property Name="RetrievedQuantity" Type="int" />
+        </EntityType>
+        <EntityType Name="StationeryRetrieval">
+          <Key>
+            <PropertyRef Name="RetrievalId" />
+          </Key>
+          <Property Name="RetrievalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateRetrieved" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ItemCode" />
+          </Key>
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Uom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Bin" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuantityOnHand" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockTransactionDetails">
+          <Key>
+            <PropertyRef Name="StockTransDetailId" />
+          </Key>
+          <Property Name="StockTransDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="Date" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Balance" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierCode" />
+          </Key>
+          <Property Name="SupplierCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FaxNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="GstRegistrationNo" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SupplierDetails">
+          <Key>
+            <PropertyRef Name="SupplierDetailsId" />
+          </Key>
+          <Property Name="SupplierDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="UnitPrice" Type="float" Nullable="false" />
+          <Property Name="SupplierRank" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucher">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucher">
+              <PropertyRef Name="RequesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId">
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucherDetails" Type="Self.AdjustmentVoucherDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdjustmentVoucher">
+              <PropertyRef Name="VoucherId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucherDetails">
+              <PropertyRef Name="VoucherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucherDetails" Type="Self.AdjustmentVoucherDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucherDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogueItem_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="CatalogueItem" Type="Self.CatalogueItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="CatalogueItem">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_CollectionPoint_CollectionPointId">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="CollectionPointId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_AuthorityId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="AuthorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_ContactNameId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="ContactNameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DepartmentRepresentativeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Staff_CreatedById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="ReceivedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplate_dbo_Staff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestTemplate" Type="Self.RequestTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="RequestTemplate">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId">
+          <End Role="RequestTemplate" Type="Self.RequestTemplate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestTemplateDetails" Type="Self.RequestTemplateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestTemplate">
+              <PropertyRef Name="TemplateId" />
+            </Principal>
+            <Dependent Role="RequestTemplateDetails">
+              <PropertyRef Name="RequestTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="RequestTemplateDetails" Type="Self.RequestTemplateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="RequestTemplateDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Department_DepartmentCode">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentCode" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Role_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentCode" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="DepartmentCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="CollectionRepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="StoreClerkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId">
+          <End Role="StationeryRetrieval" Type="Self.StationeryRetrieval" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryRetrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId">
+          <End Role="StationeryDisbursement" Type="Self.StationeryDisbursement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryDisbursementDetails" Type="Self.StationeryDisbursementDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryDisbursement">
+              <PropertyRef Name="DisbursementId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursementDetails">
+              <PropertyRef Name="DisbursementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StationeryDisbursementDetails" Type="Self.StationeryDisbursementDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StationeryDisbursementDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequest_dbo_Staff_DecisionById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryRequest">
+              <PropertyRef Name="DecisionById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequest_dbo_Staff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryRequest">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId">
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="0..1" />
+          <End Role="StationeryRequestDetails" Type="Self.StationeryRequestDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryRequest">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="StationeryRequestDetails">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StationeryRequestDetails" Type="Self.StationeryRequestDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StationeryRequestDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StockTransactionDetails" Type="Self.StockTransactionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StockTransactionDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="SupplierDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="SupplierDetails">
+              <PropertyRef Name="SupplierCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StationeryStoreModelStoreContainer">
+          <EntitySet Name="AdjustmentVoucher" EntityType="Self.AdjustmentVoucher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdjustmentVoucherDetails" EntityType="Self.AdjustmentVoucherDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogueItem" EntityType="Self.CatalogueItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CollectionPoint" EntityType="Self.CollectionPoint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderDetails" EntityType="Self.PurchaseOrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestTemplate" EntityType="Self.RequestTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestTemplateDetails" EntityType="Self.RequestTemplateDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StationeryDisbursement" EntityType="Self.StationeryDisbursement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StationeryDisbursementDetails" EntityType="Self.StationeryDisbursementDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StationeryRequest" EntityType="Self.StationeryRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StationeryRequestDetails" EntityType="Self.StationeryRequestDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StationeryRetrieval" EntityType="Self.StationeryRetrieval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockTransactionDetails" EntityType="Self.StockTransactionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierDetails" EntityType="Self.SupplierDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" Association="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" Association="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" Association="Self.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId">
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+            <End Role="AdjustmentVoucherDetails" EntitySet="AdjustmentVoucherDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="AdjustmentVoucherDetails" EntitySet="AdjustmentVoucherDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogueItem_dbo_Stock_ItemCode" Association="Self.FK_dbo_CatalogueItem_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="CatalogueItem" EntitySet="CatalogueItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_CollectionPoint_CollectionPointId" Association="Self.FK_dbo_Department_dbo_CollectionPoint_CollectionPointId">
+            <End Role="CollectionPoint" EntitySet="CollectionPoint" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_AuthorityId" Association="Self.FK_dbo_Department_dbo_Staff_AuthorityId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_ContactNameId" Association="Self.FK_dbo_Department_dbo_Staff_ContactNameId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId" Association="Self.FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Staff_CreatedById" Association="Self.FK_dbo_PurchaseOrder_dbo_Staff_CreatedById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById" Association="Self.FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode" Association="Self.FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId" Association="Self.FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplate_dbo_Staff_StaffId" Association="Self.FK_dbo_RequestTemplate_dbo_Staff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="RequestTemplate" EntitySet="RequestTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId" Association="Self.FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId">
+            <End Role="RequestTemplate" EntitySet="RequestTemplate" />
+            <End Role="RequestTemplateDetails" EntitySet="RequestTemplateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="RequestTemplateDetails" EntitySet="RequestTemplateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Department_DepartmentCode" Association="Self.FK_dbo_Staff_dbo_Department_DepartmentCode">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Role_RoleId" Association="Self.FK_dbo_Staff_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode" Association="Self.FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId" Association="Self.FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId" Association="Self.FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId" Association="Self.FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId">
+            <End Role="StationeryRetrieval" EntitySet="StationeryRetrieval" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId" Association="Self.FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId">
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+            <End Role="StationeryDisbursementDetails" EntitySet="StationeryDisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StationeryDisbursementDetails" EntitySet="StationeryDisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequest_dbo_Staff_DecisionById" Association="Self.FK_dbo_StationeryRequest_dbo_Staff_DecisionById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequest_dbo_Staff_StaffId" Association="Self.FK_dbo_StationeryRequest_dbo_Staff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId" Association="Self.FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId">
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+            <End Role="StationeryRequestDetails" EntitySet="StationeryRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StationeryRequestDetails" EntitySet="StationeryRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StockTransactionDetails" EntitySet="StockTransactionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_SupplierDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="SupplierDetails" EntitySet="SupplierDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode" Association="Self.FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierDetails" EntitySet="SupplierDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StationeryStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdjustmentVoucher">
+          <Key>
+            <PropertyRef Name="VoucherId" />
+          </Key>
+          <Property Name="VoucherId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApproverId" Type="Int32" />
+          <Property Name="RequesterId" Type="Int32" Nullable="false" />
+          <Property Name="DateIssued" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" FromRole="AdjustmentVoucher" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" FromRole="AdjustmentVoucher" ToRole="Staff" />
+          <NavigationProperty Name="AdjustmentVoucherDetails" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" FromRole="AdjustmentVoucher" ToRole="AdjustmentVoucherDetails" />
+        </EntityType>
+        <EntityType Name="AdjustmentVoucherDetails">
+          <Key>
+            <PropertyRef Name="AdjustmentId" />
+          </Key>
+          <Property Name="AdjustmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VoucherId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AdjustmentVoucher" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" FromRole="AdjustmentVoucherDetails" ToRole="AdjustmentVoucher" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" FromRole="AdjustmentVoucherDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="CatalogueItem">
+          <Key>
+            <PropertyRef Name="CatalogueId" />
+          </Key>
+          <Property Name="CatalogueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReorderLevel" Type="Int32" Nullable="false" />
+          <Property Name="ReorderQty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_CatalogueItem_dbo_Stock_ItemCode" FromRole="CatalogueItem" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="CollectionPoint">
+          <Key>
+            <PropertyRef Name="CollectionPointId" />
+          </Key>
+          <Property Name="CollectionPointId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CollectionTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_dbo_Department_dbo_CollectionPoint_CollectionPointId" FromRole="CollectionPoint" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentCode" />
+          </Key>
+          <Property Name="DepartmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNameId" Type="Int32" />
+          <Property Name="AuthorityId" Type="Int32" />
+          <Property Name="DepartmentRepresentativeId" Type="Int32" />
+          <Property Name="DelegationStartDate" Type="Int64" />
+          <Property Name="DelegationEndDate" Type="Int64" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CollectionPointId" Type="Int32" />
+          <NavigationProperty Name="CollectionPoint" Relationship="Self.FK_dbo_Department_dbo_CollectionPoint_CollectionPointId" FromRole="Department" ToRole="CollectionPoint" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_Department_dbo_Staff_AuthorityId" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_dbo_Department_dbo_Staff_ContactNameId" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="Staff2" Relationship="Self.FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="Staff3" Relationship="Self.FK_dbo_Staff_dbo_Department_DepartmentCode" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="StationeryDisbursement" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode" FromRole="Department" ToRole="StationeryDisbursement" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="Int64" Nullable="false" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="SupplierCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DeliverByDate" Type="Int64" Nullable="false" />
+          <Property Name="DateDeliveredOn" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivedById" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Staff_CreatedById" FromRole="PurchaseOrder" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById" FromRole="PurchaseOrder" ToRole="Staff" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="Self.FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetails" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+          </Key>
+          <Property Name="OrderDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityOrdered" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId" FromRole="PurchaseOrderDetails" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode" FromRole="PurchaseOrderDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="RequestTemplate">
+          <Key>
+            <PropertyRef Name="TemplateId" />
+          </Key>
+          <Property Name="TemplateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TemplateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StaffId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_RequestTemplate_dbo_Staff_StaffId" FromRole="RequestTemplate" ToRole="Staff" />
+          <NavigationProperty Name="RequestTemplateDetails" Relationship="Self.FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId" FromRole="RequestTemplate" ToRole="RequestTemplateDetails" />
+        </EntityType>
+        <EntityType Name="RequestTemplateDetails">
+          <Key>
+            <PropertyRef Name="TemplateDetailsId" />
+          </Key>
+          <Property Name="TemplateDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RequestQuantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RequestTemplate" Relationship="Self.FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId" FromRole="RequestTemplateDetails" ToRole="RequestTemplate" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode" FromRole="RequestTemplateDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_Staff_dbo_Role_RoleId" FromRole="Role" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffId" />
+          </Key>
+          <Property Name="StaffId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdjustmentVoucher" Relationship="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" FromRole="Staff" ToRole="AdjustmentVoucher" />
+          <NavigationProperty Name="AdjustmentVoucher1" Relationship="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" FromRole="Staff" ToRole="AdjustmentVoucher" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_dbo_Department_dbo_Staff_AuthorityId" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Department1" Relationship="Self.FK_dbo_Department_dbo_Staff_ContactNameId" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Department2" Relationship="Self.FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Department3" Relationship="Self.FK_dbo_Staff_dbo_Department_DepartmentCode" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Staff_CreatedById" FromRole="Staff" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseOrder1" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById" FromRole="Staff" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="RequestTemplate" Relationship="Self.FK_dbo_RequestTemplate_dbo_Staff_StaffId" FromRole="Staff" ToRole="RequestTemplate" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_dbo_Staff_dbo_Role_RoleId" FromRole="Staff" ToRole="Role" />
+          <NavigationProperty Name="StationeryDisbursement" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId" FromRole="Staff" ToRole="StationeryDisbursement" />
+          <NavigationProperty Name="StationeryDisbursement1" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId" FromRole="Staff" ToRole="StationeryDisbursement" />
+          <NavigationProperty Name="StationeryRequest" Relationship="Self.FK_dbo_StationeryRequest_dbo_Staff_DecisionById" FromRole="Staff" ToRole="StationeryRequest" />
+          <NavigationProperty Name="StationeryRequest1" Relationship="Self.FK_dbo_StationeryRequest_dbo_Staff_StaffId" FromRole="Staff" ToRole="StationeryRequest" />
+        </EntityType>
+        <EntityType Name="StationeryDisbursement">
+          <Key>
+            <PropertyRef Name="DisbursementId" />
+          </Key>
+          <Property Name="DisbursementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RetrievalId" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateDisbursed" Type="Int64" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CollectionRepId" Type="Int32" />
+          <Property Name="StoreClerkId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode" FromRole="StationeryDisbursement" ToRole="Department" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId" FromRole="StationeryDisbursement" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId" FromRole="StationeryDisbursement" ToRole="Staff" />
+          <NavigationProperty Name="StationeryRetrieval" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId" FromRole="StationeryDisbursement" ToRole="StationeryRetrieval" />
+          <NavigationProperty Name="StationeryDisbursementDetails" Relationship="Self.FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId" FromRole="StationeryDisbursement" ToRole="StationeryDisbursementDetails" />
+        </EntityType>
+        <EntityType Name="StationeryDisbursementDetails">
+          <Key>
+            <PropertyRef Name="DisbursementDetailsId" />
+          </Key>
+          <Property Name="DisbursementDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisbursementId" Type="Int32" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RequestQuantity" Type="Int32" Nullable="false" />
+          <Property Name="RetrievedQuantity" Type="Int32" Nullable="false" />
+          <Property Name="DisbursedQuantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StationeryDisbursement" Relationship="Self.FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId" FromRole="StationeryDisbursementDetails" ToRole="StationeryDisbursement" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode" FromRole="StationeryDisbursementDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="StationeryRequest">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RequestDate" Type="Int64" Nullable="false" />
+          <Property Name="DecisionById" Type="Int32" />
+          <Property Name="DecisionDate" Type="Int64" />
+          <Property Name="Designation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_StationeryRequest_dbo_Staff_DecisionById" FromRole="StationeryRequest" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_dbo_StationeryRequest_dbo_Staff_StaffId" FromRole="StationeryRequest" ToRole="Staff" />
+          <NavigationProperty Name="StationeryRequestDetails" Relationship="Self.FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId" FromRole="StationeryRequest" ToRole="StationeryRequestDetails" />
+        </EntityType>
+        <EntityType Name="StationeryRequestDetails">
+          <Key>
+            <PropertyRef Name="RequestDetailsId" />
+          </Key>
+          <Property Name="RequestDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RequestQuantity" Type="Int32" Nullable="false" />
+          <Property Name="FulfilmentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FulfilledQuantity" Type="Int32" Nullable="false" />
+          <Property Name="RetrievedQuantity" Type="Int32" />
+          <NavigationProperty Name="StationeryRequest" Relationship="Self.FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId" FromRole="StationeryRequestDetails" ToRole="StationeryRequest" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode" FromRole="StationeryRequestDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="StationeryRetrieval">
+          <Key>
+            <PropertyRef Name="RetrievalId" />
+          </Key>
+          <Property Name="RetrievalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateRetrieved" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StationeryDisbursement" Relationship="Self.FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId" FromRole="StationeryRetrieval" ToRole="StationeryDisbursement" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ItemCode" />
+          </Key>
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityOnHand" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdjustmentVoucherDetails" Relationship="Self.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="AdjustmentVoucherDetails" />
+          <NavigationProperty Name="CatalogueItem" Relationship="Self.FK_dbo_CatalogueItem_dbo_Stock_ItemCode" FromRole="Stock" ToRole="CatalogueItem" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="Self.FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="PurchaseOrderDetails" />
+          <NavigationProperty Name="RequestTemplateDetails" Relationship="Self.FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="RequestTemplateDetails" />
+          <NavigationProperty Name="StationeryDisbursementDetails" Relationship="Self.FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="StationeryDisbursementDetails" />
+          <NavigationProperty Name="StationeryRequestDetails" Relationship="Self.FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="StationeryRequestDetails" />
+          <NavigationProperty Name="StockTransactionDetails" Relationship="Self.FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="StockTransactionDetails" />
+          <NavigationProperty Name="SupplierDetails" Relationship="Self.FK_dbo_SupplierDetails_dbo_Stock_ItemCode" FromRole="Stock" ToRole="SupplierDetails" />
+        </EntityType>
+        <EntityType Name="StockTransactionDetails">
+          <Key>
+            <PropertyRef Name="StockTransDetailId" />
+          </Key>
+          <Property Name="StockTransDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Balance" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode" FromRole="StockTransactionDetails" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierCode" />
+          </Key>
+          <Property Name="SupplierCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GstRegistrationNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode" FromRole="Supplier" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="SupplierDetails" Relationship="Self.FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode" FromRole="Supplier" ToRole="SupplierDetails" />
+        </EntityType>
+        <EntityType Name="SupplierDetails">
+          <Key>
+            <PropertyRef Name="SupplierDetailsId" />
+          </Key>
+          <Property Name="SupplierDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Double" Nullable="false" />
+          <Property Name="SupplierRank" Type="Int32" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_dbo_SupplierDetails_dbo_Stock_ItemCode" FromRole="SupplierDetails" ToRole="Stock" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode" FromRole="SupplierDetails" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucher">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucher">
+              <PropertyRef Name="RequesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId">
+          <End Role="AdjustmentVoucher" Type="Self.AdjustmentVoucher" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucherDetails" Type="Self.AdjustmentVoucherDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdjustmentVoucher">
+              <PropertyRef Name="VoucherId" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucherDetails">
+              <PropertyRef Name="VoucherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="AdjustmentVoucherDetails" Type="Self.AdjustmentVoucherDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="AdjustmentVoucherDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogueItem_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="CatalogueItem" Type="Self.CatalogueItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="CatalogueItem">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_CollectionPoint_CollectionPointId">
+          <End Role="CollectionPoint" Type="Self.CollectionPoint" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CollectionPoint">
+              <PropertyRef Name="CollectionPointId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CollectionPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_AuthorityId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="AuthorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_ContactNameId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="ContactNameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DepartmentRepresentativeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Department_DepartmentCode">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentCode" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartmentCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentCode" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="DepartmentCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Staff_CreatedById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="ReceivedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplate_dbo_Staff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestTemplate" Type="Self.RequestTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="RequestTemplate">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId">
+          <End Role="RequestTemplate" Type="Self.RequestTemplate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestTemplateDetails" Type="Self.RequestTemplateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestTemplate">
+              <PropertyRef Name="TemplateId" />
+            </Principal>
+            <Dependent Role="RequestTemplateDetails">
+              <PropertyRef Name="RequestTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="RequestTemplateDetails" Type="Self.RequestTemplateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="RequestTemplateDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Role_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="CollectionRepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="StoreClerkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequest_dbo_Staff_DecisionById">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryRequest">
+              <PropertyRef Name="DecisionById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequest_dbo_Staff_StaffId">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="StationeryRequest">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId">
+          <End Role="StationeryRetrieval" Type="Self.StationeryRetrieval" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryRetrieval">
+              <PropertyRef Name="RetrievalId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursement">
+              <PropertyRef Name="RetrievalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId">
+          <End Role="StationeryDisbursement" Type="StationeryStoreModel.StationeryDisbursement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StationeryDisbursementDetails" Type="Self.StationeryDisbursementDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryDisbursement">
+              <PropertyRef Name="DisbursementId" />
+            </Principal>
+            <Dependent Role="StationeryDisbursementDetails">
+              <PropertyRef Name="DisbursementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StationeryDisbursementDetails" Type="Self.StationeryDisbursementDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StationeryDisbursementDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId">
+          <End Role="StationeryRequest" Type="Self.StationeryRequest" Multiplicity="0..1" />
+          <End Role="StationeryRequestDetails" Type="Self.StationeryRequestDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StationeryRequest">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="StationeryRequestDetails">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StationeryRequestDetails" Type="Self.StationeryRequestDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StationeryRequestDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="StockTransactionDetails" Type="Self.StockTransactionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="StockTransactionDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierDetails_dbo_Stock_ItemCode">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="SupplierDetails">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="SupplierDetails">
+              <PropertyRef Name="SupplierCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdjustmentVoucher" EntityType="Self.AdjustmentVoucher" />
+          <EntitySet Name="AdjustmentVoucherDetails" EntityType="Self.AdjustmentVoucherDetails" />
+          <EntitySet Name="CatalogueItem" EntityType="Self.CatalogueItem" />
+          <EntitySet Name="CollectionPoint" EntityType="Self.CollectionPoint" />
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderDetails" EntityType="Self.PurchaseOrderDetails" />
+          <EntitySet Name="RequestTemplate" EntityType="Self.RequestTemplate" />
+          <EntitySet Name="RequestTemplateDetails" EntityType="Self.RequestTemplateDetails" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="StationeryDisbursement" EntityType="StationeryStoreModel.StationeryDisbursement" />
+          <EntitySet Name="StationeryDisbursementDetails" EntityType="Self.StationeryDisbursementDetails" />
+          <EntitySet Name="StationeryRequest" EntityType="Self.StationeryRequest" />
+          <EntitySet Name="StationeryRequestDetails" EntityType="Self.StationeryRequestDetails" />
+          <EntitySet Name="StationeryRetrieval" EntityType="Self.StationeryRetrieval" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" />
+          <EntitySet Name="StockTransactionDetails" EntityType="Self.StockTransactionDetails" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" />
+          <EntitySet Name="SupplierDetails" EntityType="Self.SupplierDetails" />
+          <AssociationSet Name="FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" Association="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" Association="Self.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" Association="Self.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId">
+            <End Role="AdjustmentVoucher" EntitySet="AdjustmentVoucher" />
+            <End Role="AdjustmentVoucherDetails" EntitySet="AdjustmentVoucherDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_AdjustmentVoucherDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="AdjustmentVoucherDetails" EntitySet="AdjustmentVoucherDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogueItem_dbo_Stock_ItemCode" Association="Self.FK_dbo_CatalogueItem_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="CatalogueItem" EntitySet="CatalogueItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_CollectionPoint_CollectionPointId" Association="Self.FK_dbo_Department_dbo_CollectionPoint_CollectionPointId">
+            <End Role="CollectionPoint" EntitySet="CollectionPoint" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_AuthorityId" Association="Self.FK_dbo_Department_dbo_Staff_AuthorityId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_ContactNameId" Association="Self.FK_dbo_Department_dbo_Staff_ContactNameId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId" Association="Self.FK_dbo_Department_dbo_Staff_DepartmentRepresentativeId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Department_DepartmentCode" Association="Self.FK_dbo_Staff_dbo_Department_DepartmentCode">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode" Association="Self.FK_dbo_StationeryDisbursement_dbo_Department_DepartmentCode">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Staff_CreatedById" Association="Self.FK_dbo_PurchaseOrder_dbo_Staff_CreatedById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById" Association="Self.FK_dbo_PurchaseOrder_dbo_Staff_ReceivedById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode" Association="Self.FK_dbo_PurchaseOrder_dbo_Supplier_SupplierCode">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId" Association="Self.FK_dbo_PurchaseOrderDetails_dbo_PurchaseOrder_OrderId">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_PurchaseOrderDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplate_dbo_Staff_StaffId" Association="Self.FK_dbo_RequestTemplate_dbo_Staff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="RequestTemplate" EntitySet="RequestTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId" Association="Self.FK_dbo_RequestTemplateDetails_dbo_RequestTemplate_RequestTemplateId">
+            <End Role="RequestTemplate" EntitySet="RequestTemplate" />
+            <End Role="RequestTemplateDetails" EntitySet="RequestTemplateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_RequestTemplateDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="RequestTemplateDetails" EntitySet="RequestTemplateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Role_RoleId" Association="Self.FK_dbo_Staff_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId" Association="Self.FK_dbo_StationeryDisbursement_dbo_Staff_CollectionRepId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId" Association="Self.FK_dbo_StationeryDisbursement_dbo_Staff_StoreClerkId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequest_dbo_Staff_DecisionById" Association="Self.FK_dbo_StationeryRequest_dbo_Staff_DecisionById">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequest_dbo_Staff_StaffId" Association="Self.FK_dbo_StationeryRequest_dbo_Staff_StaffId">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId" Association="Self.FK_dbo_StationeryDisbursement_dbo_StationeryRetrieval_RetrievalId">
+            <End Role="StationeryRetrieval" EntitySet="StationeryRetrieval" />
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId" Association="Self.FK_dbo_StationeryDisbursementDetails_dbo_StationeryDisbursement_DisbursementId">
+            <End Role="StationeryDisbursement" EntitySet="StationeryDisbursement" />
+            <End Role="StationeryDisbursementDetails" EntitySet="StationeryDisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StationeryDisbursementDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StationeryDisbursementDetails" EntitySet="StationeryDisbursementDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId" Association="Self.FK_dbo_StationeryRequestDetails_dbo_StationeryRequest_RequestId">
+            <End Role="StationeryRequest" EntitySet="StationeryRequest" />
+            <End Role="StationeryRequestDetails" EntitySet="StationeryRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StationeryRequestDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StationeryRequestDetails" EntitySet="StationeryRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_StockTransactionDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StockTransactionDetails" EntitySet="StockTransactionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierDetails_dbo_Stock_ItemCode" Association="Self.FK_dbo_SupplierDetails_dbo_Stock_ItemCode">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="SupplierDetails" EntitySet="SupplierDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode" Association="Self.FK_dbo_SupplierDetails_dbo_Supplier_SupplierCode">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierDetails" EntitySet="SupplierDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StationeryStoreModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AdjustmentVoucher">
+            <EntityTypeMapping TypeName="StationeryStoreModel.AdjustmentVoucher">
+              <MappingFragment StoreEntitySet="AdjustmentVoucher">
+                <ScalarProperty Name="VoucherId" ColumnName="VoucherId" />
+                <ScalarProperty Name="ApproverId" ColumnName="ApproverId" />
+                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
+                <ScalarProperty Name="DateIssued" ColumnName="DateIssued" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdjustmentVoucherDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.AdjustmentVoucherDetails">
+              <MappingFragment StoreEntitySet="AdjustmentVoucherDetails">
+                <ScalarProperty Name="AdjustmentId" ColumnName="AdjustmentId" />
+                <ScalarProperty Name="VoucherId" ColumnName="VoucherId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogueItem">
+            <EntityTypeMapping TypeName="StationeryStoreModel.CatalogueItem">
+              <MappingFragment StoreEntitySet="CatalogueItem">
+                <ScalarProperty Name="CatalogueId" ColumnName="CatalogueId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="ReorderQty" ColumnName="ReorderQty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CollectionPoint">
+            <EntityTypeMapping TypeName="StationeryStoreModel.CollectionPoint">
+              <MappingFragment StoreEntitySet="CollectionPoint">
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="CollectionTime" ColumnName="CollectionTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="StationeryStoreModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ContactNameId" ColumnName="ContactNameId" />
+                <ScalarProperty Name="AuthorityId" ColumnName="AuthorityId" />
+                <ScalarProperty Name="DepartmentRepresentativeId" ColumnName="DepartmentRepresentativeId" />
+                <ScalarProperty Name="DelegationStartDate" ColumnName="DelegationStartDate" />
+                <ScalarProperty Name="DelegationEndDate" ColumnName="DelegationEndDate" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="CollectionPointId" ColumnName="CollectionPointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrder">
+            <EntityTypeMapping TypeName="StationeryStoreModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="DeliverByDate" ColumnName="DeliverByDate" />
+                <ScalarProperty Name="DateDeliveredOn" ColumnName="DateDeliveredOn" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReceivedById" ColumnName="ReceivedById" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.PurchaseOrderDetails">
+              <MappingFragment StoreEntitySet="PurchaseOrderDetails">
+                <ScalarProperty Name="OrderDetailsId" ColumnName="OrderDetailsId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="QuantityOrdered" ColumnName="QuantityOrdered" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTemplate">
+            <EntityTypeMapping TypeName="StationeryStoreModel.RequestTemplate">
+              <MappingFragment StoreEntitySet="RequestTemplate">
+                <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+                <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTemplateDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.RequestTemplateDetails">
+              <MappingFragment StoreEntitySet="RequestTemplateDetails">
+                <ScalarProperty Name="TemplateDetailsId" ColumnName="TemplateDetailsId" />
+                <ScalarProperty Name="RequestTemplateId" ColumnName="RequestTemplateId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="RequestQuantity" ColumnName="RequestQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="StationeryStoreModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="StationeryStoreModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StationeryDisbursement">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StationeryDisbursement">
+              <MappingFragment StoreEntitySet="StationeryDisbursement">
+                <ScalarProperty Name="DisbursementId" ColumnName="DisbursementId" />
+                <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="DateDisbursed" ColumnName="DateDisbursed" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CollectionRepId" ColumnName="CollectionRepId" />
+                <ScalarProperty Name="StoreClerkId" ColumnName="StoreClerkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StationeryDisbursementDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StationeryDisbursementDetails">
+              <MappingFragment StoreEntitySet="StationeryDisbursementDetails">
+                <ScalarProperty Name="DisbursementDetailsId" ColumnName="DisbursementDetailsId" />
+                <ScalarProperty Name="DisbursementId" ColumnName="DisbursementId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="RequestQuantity" ColumnName="RequestQuantity" />
+                <ScalarProperty Name="RetrievedQuantity" ColumnName="RetrievedQuantity" />
+                <ScalarProperty Name="DisbursedQuantity" ColumnName="DisbursedQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StationeryRequest">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StationeryRequest">
+              <MappingFragment StoreEntitySet="StationeryRequest">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="DecisionById" ColumnName="DecisionById" />
+                <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StationeryRequestDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StationeryRequestDetails">
+              <MappingFragment StoreEntitySet="StationeryRequestDetails">
+                <ScalarProperty Name="RequestDetailsId" ColumnName="RequestDetailsId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="RequestQuantity" ColumnName="RequestQuantity" />
+                <ScalarProperty Name="FulfilmentStatus" ColumnName="FulfilmentStatus" />
+                <ScalarProperty Name="FulfilledQuantity" ColumnName="FulfilledQuantity" />
+                <ScalarProperty Name="RetrievedQuantity" ColumnName="RetrievedQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StationeryRetrieval">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StationeryRetrieval">
+              <MappingFragment StoreEntitySet="StationeryRetrieval">
+                <ScalarProperty Name="RetrievalId" ColumnName="RetrievalId" />
+                <ScalarProperty Name="DateRetrieved" ColumnName="DateRetrieved" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stock">
+            <EntityTypeMapping TypeName="StationeryStoreModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="Bin" ColumnName="Bin" />
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTransactionDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.StockTransactionDetails">
+              <MappingFragment StoreEntitySet="StockTransactionDetails">
+                <ScalarProperty Name="StockTransDetailId" ColumnName="StockTransDetailId" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="StationeryStoreModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GstRegistrationNo" ColumnName="GstRegistrationNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierDetails">
+            <EntityTypeMapping TypeName="StationeryStoreModel.SupplierDetails">
+              <MappingFragment StoreEntitySet="SupplierDetails">
+                <ScalarProperty Name="SupplierDetailsId" ColumnName="SupplierDetailsId" />
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="SupplierRank" ColumnName="SupplierRank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

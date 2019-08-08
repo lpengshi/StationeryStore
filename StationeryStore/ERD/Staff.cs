@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
@@ -18,12 +18,15 @@ namespace StationeryStore
         public Staff()
         {
             this.AdjustmentVoucher = new HashSet<AdjustmentVoucher>();
+            this.AdjustmentVoucher1 = new HashSet<AdjustmentVoucher>();
             this.Department = new HashSet<Department>();
             this.Department1 = new HashSet<Department>();
             this.Department2 = new HashSet<Department>();
             this.PurchaseOrder = new HashSet<PurchaseOrder>();
             this.PurchaseOrder1 = new HashSet<PurchaseOrder>();
+            this.RequestTemplate = new HashSet<RequestTemplate>();
             this.StationeryDisbursement = new HashSet<StationeryDisbursement>();
+            this.StationeryDisbursement1 = new HashSet<StationeryDisbursement>();
             this.StationeryRequest = new HashSet<StationeryRequest>();
             this.StationeryRequest1 = new HashSet<StationeryRequest>();
         }
@@ -40,6 +43,8 @@ namespace StationeryStore
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdjustmentVoucher> AdjustmentVoucher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdjustmentVoucher> AdjustmentVoucher1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Department1 { get; set; }
@@ -50,9 +55,13 @@ namespace StationeryStore
         public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrder1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestTemplate> RequestTemplate { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StationeryDisbursement> StationeryDisbursement { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StationeryDisbursement> StationeryDisbursement1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StationeryRequest> StationeryRequest { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

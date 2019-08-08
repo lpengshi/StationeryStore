@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace StationeryStore
             this.AdjustmentVoucherDetails = new HashSet<AdjustmentVoucherDetails>();
             this.CatalogueItem = new HashSet<CatalogueItem>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetails>();
+            this.RequestTemplateDetails = new HashSet<RequestTemplateDetails>();
             this.StationeryDisbursementDetails = new HashSet<StationeryDisbursementDetails>();
             this.StationeryRequestDetails = new HashSet<StationeryRequestDetails>();
             this.StockTransactionDetails = new HashSet<StockTransactionDetails>();
@@ -39,6 +40,8 @@ namespace StationeryStore
         public virtual ICollection<CatalogueItem> CatalogueItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetails> PurchaseOrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestTemplateDetails> RequestTemplateDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StationeryDisbursementDetails> StationeryDisbursementDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

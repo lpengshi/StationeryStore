@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class StockTransactionDetails
+    public partial class RequestTemplateDetails
     {
-        public int StockTransDetailId { get; set; }
+        public int TemplateDetailsId { get; set; }
+        public int RequestTemplateId { get; set; }
         public string ItemCode { get; set; }
-        public long Date { get; set; }
-        public int Quantity { get; set; }
-        public int Balance { get; set; }
-        public string Type { get; set; }
+        public int RequestQuantity { get; set; }
     
+        public virtual RequestTemplate RequestTemplate { get; set; }
         public virtual Stock Stock { get; set; }
     }
 }

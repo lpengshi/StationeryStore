@@ -27,7 +27,5 @@ namespace StationeryStore.Models
         [MaxLength(255)]
         public string Reason { get; set; }
 
-        [MaxLength(50)]
-        public string Status { get; set; }
     }
 }

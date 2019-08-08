@@ -7,16 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class C__MigrationHistory
+    public partial class AdjustmentVoucherDetails
     {
-        public string MigrationId { get; set; }
-        public string ContextKey { get; set; }
-        public byte[] Model { get; set; }
-        public string ProductVersion { get; set; }
+        public int AdjustmentId { get; set; }
+        public string VoucherId { get; set; }
+        public string ItemCode { get; set; }
+        public int Quantity { get; set; }
+        public string Reason { get; set; }
+        public string Status { get; set; }
+    
+        public virtual AdjustmentVoucher AdjustmentVoucher { get; set; }
+        public virtual Stock Stock { get; set; }
     }
 }

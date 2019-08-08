@@ -7,31 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class StationeryRequest
+    public partial class StationeryRetrieval
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StationeryRequest()
+        public StationeryRetrieval()
         {
-            this.StationeryRequestDetails = new HashSet<StationeryRequestDetails>();
+            this.StationeryDisbursement = new HashSet<StationeryDisbursement>();
         }
     
-        public string RequestId { get; set; }
-        public int StaffId { get; set; }
+        public int RetrievalId { get; set; }
+        public long DateRetrieved { get; set; }
         public string Status { get; set; }
-        public long RequestDate { get; set; }
-        public Nullable<int> DecisionById { get; set; }
-        public Nullable<long> DecisionDate { get; set; }
-        public string Designation { get; set; }
-        public string Comment { get; set; }
     
-        public virtual Staff Staff { get; set; }
-        public virtual Staff Staff1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StationeryRequestDetails> StationeryRequestDetails { get; set; }
+        public virtual ICollection<StationeryDisbursement> StationeryDisbursement { get; set; }
     }
 }

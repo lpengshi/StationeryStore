@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
@@ -26,9 +26,11 @@ namespace StationeryStore
         public Nullable<long> DateDisbursed { get; set; }
         public string Status { get; set; }
         public Nullable<int> CollectionRepId { get; set; }
+        public Nullable<int> StoreClerkId { get; set; }
     
         public virtual Department Department { get; set; }
         public virtual Staff Staff { get; set; }
+        public virtual Staff Staff1 { get; set; }
         public virtual StationeryRetrieval StationeryRetrieval { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StationeryDisbursementDetails> StationeryDisbursementDetails { get; set; }

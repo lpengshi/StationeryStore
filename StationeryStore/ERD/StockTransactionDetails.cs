@@ -7,21 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StationeryStore
+namespace StationeryStore.ERD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class StationeryDisbursementDetails
+    public partial class StockTransactionDetails
     {
-        public int DisbursementDetailsId { get; set; }
-        public int DisbursementId { get; set; }
+        public int StockTransDetailId { get; set; }
         public string ItemCode { get; set; }
-        public int RequestQuantity { get; set; }
-        public int RetrievedQuantity { get; set; }
-        public int DisbursedQuantity { get; set; }
+        public long Date { get; set; }
+        public int Quantity { get; set; }
+        public int Balance { get; set; }
+        public string Type { get; set; }
     
-        public virtual StationeryDisbursement StationeryDisbursement { get; set; }
         public virtual Stock Stock { get; set; }
     }
 }
