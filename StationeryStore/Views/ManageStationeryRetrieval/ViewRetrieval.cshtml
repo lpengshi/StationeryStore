@@ -10,29 +10,25 @@
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
-    <h3>View Stationery Retrieval</h3>
+    <h3>Retrieval #@retrieval.RetrievalId (@retrieval.Status)</h3>
     <br />
 
     @using (Html.BeginForm("SaveRetrieval", "ManageStationeryRetrieval", FormMethod.Post))
     {
-        <table align="center">
-            <tr>
-                <td class="details">Retrieval Id </td>
-                <td>@retrieval.RetrievalId</td>
+        <table class="listview">
+            <tr class="listview">
+                <td class="listrequestlabel">Retrieval Date </td>
+                <td class="listrequestvalue">@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
             </tr>
-            <tr>
-                <td class="details">Retrieval Date </td>
-                <td>@Timestamp.dateFromTimestamp(retrieval.DateRetrieved)</td>
-            </tr>
-            <tr>
-                <td class="details">Disbursement Date </td>
+            <tr class="listview">
+                <td class="listrequestlabel">Disbursement Date </td>
                 @if (retrieval.Status == "Processing")
                 {
-                    <td><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
+                    <td class="listrequestvalue"><input type="date" name="disbursementDate" value="@DateTime.Today.AddDays(3).ToString("yyyy-MM-dd")" /></td>
                 }
                 else
                 {
-                    <td>@Timestamp.dateFromTimestamp((long)retrieval.StationeryDisbursements.ElementAt(0).DateDisbursed)</td>
+                    <td class="listrequestvalue">@Timestamp.dateFromTimestamp((long)retrieval.StationeryDisbursements.ElementAt(0).DateDisbursed)</td>
                 }
             </tr>
         </table>

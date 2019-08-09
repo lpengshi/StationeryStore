@@ -17,6 +17,11 @@ namespace StationeryStore.Service
             return staff;
         }
 
+        public StaffEF FindStaffById(int staffId)
+        {
+            return staffEFF.FindStaffByStaffId(staffId);
+        }
+
         public StaffEF GetStaff()
         {
             StaffEF staff = null;

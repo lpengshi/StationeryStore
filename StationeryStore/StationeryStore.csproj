@@ -257,6 +257,7 @@
     <Compile Include="Service\StaffService.cs" />
     <Compile Include="Service\StockService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Util\Email.cs" />
     <Compile Include="Util\Timestamp.cs" />
     <Compile Include="WebForms\InventoryStatusReportForm.aspx.cs">
       <DependentUpon>InventoryStatusReportForm.aspx</DependentUpon>

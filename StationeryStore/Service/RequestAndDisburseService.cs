@@ -690,7 +690,7 @@ namespace StationeryStore.Service
         }
         public List<StationeryDisbursementEF> FindAllDisbursements()
         {
-            return rndEFF.FindAllDisbursement().OrderByDescending(x => x.DateDisbursed).ToList();
+            return rndEFF.FindAllDisbursement().OrderByDescending(x => x.DisbursementId).ToList();
         }
 
         public StationeryDisbursementEF FindDisbursementById(int disbursementId)
