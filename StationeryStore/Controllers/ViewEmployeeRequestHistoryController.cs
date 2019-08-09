@@ -17,6 +17,7 @@ namespace StationeryStore.Controllers
         StaffService staffService = new StaffService();
         RequestAndDisburseService rndService = new RequestAndDisburseService();
 
+        [HttpGet]
         public ActionResult Index()
         {
             StaffEF staff = staffService.GetStaff();
@@ -26,6 +27,40 @@ namespace StationeryStore.Controllers
 
             ViewBag.requestList = requestList;
             ViewBag.requestDate = requestDate;
+            ViewBag.departmentStaff = staffService.FindAllEmployeeByDepartmentCode(staff.DepartmentCode);
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(string staffId)
+        {
+            StaffEF staff = staffService.GetStaff();
+            ViewBag.staff = staff;
+            List<StationeryRequestEF> requestList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "all");
+            List<string> requestDate = rndService.ConvertToDate(requestList);
+
+            if (staffId == "All Staff")
+            {
+                return RedirectToAction("Index");
+            } else
+            {
+                int selectedStaff = int.Parse(staffId);
+                List<StationeryRequestEF> staffList = new List<StationeryRequestEF>();
+                foreach (StationeryRequestEF request in requestList)
+                {
+                    if (request.Staff.StaffId == selectedStaff)
+                    {
+                        staffList.Add(request);
+                    }
+                }
+                requestList = staffList;
+                ViewBag.selectedStaff = selectedStaff;
+            }
+
+            ViewBag.requestList = requestList;
+            ViewBag.requestDate = requestDate;
+            ViewBag.departmentStaff = staffService.FindAllEmployeeByDepartmentCode(staff.DepartmentCode);
 
             return View();
         }
