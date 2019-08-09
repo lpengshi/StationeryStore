@@ -11,11 +11,12 @@ namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
     [DepartmentFilter]
+    [CurrentAuthorityFilter]
     public class ManageCollectionController : Controller
     {
         StaffService staffService = new StaffService();
         DepartmentService deptService = new DepartmentService();
-
+        
         [HttpGet]
         public ActionResult Index(string update)
         {

@@ -12,6 +12,7 @@ namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
     [DepartmentFilter]
+    [DepartmentHeadFilter]
     public class ViewEmployeeRequestHistoryController : Controller
     {
         StaffService staffService = new StaffService();
@@ -71,6 +72,11 @@ namespace StationeryStore.Controllers
             ViewBag.staff = staff;
             StationeryRequestEF request = rndService.FindRequestById(requestId);
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
+
+            if (request.Staff.DepartmentCode != staff.DepartmentCode)
+            {
+                return RedirectToAction("Index");
+            }
 
             if (request.Status == "Submitted")
             {

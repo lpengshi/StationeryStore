@@ -188,7 +188,9 @@
     <Compile Include="EntityFrameworkFacade\StoreContext.cs" />
     <Compile Include="Filters\AuthorizeFilter.cs" />
     <Compile Include="Filters\DepartmentFilter.cs" />
+    <Compile Include="Filters\CurrentAuthorityFilter.cs" />
     <Compile Include="Filters\StoreFilter.cs" />
+    <Compile Include="Filters\DepartmentHeadFilter.cs" />
     <Compile Include="Filters\StoreManagerFilter.cs" />
     <Compile Include="Filters\StoreSupervisorFilter.cs" />
     <Compile Include="Global.asax.cs">

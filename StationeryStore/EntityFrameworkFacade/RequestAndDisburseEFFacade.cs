@@ -66,6 +66,13 @@ namespace StationeryStore.EntityFrameworkFacade
                 .ToList<StationeryRequestEF>();
         }
 
+        public RequestTemplateEF FindRequestTemplateByTemplateId(int templateId)
+        {
+            return context.RequestTemplates
+                .Where(a => a.TemplateId == templateId)
+                .SingleOrDefault();
+        }
+
         public void SaveRequestTemplate(RequestTemplateEF requestTemplate)
         {
             var existingTemplate = context.RequestTemplates.Find(requestTemplate.TemplateId);

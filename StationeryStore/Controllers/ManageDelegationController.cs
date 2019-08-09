@@ -11,6 +11,7 @@ namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
     [DepartmentFilter]
+    [DepartmentHeadFilter]
     public class ManageDelegationController : Controller
     {
         DepartmentService deptService = new DepartmentService();

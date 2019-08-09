@@ -144,6 +144,12 @@ namespace StationeryStore.Controllers
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             StationeryRequestEF request = rndService.FindRequestById(requestId);
+
+            if (request.StaffId != staff.StaffId)
+            {
+                return RedirectToAction("Index", "ManageRequest");
+            }
+
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
 
             if (request.Status == "Submitted")

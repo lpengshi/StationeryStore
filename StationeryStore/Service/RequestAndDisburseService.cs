@@ -60,6 +60,11 @@ namespace StationeryStore.Service
             rndEFF.SaveRequestTemplate(requestTemplate);
         }
 
+        public RequestTemplateEF FindRequestTemplateByTemplateId(int templateId)
+        {
+            return rndEFF.FindRequestTemplateByTemplateId(templateId);
+        }
+
         public List<StationeryRequestEF> FindRequestByDepartmentAndStatus(DepartmentEF department, string status)
         {
             List<StationeryRequestEF> pendingList = rndEFF.FindRequestsByDepartmentAndStatus(department.DepartmentCode, status);
@@ -171,7 +176,7 @@ namespace StationeryStore.Service
             rndEFF.SaveRequestAndRequestDetails(request, requestList);
             if (request.Staff.Email != null)
             {
-                string subject = "Request #" + request.RequestId + ": " + request.Status;
+                string subject = "Request Status Update";
                 string body = "Request #" + request.RequestId + " has been " + request.Status.ToLower() + " by " + staff.Name + "(" + request.Designation + ").";
                 Email.SendEmail(request.Staff.Email, subject, body);
             }
@@ -529,7 +534,7 @@ namespace StationeryStore.Service
             StaffEF currentAuthority = staff.Department.Authority;
             if (currentAuthority.Email != null)
             {
-                string subject = "Request #" + requestId+ " has been submitted for your approval";
+                string subject = "Pending Stationery Request";
                 string body = "Request #" + requestId + " has been submitted by " + staff.Name + " for your approval.";
                 Email.SendEmail(currentAuthority.Email, subject, body);
             }
