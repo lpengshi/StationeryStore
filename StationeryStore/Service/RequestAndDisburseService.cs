@@ -169,6 +169,12 @@ namespace StationeryStore.Service
             }
 
             rndEFF.SaveRequestAndRequestDetails(request, requestList);
+            if (request.Staff.Email != null)
+            {
+                string subject = "Request #" + request.RequestId + ": " + request.Status;
+                string body = "Request #" + request.RequestId + " has been " + request.Status.ToLower() + " by " + staff.Name + "(" + request.Designation + ").";
+                Email.SendEmail(request.Staff.Email, subject, body);
+            }
         }
 
         public RequestListDTO ConvertToRequestListDTO(RequestTemplateDTO requestTemplateDTO)
@@ -519,9 +525,15 @@ namespace StationeryStore.Service
 
             newRequest = new StationeryRequestEF(requestId, staff.StaffId, unixTimestamp);
             rndEFF.SaveRequestAndRequestDetails(newRequest, requestList);
+
+            StaffEF currentAuthority = staff.Department.Authority;
+            if (currentAuthority.Email != null)
+            {
+                string subject = "Request #" + requestId+ " has been submitted for your approval";
+                string body = "Request #" + requestId + " has been submitted by " + staff.Name + " for your approval.";
+                Email.SendEmail(currentAuthority.Email, subject, body);
+            }
         }
-
-
 
         //RETREIVAL
 

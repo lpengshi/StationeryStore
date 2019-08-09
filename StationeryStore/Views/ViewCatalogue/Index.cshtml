@@ -2,6 +2,7 @@
     ViewBag.Title = "View Catalogue";
     var catalogueList = ViewBag.catalogueList;
     var pageNum = ViewBag.pageNum;
+    var description = ViewBag.description;
 }
 
 <div>@Html.Partial("_Department")</div>
@@ -9,6 +10,29 @@
 <div class="mainview">
     <div class="maindetails">
         <h3 class="title">View Stationery Catalogue</h3>
+        <div class="listview">
+            <form action="~/ViewCatalogue" method="get">
+                <table class="listview">
+                    <tr class="listview">
+                        <td class="listrequestlabel" style="width: 250px">Search Catalogue:</td>
+                        <td class="listrequestvalue" style="width: 350px">
+                            @{
+                                if (description != null)
+                                {
+                                    <input type="text" placeholder="search description" name="description" value="@description">
+                                }
+                                else
+                                {
+                                    <input type="text" placeholder="search description" name="description">
+                                }
+                            }
+                            <input type="submit" value="Submit" class="decision" name="decision" />
+                            <input type="submit" value="Reset" class="decision" name="decision" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
         <br />
         <div class="listview">
             <table class="listview">
@@ -40,15 +64,30 @@
         <br />
         <div class="pagination">
             @{
-                <span>@Html.ActionLink("«", "Index", "ViewCatalogue", new { id = 1 }, null)</span>
-
-                for (int i = 1; i <= pageNum + 1; i++)
+                if (description == null)
                 {
-                    string num = i.ToString();
-                    <span>@Html.ActionLink(num, "Index", "ViewCatalogue", new { id = i }, null)</span>          
-                }
+                    <span>@Html.ActionLink("«", "Index", "ViewCatalogue", new { id = 1 }, null)</span>
 
-                <span>@Html.ActionLink("»", "Index", "ViewCatalogue", new { id = pageNum + 1}, null)</span>
+                    for (int i = 1; i <= pageNum + 1; i++)
+                    {
+                        string num = i.ToString();
+                        <span>@Html.ActionLink(num, "Index", "ViewCatalogue", new { id = i }, null)</span>
+                    }
+
+                    <span>@Html.ActionLink("»", "Index", "ViewCatalogue", new { id = pageNum + 1 }, null)</span>
+                }
+                else
+                {
+                    <span>@Html.ActionLink("«", "Index", "ViewCatalogue", new { id = 1, description = description }, null)</span>
+
+                    for (int i = 1; i <= pageNum + 1; i++)
+                    {
+                        string num = i.ToString();
+                        <span>@Html.ActionLink(num, "Index", "ViewCatalogue", new { id = i, description = description }, null)</span>
+                    }
+
+                    <span>@Html.ActionLink("»", "Index", "ViewCatalogue", new { id = pageNum + 1, description = description }, null)</span>
+                }
             }
         </div>
         <br /><br /><br /><br />

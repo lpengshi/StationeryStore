@@ -46,6 +46,21 @@ namespace StationeryStore.Service
             }
         }
 
+        public void CheckDelegation(DepartmentEF department)
+        {
+            long currentTimestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            if (department.DelegationEndDate < currentTimestamp || department.DelegationEndDate == null)
+            {
+                StaffEF deptHead = FindDepartmentHead(department.DepartmentCode);
+                RemoveStaffDelegation(deptHead);
+                }
+        }
+
+        public StaffEF FindDepartmentHead(string departmentCode)
+        {
+            return departmentEFF.FindDepartmentHeadByDepartmentCode(departmentCode);
+        }
+
         public void DelegateStaff(ManageDelegationDTO manageDelegationDTO)
         {
             long delegationStartDate = Timestamp.dateToUnixTimestamp(manageDelegationDTO.DelegationStartDate);
