@@ -15,6 +15,7 @@ namespace StationeryStore.Controllers
     {
         StockService stockService = new StockService();
         StaffService staffService = new StaffService();
+        PredictService predictService = new PredictService();
 
         // GET: ManageCatalogue
 
@@ -126,7 +127,7 @@ namespace StationeryStore.Controllers
             if (decision == "Predict Reorder Quantity")
             {
                 // get prediction from service
-                int prediction = 1;
+                int prediction = predictService.PredictReorderQuantity(item).Result;
                 // set it and throw it back to the update catalogue view
                 ModelState.Remove("ReorderQty");
                 item.ReorderQty = prediction;

@@ -70,6 +70,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -215,6 +216,7 @@
     <Compile Include="Models\ManageDelegationDTO.cs" />
     <Compile Include="Models\MobileDisbursementDTO.cs" />
     <Compile Include="Models\MobileRetrievalItemDTO.cs" />
+    <Compile Include="Models\PredictReorderQtyDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
     <Compile Include="Models\PurchaseOrderFormDTO.cs" />
@@ -254,6 +256,7 @@
       <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Service\DepartmentService.cs" />
+    <Compile Include="Service\PredictService.cs" />
     <Compile Include="Service\PurchaseService.cs" />
     <Compile Include="Service\RequestAndDisburseService.cs" />
     <Compile Include="Service\StaffService.cs" />
