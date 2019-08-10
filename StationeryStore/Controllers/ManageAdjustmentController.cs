@@ -60,13 +60,15 @@ namespace StationeryStore.Controllers
         {
             AdjustmentVoucherEF voucher = stockService.FindAdjustmentVoucherById(voucherId);
             List<AdjustmentVoucherDetailsEF> voucherDetailsList = stockService.FindAdjustmentDetailsById(voucherId);
+            List<AdjustmentVoucherDetailsDTO> convertedList = stockService.ConvertAdjVoucherDetailsToDTO(voucherDetailsList);
+
             StaffEF staff = staffService.GetStaff();
 
             bool needsManagerAuthority = stockService.VoucherExceedsSetValue(voucherDetailsList);
 
             ViewData["needsManagerAuthority"] = needsManagerAuthority;
             ViewData["adjustmentVoucher"] = voucher;
-            ViewData["voucherDetailsList"] = voucherDetailsList;
+            ViewData["voucherDetailsList"] = convertedList;
             ViewData["staffRole"] = staff.Role.Description;
             ViewData["staffId"] = staff.StaffId;
 
@@ -186,6 +188,8 @@ namespace StationeryStore.Controllers
                 }
                 return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId});
             }
+
+            detailsList = stockService.GetPricesForVoucherDetails(detailsList);
 
             ModelState.Clear();
             return View(detailsList);

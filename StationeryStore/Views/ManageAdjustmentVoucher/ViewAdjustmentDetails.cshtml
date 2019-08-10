@@ -5,7 +5,7 @@
 
     bool needsManagerAuthority = (bool)ViewData["needsManagerAuthority"];
     AdjustmentVoucherEF voucher = (AdjustmentVoucherEF)ViewData["adjustmentVoucher"];
-    List<AdjustmentVoucherDetailsEF> voucherDetails = (List<AdjustmentVoucherDetailsEF>)ViewData["voucherDetailsList"];
+    List<AdjustmentVoucherDetailsDTO> voucherDetails = (List<AdjustmentVoucherDetailsDTO>)ViewData["voucherDetailsList"];
     string staffRole = (string)ViewData["staffRole"];
     int staffId = (int)ViewData["staffId"];
 }
@@ -46,19 +46,30 @@
                 <tr>
                     <th class="listviewheader">Item Code</th>
                     <th class="listviewheader">Item Description</th>
-                    <th class="listviewheader">Adjustment Quantity</th>
+                    <th class="listviewheader">Quantity</th>
+                    <th class="listviewheader">Unit Price</th>
+                    <th class="listviewheader">Total Cost</th>
                     <th class="listviewheader">Reason</th>
+
                 </tr>
                 @{ foreach (var v in voucherDetails)
                     {
+                        double totalCost = v.Quantity * v.Price;
                         <tr class="oddlistview">
                             <td class="oddlistview">@v.ItemCode</td>
-                            <td class="oddlistview">@v.Stock.Description</td>
+                            <td class="oddlistview">@v.Description</td>
                             <td class="oddlistview">@v.Quantity</td>
+                            <td class="oddlistview">@string.Format("{0:C}",v.Price)</td>
+                            <td class="oddlistview">@string.Format("{0:C}",totalCost)</td>
                             <td class="oddlistview">@v.Reason</td>
+
                         </tr>
                     }
                 }
+                <tr class="oddlistview">
+                    <td class="oddlistview" colspan="5" align="right">Voucher Sum:</td>
+                    <td class="oddlistview">@string.Format("{0:C}",voucherDetails.Sum(x=> x.Price * x.Quantity))</td>
+                </tr>
             </table>
             <br />
             if (voucher.Status == "Pending Approval")
