@@ -26,7 +26,7 @@ namespace StationeryStore.Controllers
             List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(staff.DepartmentCode);
             ViewBag.deptStaff = deptStaff;
             ViewBag.department = staff.Department;
-
+            //retrieve current delegation
             ManageDelegationDTO manageDelegationDTO = new ManageDelegationDTO();
             manageDelegationDTO.DepartmentCode = staff.DepartmentCode;
 
@@ -43,6 +43,7 @@ namespace StationeryStore.Controllers
             ViewBag.deptStaff = deptStaff;
             ViewBag.department = staff.Department;
 
+            //update delegation and validate delegation start and end date
             if (decision == "Add Delegation") {
                 if (staff.Department.AuthorityId != staff.StaffId)
                 {

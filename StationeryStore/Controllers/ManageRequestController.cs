@@ -36,7 +36,7 @@ namespace StationeryStore.Controllers
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             ViewBag.catalogueList = catalogueList;
             RequestListDTO requestListDTO = null;
-
+            //past existing request details if editing previous request
             if (TempData["requestListDTO"] != null)
             {
                 requestListDTO = (RequestListDTO)TempData["requestListDTO"];
@@ -53,7 +53,7 @@ namespace StationeryStore.Controllers
             ViewBag.staff = staff;
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             ViewBag.catalogueList = catalogueList;
-
+            //validate request details
             if (requestListDTO.RequestId != null)
             {
                 ViewBag.amend = true;
@@ -132,6 +132,7 @@ namespace StationeryStore.Controllers
                     ViewBag.note = "You will need to have at least one item in the request";
                 } else
                 {
+                    //save request details when there are no errors
                     rndService.CreateRequest(staff, requestListDTO);
                     return RedirectToAction("Index");
                 }
@@ -151,7 +152,7 @@ namespace StationeryStore.Controllers
             }
 
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
-
+            //check request status and redirect to create or view page
             if (request.Status == "Submitted")
             {
                 RequestListDTO requestListDTO = rndService.AddToRequestListDTO(requestId, request.Status, requestDetails);
