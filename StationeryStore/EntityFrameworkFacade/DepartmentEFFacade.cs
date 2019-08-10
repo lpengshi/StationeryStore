@@ -66,5 +66,12 @@ namespace StationeryStore.EntityFrameworkFacade
                 context.SaveChanges();
             }
         }
+
+        public StaffEF FindDepartmentHeadByDepartmentCode(string departmentCode)
+        {
+            return context.Staff.
+                Where(a => a.DepartmentCode == departmentCode && a.Role.Description == "Department Head")
+                .SingleOrDefault();
+        }
     }
 }

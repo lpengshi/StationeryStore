@@ -11,6 +11,7 @@ namespace StationeryStore.Service
     public class DepartmentService
     {
         DepartmentEFFacade departmentEFF = new DepartmentEFFacade();
+        StaffService staffService = new StaffService();
 
         public List<DepartmentEF> FindDistinctDepartments(List<StationeryRequestDetailsEF> requests)
         {
@@ -34,6 +35,7 @@ namespace StationeryStore.Service
             if (manageCollectionDTO != null)
             {
                 DepartmentEF department = departmentEFF.FindDepartmentByCode(manageCollectionDTO.Department);
+
                 department.CollectionPointId = manageCollectionDTO.CollectionPointId;
 
                 if (manageCollectionDTO.DepartmentRepId != null)
@@ -43,7 +45,33 @@ namespace StationeryStore.Service
               
                 departmentEFF.SaveDepartment(department);
 
+                List<StaffEF> clerkList = staffService.FindStaffByRole(3);
+                foreach (StaffEF clerk in clerkList)
+                {
+                    if (clerk.Email != null)
+                    {
+                        string subject = "Update of Collection Point / Department Rep";
+                        string body = department.DepartmentName + " has updated their collection point / department rep.";
+                        Email.SendEmail(clerk.Email, subject, body);
+                    }
+                }
+
             }
+        }
+
+        public void CheckDelegation(DepartmentEF department)
+        {
+            long currentTimestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            if (department.DelegationEndDate < currentTimestamp || department.DelegationEndDate == null)
+            {
+                StaffEF deptHead = FindDepartmentHead(department.DepartmentCode);
+                RemoveStaffDelegation(deptHead);
+                }
+        }
+
+        public StaffEF FindDepartmentHead(string departmentCode)
+        {
+            return departmentEFF.FindDepartmentHeadByDepartmentCode(departmentCode);
         }
 
         public void DelegateStaff(ManageDelegationDTO manageDelegationDTO)

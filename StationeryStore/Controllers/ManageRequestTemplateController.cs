@@ -59,6 +59,13 @@ namespace StationeryStore.Controllers
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
 
+            RequestTemplateEF requestTemplate = rndService.FindRequestTemplateByTemplateId(templateId);
+
+            if (requestTemplate.StaffId != staff.StaffId)
+            {
+                return RedirectToAction("ViewRequestTemplate");
+            }
+
             RequestTemplateDTO requestTemplateDTO = rndService.FindRequestTemplateDetailsByTemplateId(templateId);
 
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();

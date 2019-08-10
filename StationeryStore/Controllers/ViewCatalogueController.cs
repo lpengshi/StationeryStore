@@ -16,7 +16,8 @@ namespace StationeryStore.Controllers
         StaffService staffService = new StaffService();
         StockService stockService = new StockService();
 
-        public ActionResult Index(string id)
+        [HttpGet]
+        public ActionResult Index(string id, string description, string decision)
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
@@ -24,6 +25,23 @@ namespace StationeryStore.Controllers
             int pageNum; int startFrom; 
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             List<CatalogueItemEF> newList = new List<CatalogueItemEF>();
+
+            if (description != null && decision != "Reset")
+            {
+                List<CatalogueItemEF> searchList = new List<CatalogueItemEF>();
+                foreach (CatalogueItemEF item in catalogueList)
+                {
+                    if (item.Stock.Description.ToLower().Contains(description.ToLower()))
+                    {
+                        searchList.Add(item);
+                    }
+                }
+
+                catalogueList = searchList;
+            } else if (decision == "Reset")
+            {
+                description = "";
+            }
 
             if (id != null)
             {
@@ -37,14 +55,21 @@ namespace StationeryStore.Controllers
             startFrom = (pageNum - 1) * 10;
             for (int i = startFrom; i < (startFrom + 10); i++ )
             {
-                newList.Add(catalogueList[i]);
+                if (catalogueList.Count != 0)
+                {
+                    newList.Add(catalogueList[i]);
 
-                if (i == catalogueList.Count - 1)
+                    if (i == catalogueList.Count - 1)
+                    {
+                        break;
+                    }
+                } else
                 {
                     break;
                 }
             }
 
+            ViewBag.description = description;
             ViewBag.pageNum = catalogueList.Count / 10;
             ViewBag.catalogueList = newList;
 

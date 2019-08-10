@@ -8,11 +8,15 @@ namespace StationeryStore.Controllers
     public class LoginController : Controller
     {
         StaffService staffService = new StaffService();
+        DepartmentService deptService = new DepartmentService();
 
         [HttpGet]
         public ActionResult Index()
         {
             ViewData["note"] = "Please enter your Username and Password";
+
+
+
             return View();
         }
 
@@ -32,6 +36,10 @@ namespace StationeryStore.Controllers
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
                 Session["staff"] = staff;
+                if (staff.Department != null)
+                {
+                    deptService.CheckDelegation(staff.Department);
+                }
 
                 if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
                 {

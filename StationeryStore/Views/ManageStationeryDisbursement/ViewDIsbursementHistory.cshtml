@@ -23,19 +23,21 @@
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
-                    <td class="listviewuom">Retrieval Id</td>
-                    <td class="listviewheader">Disbursement Id</td>
+                    <td class="listviewuom">Disbursement Id</td>
                     <td class="listviewheader">Department</td>
-                    <td class="listviewheader">Collection Date</td>
-                    <td class="listviewheader">Status</td>
+                    <td class="listviewuom">Collection Date</td>
+                    <td class="listviewuom">Collection Time</td>
+                    <td class="listviewheader">Collection Point</td>
+                    <td class="listviewuom">Status</td>
                 </tr>
                 @foreach (var d in disbursements)
                 {
                 <tr class="listview">
-                    <td class="oddlistview">@d.RetrievalId</td>
                     <td class="oddlistview">@Html.ActionLink(d.DisbursementId.ToString(), "ViewDisbursement", new { disbursementId = d.DisbursementId })</td>
                     <td class="oddlistview">@d.Department.DepartmentName</td>
                     <td class="oddlistview">@Timestamp.dateFromTimestamp((long)d.DateDisbursed)</td>
+                    <td class="oddlistview">@d.Department.CollectionPoint.CollectionTime</td>
+                    <td class="oddlistview">@d.Department.CollectionPoint.Location</td>
                     <td class="oddlistview">@d.Status</td>
                 </tr>
                 }

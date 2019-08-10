@@ -12,6 +12,7 @@ namespace StationeryStore.Controllers
 {
     [AuthorizeFilter]
     [DepartmentFilter]
+    [CurrentAuthorityFilter]
     public class ApproveRequestController : Controller
     {
         StaffService staffService = new StaffService();
@@ -41,6 +42,12 @@ namespace StationeryStore.Controllers
 
             // See request details
             StationeryRequestEF request = rndService.FindRequestById(requestId);
+
+            if (request.Staff.DepartmentCode != staff.DepartmentCode)
+            {
+                return RedirectToAction("Index");
+            }
+
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
 
             ViewBag.requestDetails = requestDetails;

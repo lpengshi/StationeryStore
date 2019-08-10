@@ -60,7 +60,8 @@ namespace StationeryStore.EntityFrameworkFacade
 
         public StaffEF FindStaffBySessionId(string sessionid)
         {
-            return context.Staff.SingleOrDefault(a => a.SessionId == sessionid);
+            StoreContext newContext = new StoreContext();
+            return newContext.Staff.SingleOrDefault(a => a.SessionId == sessionid);
         }
 
         public List<StaffEF> FindAllStaffByDepartmentCode(string departmentid)
