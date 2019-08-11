@@ -23,14 +23,26 @@ GROUP BY DATENAME(m, DATEADD(S, OrderDate, '1970-01-01')), DATEPART(m, dateadd(S
 FROM PurchaseOrder 
 GROUP BY DATEPART(yyyy, dateadd(S, OrderDate,'1970-01-01'))"></asp:SqlDataSource>
             Start Month: </strong>
-            <asp:DropDownList ID="startMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt">
+            <asp:DropDownList ID="startMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
+            <Items>
+                <asp:ListItem Text="Select" Value="0" />
+            </Items>
             </asp:DropDownList>
-&nbsp;<asp:DropDownList ID="startYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt" Height="16px">
+&nbsp;<asp:DropDownList ID="startYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
+            <Items>
+                <asp:ListItem Text="Select" Value="0" />
+            </Items>
             </asp:DropDownList>
             <strong>&nbsp;End Month: </strong>
-            <asp:DropDownList ID="endMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt">
+            <asp:DropDownList ID="endMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
+            <Items>
+                <asp:ListItem Text="Select" Value="0" />
+            </Items>
             </asp:DropDownList>
-&nbsp;<asp:DropDownList ID="endYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt">
+&nbsp;<asp:DropDownList ID="endYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
+            <Items>
+                <asp:ListItem Text="Select" Value="0" />
+            </Items>            
             </asp:DropDownList>
             &nbsp;&nbsp;
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Filter" />
