@@ -246,11 +246,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OrderDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="OrderTrendDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OrderTrendDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataSets\ReorderDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -377,17 +372,6 @@
     </None>
     <Content Include="DataSets\RequisitionDataSet.xss">
       <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="OrderTrendDataSet.xsc">
-      <DependentUpon>OrderTrendDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="OrderTrendDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>OrderTrendDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="OrderTrendDataSet.xss">
-      <DependentUpon>OrderTrendDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
