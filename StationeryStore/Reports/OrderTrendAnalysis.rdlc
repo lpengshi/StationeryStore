@@ -63,12 +63,12 @@
                           <GroupExpression>=Fields!Category.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=Fields!Category.Value</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Category.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=Fields!Category.Value</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartCategoryHierarchy>
@@ -80,12 +80,12 @@
                           <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Date.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartSeriesHierarchy>
@@ -790,6 +790,9 @@
                 <Height>2.14403cm</Height>
                 <Width>9.2945cm</Width>
                 <ZIndex>1</ZIndex>
+                <Visibility>
+                  <Hidden>=CountRows() = 0</Hidden>
+                </Visibility>
                 <Style>
                   <Border>
                     <Style>None</Style>
