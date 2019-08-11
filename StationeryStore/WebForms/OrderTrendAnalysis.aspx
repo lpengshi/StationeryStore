@@ -55,7 +55,7 @@ GROUP BY DATENAME(m, DATEADD(S, OrderDate, '1970-01-01')), DATEPART(m, dateadd(S
                     </DataSources>
                 </LocalReport>
             </rsweb:ReportViewer>
-            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:StoreConnectionString %>" SelectCommand="OrderTrend" SelectCommandType="StoredProcedure">
+            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:StoreConnectionString %>" SelectCommand="OrderTrendAnalysis" SelectCommandType="StoredProcedure">
                 <SelectParameters>
                     <asp:FormParameter DefaultValue="0" FormField="startMonth" Name="StartMonth" ConvertEmptyStringToNull="False" Type="Int32" />
                     <asp:FormParameter DefaultValue="0" FormField="endMonth" Name="EndMonth" ConvertEmptyStringToNull="False" Type="Int32" />
