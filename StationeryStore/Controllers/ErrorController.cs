@@ -9,6 +9,11 @@ namespace StationeryStore.Controllers
     public class ErrorController : Controller
     {
         // GET: Error
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult StoreRoleError()
         {
             return View();

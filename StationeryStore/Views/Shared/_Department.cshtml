@@ -6,7 +6,6 @@
 <div class="mainheaderbar">
     <div class="system">STATIONERY STORE INVENTORY SYSTEM</div>
     <div class="mainheaderlink">@Html.ActionLink("Logout", "Index", "Logout", null, new { @class = "topnavlink" })</div>
-    <div class="mainheaderlink">@Html.ActionLink("Help", "Index", "Logout", null, new { @class = "topnavlink" })</div>
     @if (staff.Department.AuthorityId == staff.StaffId &&
                       staff.Department.DelegationStartDate <= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow) &&
                       staff.Department.DelegationEndDate >= StationeryStore.Util.Timestamp.dateToUnixTimestamp(DateTime.UtcNow))

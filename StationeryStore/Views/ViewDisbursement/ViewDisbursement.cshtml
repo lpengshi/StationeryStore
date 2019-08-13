@@ -63,12 +63,13 @@
                 <tfoot>
                     <tr class="decision">
                         <td class="decision" colspan="6" align="right">
-                            <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>
-                            @{ Html.BeginForm("CreateRequest", "ManageRequest", FormMethod.Post);
+
+                            @{ Html.BeginForm("ViewDisbursement", "ViewDisbursement", FormMethod.Post);
                                 if (disbursement.Status == "Disbursed")
                                 {
                                     <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
-                                    <button onclick="submit()" name="decision" value="acknowledge" class="decision">Acknowledge Disbursement</button>
+                                    <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>  
+                                    <button onclick="submit()" name="decision" value="acknowledge" class="decision">Acknowledge</button>
                                 }
                             }
                         </td>
