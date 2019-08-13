@@ -13,5 +13,10 @@ namespace StationeryStore.WebForms
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            ReportViewer1.LocalReport.Refresh();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace StationeryStore.Controllers
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
-
+            //retrieve any existing request template
             List<RequestTemplateEF> requestTemplate = rndService.FindRequestTemplateByStaffId(staff.StaffId);
             ViewBag.requestTemplate = requestTemplate;
 
@@ -39,7 +39,7 @@ namespace StationeryStore.Controllers
 
             List<RequestTemplateEF> requestTemplate = rndService.FindRequestTemplateByStaffId(staff.StaffId);
             ViewBag.requestTemplate = requestTemplate;
-
+            //validate template name and save any new template
             if (templateName == null || templateName == "")
             {
                 ViewBag.note = "Please enter a valid template name";

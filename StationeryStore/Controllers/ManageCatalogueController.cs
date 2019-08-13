@@ -4,6 +4,8 @@ using StationeryStore.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,6 +17,7 @@ namespace StationeryStore.Controllers
     {
         StockService stockService = new StockService();
         StaffService staffService = new StaffService();
+        PredictService predictService = new PredictService();
 
         // GET: ManageCatalogue
 
@@ -106,7 +109,7 @@ namespace StationeryStore.Controllers
 
         [StoreManagerFilter]
         [HttpPost]
-        public ActionResult UpdateCatalogueItem(CatalogueItemDTO item, string decision)
+        public async Task<ActionResult> UpdateCatalogueItem(CatalogueItemDTO item, string decision)
         {
             if (decision == "Cancel")
             {
@@ -126,11 +129,27 @@ namespace StationeryStore.Controllers
             if (decision == "Predict Reorder Quantity")
             {
                 // get prediction from service
-                int prediction = 1;
-                // set it and throw it back to the update catalogue view
-                ModelState.Remove("ReorderQty");
-                item.ReorderQty = prediction;
-                return View(item);
+                using (var client = new HttpClient())
+                {
+                    PredictReorderQtyDTO predModel = predictService.GetPredictModel(item);
+                    // send a POST request to the server uri with the data and get the response as HttpResponseMessage object
+                    HttpResponseMessage res = await client.PostAsJsonAsync("http://127.0.0.1:5000/", predModel);
+
+                    // Return the result from the server if the status code is 200 (everything is OK)
+                    if (res.IsSuccessStatusCode)
+                    {
+                        int prediction = int.Parse(res.Content.ReadAsStringAsync().Result);
+                        ModelState.Remove("ReorderQty");
+                        item.ReorderQty = prediction;
+                    }
+                    else
+                    {
+                        //set error message or view
+                    }
+
+                    // set it and throw it back to the update catalogue view
+                    return View(item);
+                }
             }
 
             // decision == Save

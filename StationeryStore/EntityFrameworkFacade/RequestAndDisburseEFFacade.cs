@@ -140,6 +140,40 @@ namespace StationeryStore.EntityFrameworkFacade
             }
         }
 
+        public int FindDisbursedQuantityByItemCodeAndTimePeriod(string itemCode, long startMonth, long endMonth)
+        {
+            int itemCount = -1;
+
+            List<StationeryDisbursementEF> disbursedList = context.StationeryDisbursements
+                .Where(a => a.DateDisbursed >= startMonth && a.DateDisbursed <= endMonth)
+                .ToList<StationeryDisbursementEF>();
+
+            if (disbursedList.Count > 0)
+            {
+                int disbursedQty = 0;
+
+                foreach(StationeryDisbursementEF disbursement in disbursedList)
+                {
+                    StationeryDisbursementDetailsEF disbursedDetails = context.StationeryDisbursementDetails
+                        .Where(a => a.DisbursementId == disbursement.DisbursementId && a.ItemCode == itemCode)
+                        .FirstOrDefault();
+
+                    if (disbursedDetails != null)
+                    {
+                        disbursedQty += disbursedDetails.DisbursedQuantity;
+                    }
+                }
+
+                if (disbursedQty > 0)
+                {
+                    itemCount = disbursedQty;
+                }
+
+            }
+
+            return itemCount;
+        }
+
         public List<StationeryRequestDetailsEF> FindAllRequestDetailsByStatus(string status)
         {
             return context.StationeryRequestDetails

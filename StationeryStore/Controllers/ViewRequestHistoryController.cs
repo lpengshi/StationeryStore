@@ -18,6 +18,7 @@ namespace StationeryStore.Controllers
 
         public ActionResult Index()
         {
+            //retrieve staff request history
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             List<RequestDTO> requestDTOList = rndService.FindRequestsByStaff(staff.StaffId);

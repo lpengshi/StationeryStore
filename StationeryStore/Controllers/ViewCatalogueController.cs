@@ -21,7 +21,7 @@ namespace StationeryStore.Controllers
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
-            
+            //retrieve all catalogue items and do pagination
             int pageNum; int startFrom; 
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             List<CatalogueItemEF> newList = new List<CatalogueItemEF>();

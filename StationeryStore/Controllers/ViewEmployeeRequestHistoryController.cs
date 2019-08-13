@@ -36,11 +36,12 @@ namespace StationeryStore.Controllers
         [HttpPost]
         public ActionResult Index(string staffId)
         {
+            //retrieve request history of selected staff
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             List<StationeryRequestEF> requestList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "all");
             List<string> requestDate = rndService.ConvertToDate(requestList);
-
+            //
             if (staffId == "All Staff")
             {
                 return RedirectToAction("Index");
@@ -68,6 +69,7 @@ namespace StationeryStore.Controllers
 
         public ActionResult ViewRequest(string requestId)
         {
+            //retrieve request details of selected request
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             StationeryRequestEF request = rndService.FindRequestById(requestId);

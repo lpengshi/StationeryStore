@@ -22,14 +22,12 @@ namespace StationeryStore.Controllers
         {
             return View();
         }
-
-        [StoreSupervisorFilter]
+        
         public ActionResult GenerateOrderTrendAnalysis()
         {
             return View();
         }
-
-        [StoreSupervisorFilter]
+        
         public ActionResult GenerateRequestTrendAnalysis()
         {
             return View();
