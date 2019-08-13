@@ -36,7 +36,8 @@ namespace StationeryStore.Controllers
             return View();
         }
 
-        public ActionResult ViewDisbursement (int disbursementId)
+        [HttpGet]
+        public ActionResult ViewDisbursement(int disbursementId)
         {
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
@@ -47,5 +48,17 @@ namespace StationeryStore.Controllers
             ViewBag.disbursementDetails = disbursementDetails;
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ViewDisbursement(int disbursementId, string decision)
+        {
+            StaffEF staff = staffService.GetStaff();
+            ViewBag.staff = staff;
+            StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
+            rndService.UpdateDisbursementStatus(disbursement);
+
+            return RedirectToAction("ViewDisbursement", new { disbursementId });
+        }
+
     }
 }

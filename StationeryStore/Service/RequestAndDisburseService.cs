@@ -60,6 +60,12 @@ namespace StationeryStore.Service
             rndEFF.SaveRequestTemplate(requestTemplate);
         }
 
+        public void UpdateDisbursementStatus(StationeryDisbursementEF disbursement)
+        {
+            disbursement.Status = "Acknowledged";
+            rndEFF.SaveDisbursement(disbursement);
+        }
+
         public RequestTemplateEF FindRequestTemplateByTemplateId(int templateId)
         {
             return rndEFF.FindRequestTemplateByTemplateId(templateId);
