@@ -20,12 +20,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingStock = context.Stocks.Find(stock.ItemCode);
             if (existingStock != null)
             {
-                existingStock.ItemCode = stock.ItemCode;
-                existingStock.Category = stock.Category;
-                existingStock.Description = stock.Description;
-                existingStock.Uom = stock.Uom;
-                existingStock.Bin = stock.Bin;
-                existingStock.QuantityOnHand = stock.QuantityOnHand;
+                context.Entry(existingStock).CurrentValues.SetValues(stock);
                 context.SaveChanges();
             }
         }
@@ -46,7 +41,7 @@ namespace StationeryStore.EntityFrameworkFacade
 
         public StockEF FindStockByDescription(string description)
         {
-            var stockItem = context.Stocks.Single(a => a.Description == description);
+            var stockItem = context.Stocks.SingleOrDefault(a => a.Description == description);
 
             return stockItem;
         }
@@ -122,8 +117,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingItem = context.CatalogueItems.Find(item.CatalogueId);
             if (existingItem != null)
             {
-                existingItem.ReorderLevel = item.ReorderLevel;
-                existingItem.ReorderQty = item.ReorderQty;
+                context.Entry(existingItem).CurrentValues.SetValues(item);
                 context.SaveChanges();
             }
         }

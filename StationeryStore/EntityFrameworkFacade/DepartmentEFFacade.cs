@@ -61,8 +61,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingPoint = context.CollectionPoints.Find(point.CollectionPointId);
             if (existingPoint != null)
             {
-                existingPoint.Location = point.Location;
-                existingPoint.CollectionTime = point.CollectionTime;
+                context.Entry(existingPoint).CurrentValues.SetValues(point);
                 context.SaveChanges();
             }
         }

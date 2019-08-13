@@ -303,7 +303,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingRetrieval = context.StationeryRetrievals.Find(retrieval.RetrievalId);
             if (existingRetrieval != null)
             {
-                existingRetrieval.Status = retrieval.Status;
+                context.Entry(existingRetrieval).CurrentValues.SetValues(retrieval);
                 context.SaveChanges();
             }
         }
@@ -342,9 +342,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingDisbursement = context.StationeryDisbursements.Find(disbursement.DisbursementId);
             if (existingDisbursement != null)
             {
-                existingDisbursement.CollectionRepId = disbursement.CollectionRepId;
-                existingDisbursement.Status = disbursement.Status;
-                existingDisbursement.DateDisbursed = disbursement.DateDisbursed;
+                context.Entry(existingDisbursement).CurrentValues.SetValues(disbursement);
                 context.SaveChanges();
             }
         }
@@ -381,9 +379,7 @@ namespace StationeryStore.EntityFrameworkFacade
             var existingDisbursementDetails = context.StationeryDisbursementDetails.Find(details.DisbursementDetailsId);
             if (existingDisbursementDetails != null)
             {
-                existingDisbursementDetails.RequestQuantity = details.RequestQuantity;
-                existingDisbursementDetails.RetrievedQuantity = details.RetrievedQuantity;
-                existingDisbursementDetails.DisbursedQuantity = details.DisbursedQuantity;
+                context.Entry(existingDisbursementDetails).CurrentValues.SetValues(details);
                 context.SaveChanges();
             }
         }
