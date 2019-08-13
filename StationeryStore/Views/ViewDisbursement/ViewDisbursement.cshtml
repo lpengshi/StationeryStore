@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "View Disbursement";
+    var staff = ViewBag.staff;
     var disbursement = ViewBag.disbursement;
     var disbursementDetails = ViewBag.disbursementDetails;
 }
@@ -65,7 +66,7 @@
                         <td class="decision" colspan="6" align="right">
 
                             @{ Html.BeginForm("ViewDisbursement", "ViewDisbursement", FormMethod.Post);
-                                if (disbursement.Status == "Disbursed")
+                                if (disbursement.Status == "Disbursed" && disbursement.CollectionRepId == staff.StaffId )
                                 {
                                     <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
                                     <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>  
