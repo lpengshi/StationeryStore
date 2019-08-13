@@ -1,6 +1,7 @@
 ﻿using StationeryStore.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -104,6 +105,11 @@ namespace StationeryStore.EntityFrameworkFacade
             return context.Suppliers.Find(supplierCode);
         }
 
+        public List<SupplierDetailsEF> FindAllSupplierDetails()
+        {
+            return context.SupplierDetails.ToList();
+        }
+
         public void AddToSupplierDetails(SupplierDetailsEF supplierDetails)
         {
             context.SupplierDetails.Add(supplierDetails);
@@ -124,6 +130,23 @@ namespace StationeryStore.EntityFrameworkFacade
         public List<SupplierDetailsEF> FindSupplierDetailsByItemCode(string itemCode)
         {
             return context.SupplierDetails.Where(a => a.ItemCode == itemCode).ToList();
+        }
+
+        public void UpdateSupplierDetails(SupplierDetailsEF details)
+        {
+            var existingRecord = context.SupplierDetails.Find(details.SupplierDetailsId);
+            if (existingRecord != null)
+            {
+                context.Entry(existingRecord).CurrentValues.SetValues(details);
+                context.SaveChanges();
+            }
+        }
+
+        public bool ClearSupplierDetailsData()
+        {
+            context.Database.ExecuteSqlCommand("TRUNCATE TABLE SupplierDetails");
+            Debug.Print("Supplier details cleared.");
+            return true;
         }
     }
 }

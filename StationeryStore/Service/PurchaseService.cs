@@ -165,5 +165,28 @@ namespace StationeryStore.Service
             purchaseEFF.UpdateSupplier(sup);
 
         }
+
+        public List<SupplierDetailsEF> FindAllSupplierDetails()
+        {
+            return purchaseEFF.FindAllSupplierDetails();
+        }
+
+        public bool ClearSupplierDetailsData()
+        {
+            return purchaseEFF.ClearSupplierDetailsData();
+        }
+
+        public void AddSupplierDetail(SupplierDetailsEF supplierDetails)
+        {
+            purchaseEFF.AddToSupplierDetails(supplierDetails);
+        }
+
+        public void AmendSupplierDetails(List<SupplierDetailsEF> supplierDetails)
+        {
+            foreach(SupplierDetailsEF d in supplierDetails)
+            {
+             purchaseEFF.UpdateSupplierDetails(d);
+            }
+        }
     }
 }

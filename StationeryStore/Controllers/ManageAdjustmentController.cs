@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Service;
 using StationeryStore.Models;
+using StationeryStore.Util;
 using System.Net.Mail;
 using System.Diagnostics;
 
@@ -51,7 +52,7 @@ namespace StationeryStore.Controllers
             ViewData["search"] = search;
             ViewData["page"] = page;
             ViewData["noOfPages"] = noOfPages;
-            ViewData["voucherList"] = adjVouchers;
+            ViewData["voucherList"] = details;
 
             return View();
         }
@@ -82,6 +83,7 @@ namespace StationeryStore.Controllers
                 if (choice == "Approve" || choice == "Reject" )
                 {
                     stockService.UpdateAdjustmentVoucherStatus(staff, voucherId, choice);
+                    SendEmailToStaffOnDecision(voucher.Requester, voucher);
                 }
             }
             return View();
@@ -107,6 +109,7 @@ namespace StationeryStore.Controllers
                     detailsList.Add(toAdd);
                 }
 
+                detailsList = stockService.GetPricesForVoucherDetails(detailsList);
                 ViewData["voucher"] = voucher;
             }
             List<StockEF> itemList = stockService.FindAllStocks().OrderBy(x => x.ItemCode).ToList();
@@ -179,23 +182,24 @@ namespace StationeryStore.Controllers
                 if (stockService.VoucherExceedsSetValue(detailsList))
                 {
                     Debug.Print("Pending appr sent to manager email");
-                    SendEmailToAuthority(voucher.VoucherId, "Manager");
+                    SendEmailToAuthorityOnRequest(voucher.VoucherId, "Manager");
                 }
                 else
                 {
                     Debug.Print("Pending appr sent to supervisor email");
-                    SendEmailToAuthority(voucher.VoucherId, "Supervisor");
+                    SendEmailToAuthorityOnRequest(voucher.VoucherId, "Supervisor");
                 }
                 return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId});
             }
 
+            //get prices for each item
             detailsList = stockService.GetPricesForVoucherDetails(detailsList);
 
             ModelState.Clear();
             return View(detailsList);
         }
 
-        public void SendEmailToAuthority(string voucherId, string authorityLevel)
+        private void SendEmailToAuthorityOnRequest(string voucherId, string authorityLevel)
         {
             List<string> recepientEmailAdd = new List<string>();
 
@@ -216,35 +220,20 @@ namespace StationeryStore.Controllers
                 }
             }
 
-            System.Net.NetworkCredential credentials =
-                    new System.Net.NetworkCredential("sa48team5@gmail.com", "passTeam5word");
-            SmtpClient client = new SmtpClient()
+            foreach (string e in recepientEmailAdd)
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = credentials
-            };
+                Email.SendEmail(e,
+                    "Adjustment Voucher#" + voucherId + " : Pending Review",
+                    "Adjustment Voucher" + voucherId + " requires review.");
+            }           
+        }
 
-            foreach (string recepientEmail in recepientEmailAdd)
-            {
-                MailMessage mm = new MailMessage("sa48team5@gmail.com", recepientEmail)
-                {
-                    Subject = "Adjustment Voucher#" + voucherId + " : Pending Review",
-                    Body = "Adjustment Voucher" + voucherId + " requires review."
-                };
-                mm.IsBodyHtml = true;
-                try
-                {
-                    client.Send(mm);
-                }
-                catch (Exception e)
-                {
-                    Debug.Print(e.Message);
-                }
-            }
+        private void SendEmailToStaffOnDecision(StaffEF staff, AdjustmentVoucherEF voucher)
+        {
+            string email = staff.Email;
+            Email.SendEmail(email,
+                    "Adjustment Voucher#" + voucher.VoucherId + " : has been " + voucher.Status.ToLower() + ".",
+                    "Adjustment Voucher#" + voucher.VoucherId + " has been " + voucher.Status.ToLower() + "by " + voucher.Approver.Name + ".");
         }
     }
 }

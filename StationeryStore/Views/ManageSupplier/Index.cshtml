@@ -11,6 +11,25 @@
 <div class="mainview">
     <h3>Supplier List</h3>
     <br />
+    @if (staffRole == "Store Manager")
+    {
+        <div>
+            <p>Upload a file to replace all data for supplier details:</p>
+            @using (Html.BeginForm("ImportSupplierDetails", "CSVHandler", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <table>
+                    <tr>
+                        <td colspan="2">@TempData["MessageError"]</td>
+                    </tr>
+                    <tr>
+                        <td><input class="decision" name="fileUploaded" id="fileUploaded" type="file" accept=".csv" onchange="checkfile()" /></td>
+                        <td><input class="decision" type="submit" value="Upload" onclick="confirm('Clear all supplier details and replace?')" /></td>
+                    </tr>
+                </table>
+            }
+        </div>
+    }
+
     @if (suppliers == null || suppliers.Count == 0)
     {
         <h5>There are no suppliers.</h5>
@@ -21,12 +40,17 @@
             <table class="listview">
                 @if (staffRole == "Store Manager")
                 {
-                    <tr class="decision">
-                        <td class="decision" colspan="2" align="right">
-                            <input type="button" class="decision" onclick="location.href='~/ManageSupplier/CreateSupplier';" value="Add New Supplier" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td align="right">
+                        <input type="button" onclick="location.href='ManageSupplier/CreateSupplier';" value="Add New Supplier" class="decision" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="10px"></td>
+                </tr>
                 }
+                
                 <tr class="listview">
                     <td class="listviewheader">Supplier Code</td>
                     <td class="listviewheader">Supplier Name</td>
@@ -34,18 +58,28 @@
                 </tr>
                 @foreach (var s in suppliers)
                 {
-                <tr class="listview">
-                    <td class="oddlistview"><a href="@Url.Action("ViewSupplier", "ManageSupplier", new {supplierCode = s.SupplierCode} )">@s.SupplierCode</a></td>
-                    <td class="oddlistview">@s.SupplierName</td>
-                    <td class="oddlistview">*View/Print??*</td>
-                </tr>
+                    <tr class="listview">
+                        <td class="oddlistview"><a href="@Url.Action("ViewSupplier", "ManageSupplier", new {supplierCode = s.SupplierCode} )">@s.SupplierCode</a></td>
+                        <td class="oddlistview">@s.SupplierName</td>
+                        <td class="oddlistview">*View/Print??*</td>
+                    </tr>
                 }
             </table>
         </div>
         <br />
-        <div>
-            <input type="button" onclick="location.href='ManageSupplier/CreateSupplier';" value="Add New Supplier" class="decision"/>
-        </div>
+
     }
 
 </div>
+
+<script>
+    function checkfile() {
+        var FileName = $("#fileUploaded").val();
+        var extension = FileName.split('.');
+        if (extension[1] != "csv") {
+            $("#fileUploaded").val('');
+            alert("Please select a .csv file");
+            return;
+        }
+    }
+</script>

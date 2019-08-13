@@ -49,6 +49,8 @@
                     <th class="listviewheader">Item Code</th>
                     <th class="listviewheader">Description</th>
                     <th class="listviewheader">Quantity Adjusted</th>
+                    <th class="listviewheader">Unit Cost</th>
+                    <th class="listviewheader">Subtotal</th>
                     <th class="listviewheader">Reason</th>
                     <th class="listviewheader">Remove</th>
                 </tr>
@@ -60,24 +62,36 @@
                 }
                 else
                 {
+                    List<double> prices = new List<double>();
+
                     for (int i = 0; i < Model.Count; i++)
                     {
                         int count = i + 1;
+                        double itemSubtotal = Model[i].Price * Model[i].Quantity;
+                        
                         <tr class="oddlistview">
                             <td class="oddlistview">@count</td>
                             <td class="oddlistview">@Html.Raw(Model[i].ItemCode)</td>
                             <td class="oddlistview">@Html.Raw(Model[i].Description)</td>
-                            <td class="oddlistview">@Html.EditorFor(x => x[i].Quantity)<br />@Html.ValidationMessageFor(x => Model[i].Quantity)</td>
+                            <td class="oddlistview" id="quantity-@i ">@Html.EditorFor(x => x[i].Quantity, new { htmlAttributes = new { onchange = "changeQty(`@itemSubtotal`)" } })<br />@Html.ValidationMessageFor(x => Model[i].Quantity)</td>
+                            <td class="oddlistview" id="price-@i" >@Html.DisplayFor(x => x[i].Price)</td>
+                            <td class="oddlistview" id="subtotal-@i"></td>
                             <td class="oddlistview">@Html.EditorFor(x => x[i].Reason)<br />@Html.ValidationMessageFor(x => Model[i].Reason)</td>
                             <td class="oddlistview">@Html.CheckBoxFor(x => x[i].Remove)</td>
-                            
+
                             @Html.HiddenFor(x => x[i].Remove, Model[i].Remove)
                             @Html.HiddenFor(x => x[i].ItemCode, Model[i].ItemCode)
                             @Html.HiddenFor(x => x[i].Description, Model[i].Description)
                             @Html.HiddenFor(x => x[i].Reason, Model[i].Reason)
                             @Html.HiddenFor(x => x[i].Quantity, Model[i].Quantity)
+                            @Html.HiddenFor(x => x[i].Price, Model[i].Price)
                         </tr>
                     }
+
+                    <tr>
+                        <td colspan="7" class="oddlistview">Total Value:</td>
+                        <td id="totalSum" class="oddlistview">@string.Format("{0:C}", Model.Sum(x => x.Price * x.Quantity))</td>
+                    </tr>
                 }
 
             </table>
@@ -89,3 +103,11 @@
         }
     </div>
 </div>
+<script type="text/javascript">
+    var prices = [];
+
+    function changeQty(i) {
+        
+        alert(i);
+    }
+</script>

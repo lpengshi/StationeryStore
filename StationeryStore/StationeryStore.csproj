@@ -259,6 +259,8 @@
     <Compile Include="Service\StaffService.cs" />
     <Compile Include="Service\StockService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Controllers\CSVHandlerController.cs" />
+    <Compile Include="Util\CSV_Validator.cs" />
     <Compile Include="Util\Email.cs" />
     <Compile Include="Util\Timestamp.cs" />
     <Compile Include="WebForms\InventoryStatusReportForm.aspx.cs">
@@ -455,6 +457,7 @@
     <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
+    <Content Include="Views\ManageSupplier\EditSupplierDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
