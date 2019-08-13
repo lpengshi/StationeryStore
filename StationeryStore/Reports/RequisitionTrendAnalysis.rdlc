@@ -97,12 +97,12 @@
                           <GroupExpression>=Fields!Category.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=Fields!Category.Value</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Category.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=Fields!Category.Value</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartCategoryHierarchy>
@@ -114,12 +114,12 @@
                           <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Date.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartSeriesHierarchy>
@@ -557,7 +557,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Sum(Fields!TotalQty.Value)</Value>
+                                      <Value>=IIF(Fields!TotalQty.Value IS NOTHING, 0, Sum(Fields!TotalQty.Value))</Value>
                                       <Style>
                                         <FontSize>12pt</FontSize>
                                       </Style>
@@ -580,6 +580,7 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
+                            <rd:Selected>true</rd:Selected>
                           </CellContents>
                         </TablixCell>
                         <TablixCell>
@@ -815,6 +816,9 @@
                 <Height>1.8cm</Height>
                 <Width>8.67475cm</Width>
                 <ZIndex>2</ZIndex>
+                <Visibility>
+                  <Hidden>=CountRows() = 0</Hidden>
+                </Visibility>
                 <Style>
                   <Border>
                     <Style>Solid</Style>
@@ -891,12 +895,12 @@
                                         <GroupExpression>=Fields!Category.Value</GroupExpression>
                                       </GroupExpressions>
                                     </Group>
+                                    <Label>=Fields!Category.Value</Label>
                                     <SortExpressions>
                                       <SortExpression>
                                         <Value>=Fields!Category.Value</Value>
                                       </SortExpression>
                                     </SortExpressions>
-                                    <Label>=Fields!Category.Value</Label>
                                   </ChartMember>
                                 </ChartMembers>
                               </ChartCategoryHierarchy>
@@ -908,12 +912,12 @@
                                         <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                                       </GroupExpressions>
                                     </Group>
+                                    <Label>=MonthName(Month(Fields!Date.Value))</Label>
                                     <SortExpressions>
                                       <SortExpression>
                                         <Value>=Fields!Date.Value</Value>
                                       </SortExpression>
                                     </SortExpressions>
-                                    <Label>=MonthName(Month(Fields!Date.Value))</Label>
                                   </ChartMember>
                                 </ChartMembers>
                               </ChartSeriesHierarchy>
@@ -1351,7 +1355,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(Fields!TotalQty.Value)</Value>
+                                                    <Value>=IIF(Fields!TotalQty.Value IS NOTHING, 0, Sum(Fields!TotalQty.Value))</Value>
                                                     <Style>
                                                       <FontSize>12pt</FontSize>
                                                       <FontWeight>Normal</FontWeight>

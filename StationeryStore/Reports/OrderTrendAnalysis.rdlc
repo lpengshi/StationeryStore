@@ -11,7 +11,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSet4">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>OrderDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -40,7 +40,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>OrderDataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\janel\Source\Repos\lpengshi\StationeryStore\StationeryStore\OrderDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\janel\Source\Repos\lpengshi\StationeryStore\StationeryStore\DataSets\OrderDataSet.xsd</rd:SchemaPath>
         <rd:TableName>OrderTrendAnalysis</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -63,12 +63,12 @@
                           <GroupExpression>=Fields!Category.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=Fields!Category.Value</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Category.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=Fields!Category.Value</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartCategoryHierarchy>
@@ -80,12 +80,12 @@
                           <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                         </GroupExpressions>
                       </Group>
+                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Date.Value</Value>
                         </SortExpression>
                       </SortExpressions>
-                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartSeriesHierarchy>
@@ -406,7 +406,7 @@
                     <VerticalAlign>Top</VerticalAlign>
                   </Style>
                 </ChartNoDataMessage>
-                <DataSetName>DataSet4</DataSetName>
+                <DataSetName>DataSet1</DataSetName>
                 <Top>0.03528cm</Top>
                 <Left>0.97367cm</Left>
                 <Height>9.04283cm</Height>
@@ -420,13 +420,13 @@
                   <BackgroundGradientType>None</BackgroundGradientType>
                 </Style>
               </Chart>
-              <Tablix Name="Tablix1">
+              <Tablix Name="Tablix2">
                 <TablixCorner>
                   <TablixCornerRows>
                     <TablixCornerRow>
                       <TablixCornerCell>
                         <CellContents>
-                          <Textbox Name="Textbox1">
+                          <Textbox Name="Textbox12">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -437,7 +437,6 @@
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
-                                      <TextDecoration>Underline</TextDecoration>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -446,7 +445,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox1</rd:DefaultName>
+                            <rd:DefaultName>Textbox12</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -465,7 +464,7 @@
                     <TablixCornerRow>
                       <TablixCornerCell>
                         <CellContents>
-                          <Textbox Name="Textbox14">
+                          <Textbox Name="Textbox10">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -476,7 +475,6 @@
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
-                                      <TextDecoration>Underline</TextDecoration>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -485,7 +483,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox14</rd:DefaultName>
+                            <rd:DefaultName>Textbox10</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -506,7 +504,7 @@
                 <TablixBody>
                   <TablixColumns>
                     <TablixColumn>
-                      <Width>2.96333cm</Width>
+                      <Width>2.5cm</Width>
                     </TablixColumn>
                     <TablixColumn>
                       <Width>2.5cm</Width>
@@ -514,18 +512,18 @@
                   </TablixColumns>
                   <TablixRows>
                     <TablixRow>
-                      <Height>0.79318cm</Height>
+                      <Height>0.6cm</Height>
                       <TablixCells>
                         <TablixCell>
                           <CellContents>
-                            <Textbox Name="Textbox39">
+                            <Textbox Name="TotalQty">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Sum(Fields!TotalQty.Value)</Value>
+                                      <Value>=IIF(Fields!TotalQty.Value IS NOTHING, 0, Sum(Fields!TotalQty.Value))</Value>
                                       <Style>
                                         <FontSize>12pt</FontSize>
                                       </Style>
@@ -536,7 +534,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox39</rd:DefaultName>
+                              <rd:DefaultName>TotalQty</rd:DefaultName>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -548,11 +546,12 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
+                            <rd:Selected>true</rd:Selected>
                           </CellContents>
                         </TablixCell>
                         <TablixCell>
                           <CellContents>
-                            <Textbox Name="Textbox27">
+                            <Textbox Name="Textbox16">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
@@ -572,7 +571,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox27</rd:DefaultName>
+                              <rd:DefaultName>Textbox16</rd:DefaultName>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -596,7 +595,7 @@
                       <TablixHeader>
                         <Size>0.6cm</Size>
                         <CellContents>
-                          <Textbox Name="Textbox2">
+                          <Textbox Name="Textbox13">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -607,7 +606,6 @@
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
-                                      <TextDecoration>Underline</TextDecoration>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -616,7 +614,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox2</rd:DefaultName>
+                            <rd:DefaultName>Textbox13</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -635,7 +633,7 @@
                         <TablixMember>
                           <Group Name="Date">
                             <GroupExpressions>
-                              <GroupExpression>=MonthName(Month(Fields!Date.Value))</GroupExpression>
+                              <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                             </GroupExpressions>
                           </Group>
                           <SortExpressions>
@@ -644,9 +642,9 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.75085cm</Size>
+                            <Size>0.6cm</Size>
                             <CellContents>
-                              <Textbox Name="Date1">
+                              <Textbox Name="Date">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
@@ -665,7 +663,7 @@
                                     </Style>
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Date1</rd:DefaultName>
+                                <rd:DefaultName>Date</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Style>Solid</Style>
@@ -680,17 +678,14 @@
                               </Textbox>
                             </CellContents>
                           </TablixHeader>
-                          <TablixMembers>
-                            <TablixMember />
-                          </TablixMembers>
                         </TablixMember>
                       </TablixMembers>
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.35085cm</Size>
+                        <Size>1.2cm</Size>
                         <CellContents>
-                          <Textbox Name="Textbox25">
+                          <Textbox Name="Textbox14">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -701,7 +696,6 @@
                                     <Style>
                                       <FontSize>12pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
-                                      <TextDecoration>Underline</TextDecoration>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -710,7 +704,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Textbox25</rd:DefaultName>
+                            <rd:DefaultName>Textbox14</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -742,9 +736,9 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>3.83117cm</Size>
+                        <Size>2.5cm</Size>
                         <CellContents>
-                          <Textbox Name="Category1">
+                          <Textbox Name="Category">
                             <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
@@ -763,7 +757,7 @@
                                 </Style>
                               </Paragraph>
                             </Paragraphs>
-                            <rd:DefaultName>Category1</rd:DefaultName>
+                            <rd:DefaultName>Category</rd:DefaultName>
                             <Style>
                               <Border>
                                 <Style>Solid</Style>
@@ -778,21 +772,18 @@
                           </Textbox>
                         </CellContents>
                       </TablixHeader>
-                      <TablixMembers>
-                        <TablixMember />
-                      </TablixMembers>
                     </TablixMember>
                   </TablixMembers>
                 </TablixRowHierarchy>
-                <DataSetName>DataSet4</DataSetName>
-                <Top>9.63783cm</Top>
-                <Left>1.60867cm</Left>
-                <Height>2.14403cm</Height>
-                <Width>9.2945cm</Width>
+                <DataSetName>DataSet1</DataSetName>
+                <Top>9.7917cm</Top>
+                <Left>1.93887cm</Left>
+                <Height>1.8cm</Height>
+                <Width>7.5cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
-                    <Style>None</Style>
+                    <Style>Solid</Style>
                   </Border>
                 </Style>
               </Tablix>
