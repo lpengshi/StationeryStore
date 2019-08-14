@@ -63,6 +63,12 @@ namespace StationeryStore.Service
         public void UpdateDisbursementStatus(StationeryDisbursementEF disbursement)
         {
             disbursement.Status = "Acknowledged";
+            if (disbursement.StoreClerk.Email != null)
+            {
+                string subject = "Acknowledgement for Disbursement#" + disbursement.DisbursementId;
+                string body = disbursement.Staff.Name + "has acknowledged disbursement#" + disbursement.DisbursementId + ".";
+                Email.SendEmail(disbursement.StoreClerk.Email, subject, body);
+            }
             rndEFF.SaveDisbursement(disbursement);
         }
 
@@ -184,7 +190,7 @@ namespace StationeryStore.Service
             {
                 string subject = "Request Status Update";
                 string body = "Request #" + request.RequestId + " has been " + request.Status.ToLower() + " by " + staff.Name + "(" + request.Designation + "). Please click " +
-                "<a href='http://localhost:56415/ManageRequest/ViewRequest/?requestId=" + request.RequestId + "'>" + "here</a> to view the details.";
+                "<a href='http://localhost/StationeryStore/ManageRequest/ViewRequest/?requestId=" + request.RequestId + "'>" + "here</a> to view the details.";
                 Email.SendEmail(request.Staff.Email, subject, body);
             }
         }
@@ -543,7 +549,7 @@ namespace StationeryStore.Service
             {
                 string subject = "Pending Stationery Request";
                 string body = "Request #" + requestId + " has been submitted by " + staff.Name + " for your approval. Please click " +
-                "<a href='http://localhost:56415/ApproveRequest/ViewRequest/?requestId=" + requestId + "'>" + "here</a> to view the details.";
+                "<a href='http://localhost/StationeryStore/ApproveRequest/ViewRequest/?requestId=" + requestId + "'>" + "here</a> to view the details.";
                 Email.SendEmail(currentAuthority.Email, subject, body);
             }
         }
