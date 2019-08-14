@@ -28,6 +28,7 @@ namespace StationeryStore.Controllers
             ViewBag.department = staff.Department;
             //retrieve current delegation
             ManageDelegationDTO manageDelegationDTO = new ManageDelegationDTO();
+            manageDelegationDTO.DelegationStartDate = DateTime.UtcNow;
             manageDelegationDTO.DepartmentCode = staff.DepartmentCode;
 
             return View(manageDelegationDTO);
@@ -42,19 +43,13 @@ namespace StationeryStore.Controllers
             List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(staff.DepartmentCode);
             ViewBag.deptStaff = deptStaff;
             ViewBag.department = staff.Department;
+            manageDelegationDTO.DelegationStartDate = DateTime.UtcNow;
 
             //update delegation and validate delegation start and end date
             if (decision == "Add Delegation") {
                 if (staff.Department.AuthorityId != staff.StaffId)
                 {
                     ViewBag.note = "Please remove existing delegation before adding a new one";
-
-                    return View(manageDelegationDTO);
-                }
-
-                if (manageDelegationDTO.DelegationStartDate.Date.CompareTo(DateTime.UtcNow.Date) < 0)
-                {
-                    ViewBag.note = "Delegation Start Date cannot be earlier than today";
 
                     return View(manageDelegationDTO);
                 }

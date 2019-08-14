@@ -51,11 +51,12 @@ namespace StationeryStore.Service
                     if (clerk.Email != null)
                     {
                         string subject = "Update of Collection Point / Department Rep";
-                        string body = department.DepartmentName + " has updated their collection point / department rep.";
+                        string body = department.DepartmentName + " has updated their collection point(" + department.CollectionPoint.Location + ", " + 
+                            department.CollectionPoint.CollectionTime + ") and department representative(" +
+                            department.DepartmentRepresentative.Name + ")";
                         Email.SendEmail(clerk.Email, subject, body);
                     }
                 }
-
             }
         }
 

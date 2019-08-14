@@ -19,12 +19,15 @@
         <div class="listview">
             <table class="listview">
                 <tr class="listview">
-                    <td class="listrequestlabel">Current Authority</td>
+                    <td class="listrequestlabel">Delegated Staff</td>
                     <td class="listrequestlabel">Delegation Start Date</td>
                     <td class="listrequestlabel">Delegation End Date</td>
                 </tr>
                 <tr class="listview">
-                    <td class="listrequestlabel">@department.Authority.Name</td>
+                    @if (department.Authority.Role.Description != "Department Head")
+                    {
+                        <td class="listrequestlabel">@department.Authority.Name</td>
+                    }
                     @if (department.DelegationStartDate != null)
                     {
                         <td class="listrequestlabel">@StationeryStore.Util.Timestamp.dateFromTimestamp(department.DelegationStartDate)</td>
@@ -57,18 +60,18 @@
                     <td class="viewlabel">@Html.DropDownListFor(a => a.AuthorityId, new SelectList(deptStaff, "StaffId", "Name"))<br /><br /></td>
                 </tr>
                 <tr class="listview">
-                    <td class="viewlabel">Select Start Date</td>
+                    <td class="viewlabel">Today Date (Start Date)</td>
                     <td class="listrequestlabel">Select End Date</td>
                 </tr>
                 <tr class="listview">
-                    @if (Model.DelegationStartDate.Date.CompareTo(DateTime.UtcNow.Date) > -1)
+                    @if (Model.DelegationEndDate.Date.CompareTo(DateTime.UtcNow.Date) > -1)
                     {
-                        <td class="viewlabel"><input type="date" name="DelegationStartDate" value="@Model.DelegationStartDate.ToString("yyyy-MM-dd")" /></td>
+                        <td class="viewlabel"><input type="date" value="@Model.DelegationStartDate.ToString("yyyy-MM-dd")" disabled/></td>
                         <td class="listrequestlabel"><input type="date" name="DelegationEndDate" value="@Model.DelegationEndDate.ToString("yyyy-MM-dd"))" /></td>
                     }
                     else
                     {
-                        <td class="viewlabel"><input type="date" name="DelegationStartDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" /></td>
+                        <td class="viewlabel"><input type="date" value="@Model.DelegationStartDate.ToString("yyyy-MM-dd")" disabled/></td>
                         <td class="listrequestlabel"><input type="date" name="DelegationEndDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" /></td>
                     }
                 </tr>
