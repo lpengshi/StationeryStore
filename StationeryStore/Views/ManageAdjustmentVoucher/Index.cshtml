@@ -12,7 +12,7 @@
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
-    <h3>Supplier List</h3>
+    <h3>Adjustment Voucher History</h3>
     <br />
 
     @if (voucherList.Count == 0)
@@ -37,7 +37,7 @@
                         }
                     }
                 </select>
-                <input type="submit">
+                <input type="submit" class="decision">
                 <input type="hidden" name="page" value="@page"/>
             </p>
         </form>

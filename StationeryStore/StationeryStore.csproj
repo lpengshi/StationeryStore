@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -70,9 +73,13 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -136,6 +143,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Diagnostics.DiagnosticSource">
@@ -164,7 +172,7 @@
     <Compile Include="Controllers\GenerateRetrievalListController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogoutController.cs" />
-    <Compile Include="Controllers\ManageAdjustmentController.cs" />
+    <Compile Include="Controllers\ManageAdjustmentVoucherController.cs" />
     <Compile Include="Controllers\ManageCatalogueController.cs" />
     <Compile Include="Controllers\ManageCollectionController.cs" />
     <Compile Include="Controllers\ManageDelegationController.cs" />
@@ -264,6 +272,8 @@
     <Compile Include="Service\StaffService.cs" />
     <Compile Include="Service\StockService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Controllers\CSVHandlerController.cs" />
+    <Compile Include="TemplatesAndGenerators\PurchaseOrderGenerator.cs" />
     <Compile Include="Util\Email.cs" />
     <Compile Include="Util\Timestamp.cs" />
     <Compile Include="WebForms\InventoryStatusReportForm.aspx.cs">
@@ -373,6 +383,7 @@
     <Content Include="DataSets\RequisitionDataSet.xss">
       <DependentUpon>RequisitionDataSet.xsd</DependentUpon>
     </Content>
+    <None Include="packages.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -397,7 +408,9 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -460,10 +473,13 @@
     <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
+    <Content Include="Views\ManageSupplier\EditSupplierDetails.cshtml" />
+    <Content Include="TemplatesAndGenerators\PurchaseOrderTemplate.dotx" />
     <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="TemplatesAndGenerators\out\" />
     <Folder Include="Views\GenerateDisbursementList\" />
     <Folder Include="Views\GenerateRetrievalList\" />
     <Folder Include="Views\Logout\" />

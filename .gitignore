@@ -262,3 +262,4 @@ __pycache__/
 
 # Ignore web config
 Web.config
+/StationeryStore/Util/CSV_Validator.cs

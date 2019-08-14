@@ -2,6 +2,9 @@
 @using StationeryStore.Util
 @{
     List<PurchaseOrderEF> poList = (List<PurchaseOrderEF>)ViewData["purchaseOrders"];
+    int page = (int)ViewData["page"];
+    int noOfPages = (int)ViewData["noOfPages"];
+    string search = (string)ViewData["search"];
 }
 
 <div>@Html.Partial("_Store")</div>
@@ -12,23 +15,37 @@
     <br />
     <div class="detailstext">
         @{string currentDate = DateTime.Now.ToShortDateString();
-        <form action="~/ManagePurchase/PurchaseOrderHistory" method="post">
-            <p>From: <input type="date" name="startDate" />   To: <input type="date" name="endDate" /> </p>
-            <br />
-            <p><input type="search" name="search" placeholder="Search by P.O id, status, description..." />  <input type="submit" value="Search" /></p>
-        </form>
+            <form action="~/ManagePurchase/PurchaseOrderHistory" method="post">
+                <input type="hidden" name="page" value="1" />
+                <table class="listview">
+                    <tr>
+                        <td colspan="2"><p>From: <input type="date" name="startDate" />   To: <input type="date" name="endDate" /></p></td>
+                    </tr>
+                    <tr>
+                        @if (search != null)
+                        {
+                            <td><input size="40" type="text" name="search" value="@search" placeholder="Search by P.O id, status, description..." /></td>
+                        }
+                        else
+                        {
+                            <td><input size="40" type="text" name="search" placeholder="Search by P.O id, status, description..." /></td>
+                        }
+                        <td><input type="submit" value="Search" class="decision" /></td>
+                    </tr>
+                </table>
+            </form>
         }
     </div>
     <br />
-    <div class="listview">
+    <div>
         <table class="listview">
             <tr class="listview">
-                <th class="listviewheader">OrderId</th>
-                <th class="listviewheader">Created Date</th>
-                <th class="listviewheader">Supplier</th>
-                <th class="listviewheader">No. Items</th>
-                <th class="listviewheader">Description</th>
-                <th class="listviewheader">Status</th>
+                <th class="listviewuom">OrderId</th>
+                <th class="listviewdate">Date Created</th>
+                <th class="listviewuom">Supplier</th>
+                <th class="listviewuom">No. Items</th>
+                <th class="listviewdescription">Description</th>
+                <th class="listviewuom">Status</th>
             </tr>
             @{if (poList != null && poList.Count != 0)
                 {
@@ -56,5 +73,22 @@
             }
         </table>
     </div>
+    @if (noOfPages > 1)
+    {
+        <br />
+        <div class="pagination">
+            @{
+                <span>@Html.ActionLink("«", "PurchaseOrderHistory", "ManagePurchase", new { page = 1 }, null)</span>
 
+                for (int i = 1; i <= noOfPages; i++)
+                {
+                    string num = i.ToString();
+                    <span>@Html.ActionLink(num, "PurchaseOrderHistory", "ManagePurchase", new { page = i }, null)</span>
+                }
+
+                <span>@Html.ActionLink("»", "PurchaseOrderHistory", "ManagePurchase", new { page = noOfPages }, null)</span>
+            }
+            <p>Page: @page </p>
+        </div>
+    }
 </div>

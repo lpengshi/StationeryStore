@@ -280,5 +280,34 @@ namespace StationeryStore.Service
             return valueExceeded;
         }
        
+        public List<AdjustmentVoucherDetailsDTO> GetPricesForVoucherDetails(List<AdjustmentVoucherDetailsDTO> detailsList)
+        {
+            foreach (var d in detailsList)
+            {
+                //Averaging stock cost across suppliers.
+                List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
+                d.Price = items.Average(x => x.UnitPrice);           
+            }
+            return detailsList;
+        }
+
+        public List<AdjustmentVoucherDetailsDTO> ConvertAdjVoucherDetailsToDTO(List<AdjustmentVoucherDetailsEF> detailsList)
+        {
+            List<AdjustmentVoucherDetailsDTO> dtoList = new List<AdjustmentVoucherDetailsDTO>();
+
+            foreach(var d in detailsList)
+            {
+                AdjustmentVoucherDetailsDTO newItem = new AdjustmentVoucherDetailsDTO();
+                List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
+                newItem.Price = items.Average(x => x.UnitPrice);
+                newItem.ItemCode = d.ItemCode;
+                newItem.Quantity = d.Quantity;
+                newItem.Reason = d.Reason;
+                newItem.Description = d.Stock.Description;
+
+                dtoList.Add(newItem);
+            }
+            return dtoList;
+        }
     }
 }
