@@ -21,10 +21,13 @@
                     <td class="listrequestvalue">@StationeryStore.Util.Timestamp.dateFromTimestamp(disbursement.DateDisbursed)</td>
 
                 </tr>
-                <tr>
-                    <td class="listrequestlabel">Store Clerk:</td>
-                    <td class="listrequestvalue">@disbursement.StoreClerk.Name</td>
-                </tr>
+                @if (disbursement.StoreClerkId != null)
+                {
+                    <tr>
+                        <td class="listrequestlabel">Store Clerk:</td>
+                        <td class="listrequestvalue">@disbursement.StoreClerk.Name</td>
+                    </tr>
+                }
                 <tr>
                     <td class="listrequestlabel">Department Rep:</td>
                     <td class="listrequestvalue">@disbursement.Staff.Name</td>
@@ -56,7 +59,7 @@
                             <tr class="listview">
                                 <td class="oddlistview">@disbursementDetails[i].Stock.Description</td>
                                 <td class="oddlistview">@disbursementDetails[i].RequestQuantity</td>
-                                <td class="oddlistview">@disbursementDetails[i].RequestQuantity</td>
+                                <td class="oddlistview">@disbursementDetails[i].DisbursedQuantity</td>
                             </tr>
                         }
                     }
@@ -69,8 +72,8 @@
                                 if (disbursement.Status == "Disbursed" && disbursement.CollectionRepId == staff.StaffId )
                                 {
                                     <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
-                                    <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>  
-                                    <button onclick="submit()" name="decision" value="acknowledge" class="decision">Acknowledge</button>
+                                    <button name="decision" value="Back" class="decision">Back</button>  
+                                    <button name="decision" value="acknowledge" class="decision">Acknowledge</button>
                                 }
                             }
                         </td>

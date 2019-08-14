@@ -29,10 +29,13 @@
                     <td class="listrequestlabel">Department</td>
                     <td class="listrequestvalue">@disbursement.Department.DepartmentName</td>
                 </tr>
-                <tr class="listview">
-                    <td class="listrequestlabel">Store Clerk</td>
-                    <td class="listrequestvalue">@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
-                </tr>
+                @if(disbursement.Status != "Cancelled")
+                {
+                    <tr class="listview">
+                        <td class="listrequestlabel">Store Clerk</td>
+                     <td class="listrequestvalue">@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
+                    </tr>
+                }
                 @if (disbursement.Status == "Retrieved")
                 {
                     <tr class="listview">
@@ -55,7 +58,7 @@
                         </td>
                     </tr>
                 }
-                else
+                else if(disbursement.Status != "Cancelled")
                 {
                     <tr class="listview">
                         <td class="listrequestlabel">Collected By</td>

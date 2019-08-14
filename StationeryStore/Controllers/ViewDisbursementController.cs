@@ -52,6 +52,10 @@ namespace StationeryStore.Controllers
         [HttpPost]
         public ActionResult ViewDisbursement(int disbursementId, string decision)
         {
+            if(decision == "Back")
+            {
+                return RedirectToAction("Index");
+            }
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
