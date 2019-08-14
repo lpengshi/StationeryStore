@@ -70,8 +70,8 @@
                 </tr>
 
                 <tr class="decision">
-                    <td class="decision" colspan="2" align="right">
-                        <button onclick="location.href='@Url.Action("Index", "ApproveRequest")'" value="Cancel" class="decision">Cancel</button>
+                    <td class="decision" colspan="2" alignt="right">
+                        <input type="button" onclick="location.href='@Url.Action("Index", "ApproveRequest")'" class="decision" value="cancel">
                         @if (staff.Department.AuthorityId != staff.StaffId)
                         {
                             <input type="submit" name="decision" value="Confirm" class="disableddecision" disabled />
