@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using StationeryStore.Models;
 using StationeryStore.Service;
+using StationeryStore.Filters;
 
 namespace StationeryStore.Util
 {
@@ -17,6 +18,7 @@ namespace StationeryStore.Util
 
         //SUPPLIER DETAILS IMPORT + EXPORT
         [HttpPost]
+        [StoreManagerFilter]
         public ActionResult ImportSupplierDetails(HttpPostedFileBase fileUploaded)
         {
             try
@@ -24,12 +26,9 @@ namespace StationeryStore.Util
                 //Check if there is a file is sent to the controller
                 if (fileUploaded != null && fileUploaded.ContentLength > 0)
                 {
-                    // Check if the file ends with csv extention
+                    // Check if the file ends with csv extension
                     if (fileUploaded.FileName.EndsWith(".csv"))
                     {
-                        //// Instance of EF Class;
-                        //DBContext db = new DBContext();
-                        //Validation_CVS csvValidate = new Validation_CVS(); //Instance of Validation Class
 
                         // Read the file as a stream
                         StreamReader streamCsv = new StreamReader(fileUploaded.InputStream);
@@ -48,9 +47,6 @@ namespace StationeryStore.Util
                             // Ignore the first line of the file, for column names.
                             if (CurrentLine != 0)
                             {
-                                // Validate File Data and normalize it
-                                //csvDataLine = csvValidate.Validate(csvDataLine);
-
                                 // Add the returned data to an array
                                 LineData = csvDataLine.Split(',');
 
@@ -91,6 +87,7 @@ namespace StationeryStore.Util
         }
 
         [HttpPost]
+        [StoreFilter]
         public FileResult ExportSupplierDetailsToCSV()
         {
             List<SupplierDetailsEF> sdef = purchaseService.FindAllSupplierDetails();
@@ -119,7 +116,6 @@ namespace StationeryStore.Util
                     
                 //Append new line character.
                 sb.Append("\r\n");
-
             }
 
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "SupplierDetails.csv");

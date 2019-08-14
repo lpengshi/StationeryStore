@@ -6,7 +6,10 @@ using System.Web.Mvc;
 using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
+using StationeryStore.TemplatesAndGenerators;
 using StationeryStore.Util;
+using DocumentFormat.OpenXml;
+using System.IO;
 
 namespace StationeryStore.Controllers
 {
@@ -49,7 +52,7 @@ namespace StationeryStore.Controllers
             else if (!(search == null || search.Trim() == "") && !dateOkay)
             {
                 poList = purchaseService.SearchPurchaseOrder(search, poList);
-                
+
             }
             else if ((search == null || search.Trim() == "") && dateOkay)
             {
@@ -58,7 +61,7 @@ namespace StationeryStore.Controllers
             }
             else
             {
-                
+
             }
 
             //added pagination
@@ -122,7 +125,7 @@ namespace StationeryStore.Controllers
                 }
             }
 
-            if (choice == "AddItem")
+            if (choice == "Add Item")
             {
                 SupplierDetailsEF newSD = null;
                 bool isValid = false;
@@ -162,7 +165,7 @@ namespace StationeryStore.Controllers
                 purOrder.SupplierId = supplierItems[0].SupplierCode;
                 int newPOId = purchaseService.CreatePO(createdBy, purOrder);
 
-                return RedirectToAction("ViewPurchaseOrder", "ManagePurchase", new {purchaseOrderId = newPOId.ToString() });
+                return RedirectToAction("ViewPurchaseOrder", "ManagePurchase", new { purchaseOrderId = newPOId.ToString() });
 
             }
 
@@ -183,6 +186,7 @@ namespace StationeryStore.Controllers
                     }
                 }
             }
+
             return View(purOrder);
         }
 
@@ -196,16 +200,16 @@ namespace StationeryStore.Controllers
             ViewData["purchaseOrder"] = po;
             ViewData["purchaseOrderDetails"] = pod;
 
-            if(choice == "Confirm Delivery" && po.Status == "Pending Delivery")
+            if (choice == "Confirm Delivery" && po.Status == "Pending Delivery")
             {
                 //set PO status to Delivered.
                 purchaseService.UpdatePurchaseOrderToDelivered(receivedBy, po);
 
                 //update stock transaction
-                stockService.LogTransactionsForDeliveryOrder(po.OrderId);           
+                stockService.LogTransactionsForDeliveryOrder(po.OrderId);
                 return RedirectToAction("PurchaseOrderHistory", "ManagePurchase");
             }
-            if(choice == "Print Purchase Order")
+            if (choice == "Print Purchase Order")
             {
                 PurchaseOrderPrinter(po.OrderId);
             }
@@ -214,9 +218,23 @@ namespace StationeryStore.Controllers
         }
 
         //PRINTER SERVICE
-        public void PurchaseOrderPrinter(int purchaseOrderId)
+        [HttpPost]
+        public ActionResult PurchaseOrderPrinter(int purchaseOrderId)
         {
-
+            try
+            {
+                PurchaseOrderEF po = purchaseService.FindPOById(purchaseOrderId);
+                List<PurchaseOrderDetailsEF> poDetailsList = purchaseService.FindPODetailsByOrderId(po.OrderId);
+                PurchaseOrderGenerator generator = new PurchaseOrderGenerator();
+                generator.PurchaseOrder(po, poDetailsList);
+                byte[] document = System.IO.File.ReadAllBytes("~/TemplatesAndGenerators/out/purchaseOrder.docx");
+                return File(document, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", $"PurchaseOrder{po.OrderId}.docx");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("ViewPurchaseOrder", "ManagePurchase", new { purchaseOrderId = purchaseOrderId });
+            }
         }
     }
 }

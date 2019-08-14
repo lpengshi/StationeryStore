@@ -10,15 +10,19 @@
 <div>@Html.Partial("_Store")</div>
 <div class="mainview">
     <h3>Edit Supplier Details(@supplier.SupplierCode: @supplier.SupplierName)</h3>
+    <br />
+    <br />
 
     @using (Html.BeginForm("EditSupplierDetails", "ManageSupplier", FormMethod.Post))
     {
-        <div>
-            <p>Add items to edit:</p>
-            <table>
+        <div>           
+            <table class="listview">
                 <tr>
-                    <td>
-                        <input list="items" name="itemToAddCode" />
+                    <td class="listviewtitle2" colspan="2">Select supplier's items to edit:</td>
+                </tr>
+                <tr>
+                    <td class="formviewoption">
+                        <input list="items" name="itemToAddCode" size="50"/>
                         <datalist id="items">
                             @{foreach (var item in supplierItems)
                                 {
@@ -28,18 +32,18 @@
                             }
                         </datalist>
                     </td>
-                    <td><input class="decision" type="submit" value="Add Item" name="choice" /></td>
+                    <td class="formviewbutton"><input class="decision" type="submit" value="Add Item" name="choice" /></td>
                 </tr>
             </table>
         </div>
         <br />
         <div>
-            <table>
+            <table class="listview">
                 <tr class="oddlistview">
-                    <th class="listviewheader">Item Code</th>
-                    <th class="listviewheader">Description</th>
-                    <th class="listviewheader">Unit Price</th>
-                    <th class="listviewheader">Supplier rank</th>
+                    <th class="listviewuom">Item Code</th>
+                    <th class="listviewdescription">Description</th>
+                    <th class="listviewquantity">Unit Price</th>
+                    <th class="listviewuom">Supplier rank</th>
                     <th></th>
                 </tr>
 

@@ -10,9 +10,11 @@
 
 <div>@Html.Partial("_Store")</div>
 
-<div class="maindetails">
-    <h3 class="title">Edit Adjustment Voucher</h3>
+<div class="maindetails">    
     <div class="mainview">
+        <h3>Create Adjustment Voucher</h3>
+        <br />
+        <br />
         @using (Html.BeginForm("CreateAdjustmentVoucher", "ManageAdjustmentVoucher", FormMethod.Post))
         {
             if (voucher != null && voucher.VoucherId != null)
@@ -29,9 +31,8 @@
                 </table>
                 <input type="hidden" name="voucherId" value="@voucher.VoucherId" />
             }
-            <p>Add items to adjustment voucher.</p>
-
-            <input list="items" name="itemToAdd" />
+                       
+            <input list="items" name="itemToAdd" size="40" class="listview"/>
             <datalist id="items">
                 @{foreach (var item in itemList)
                     {
@@ -45,14 +46,14 @@
             <br />
             <table class="listview">
                 <tr>
-                    <th class="listviewheader">S/N</th>
-                    <th class="listviewheader">Item Code</th>
-                    <th class="listviewheader">Description</th>
-                    <th class="listviewheader">Quantity Adjusted</th>
-                    <th class="listviewheader">Unit Cost</th>
-                    <th class="listviewheader">Subtotal</th>
-                    <th class="listviewheader">Reason</th>
-                    <th class="listviewheader">Remove</th>
+                    <th class="listviewuom">S/N</th>
+                    <th class="listviewuom">Item Code</th>
+                    <th class="listviewdescription">Description</th>
+                    <th class="listviewquantity">Quantity Adjusted</th>
+                    <th class="listviewquantity">Unit Cost</th>
+                    <th class="listviewquantity">Subtotal</th>
+                    <th class="listviewquantity">Reason</th>
+                    <th class="listviewremove">Remove</th>
                 </tr>
                 @if (Model == null)
                 {
@@ -68,14 +69,14 @@
                     {
                         int count = i + 1;
                         double itemSubtotal = Model[i].Price * Model[i].Quantity;
-                        
+
                         <tr class="oddlistview">
                             <td class="oddlistview">@count</td>
                             <td class="oddlistview">@Html.Raw(Model[i].ItemCode)</td>
                             <td class="oddlistview">@Html.Raw(Model[i].Description)</td>
-                            <td class="oddlistview" id="quantity-@i ">@Html.EditorFor(x => x[i].Quantity, new { htmlAttributes = new { onchange = "changeQty(`@itemSubtotal`)" } })<br />@Html.ValidationMessageFor(x => Model[i].Quantity)</td>
-                            <td class="oddlistview" id="price-@i" >@Html.DisplayFor(x => x[i].Price)</td>
-                            <td class="oddlistview" id="subtotal-@i"></td>
+                            <td class="oddlistview" id="quantity-@i ">@Html.EditorFor(x => x[i].Quantity, new { htmlAttributes = new { onchange = "submit()" } })<br />@Html.ValidationMessageFor(x => Model[i].Quantity)</td>
+                            <td class="oddlistview" id="price-@i">@Html.DisplayFor(x => x[i].Price)</td>
+                            <td class="oddlistview" id="subtotal-@i">@string.Format("{0:C}", itemSubtotal)</td>
                             <td class="oddlistview">@Html.EditorFor(x => x[i].Reason)<br />@Html.ValidationMessageFor(x => Model[i].Reason)</td>
                             <td class="oddlistview">@Html.CheckBoxFor(x => x[i].Remove)</td>
 
@@ -96,9 +97,9 @@
 
             </table>
             <br />
-            <button onclick="location.href='@Url.Action("Index", "ManageAdjustment")'" name="choice" value="Cancel" class="decision">Cancel</button>
+            <button onclick="submit()" name="choice" value="Cancel" class="decision">Cancel</button>
             <input class="decision" type="submit" value="Submit" name="choice" />
-            <input class="decision" type="submit" value="Remove" name="choice" />
+            <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
 
         }
     </div>

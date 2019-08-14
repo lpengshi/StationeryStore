@@ -25,15 +25,17 @@ namespace StationeryStore.Controllers
             List<AdjustmentVoucherEF> adjVouchers = new List<AdjustmentVoucherEF>();
             List<string> status = new List<string>();
             status.Add("All");
-            foreach(var v in stockService.FindAllAdjustmentVouchers().Select(x => x.Status).Distinct().ToList())
+            foreach (var v in stockService.FindAllAdjustmentVouchers().Select(x => x.Status).Distinct().ToList())
             {
                 status.Add(v);
             }
 
-            if (search != null && search != "All") {
+            if (search != null && search != "All")
+            {
                 adjVouchers = stockService.FindAllAdjustmentVouchers();
                 adjVouchers = adjVouchers.Where(x => x.Status != null && x.Status.Contains(search)).ToList();
-            }else if((search != null && search == "All") || search== null)
+            }
+            else if ((search != null && search == "All") || search == null)
             {
                 adjVouchers = stockService.FindAllAdjustmentVouchers();
             }
@@ -56,7 +58,7 @@ namespace StationeryStore.Controllers
 
             return View();
         }
-        
+
         public ActionResult ViewAdjustmentDetails(string voucherId, string choice)
         {
             AdjustmentVoucherEF voucher = stockService.FindAdjustmentVoucherById(voucherId);
@@ -78,9 +80,9 @@ namespace StationeryStore.Controllers
 
                 if (choice == "Edit")
                 {
-                    return RedirectToAction("CreateAdjustmentVoucher", "ManageAdjustmentVoucher", new { voucherId = voucherId});
+                    return RedirectToAction("CreateAdjustmentVoucher", "ManageAdjustmentVoucher", new { voucherId = voucherId });
                 }
-                if (choice == "Approve" || choice == "Reject" )
+                if (choice == "Approve" || choice == "Reject")
                 {
                     stockService.UpdateAdjustmentVoucherStatus(staff, voucherId, choice);
                     SendEmailToStaffOnDecision(voucher.Requester, voucher);
@@ -121,7 +123,7 @@ namespace StationeryStore.Controllers
         [HttpPost]
         public ActionResult CreateAdjustmentVoucher(string itemToAdd, string removalItem, string choice, string voucherId, List<AdjustmentVoucherDetailsDTO> detailsList)
         {
-            List<StockEF> itemList = stockService.FindAllStocks().OrderBy(x=> x.ItemCode).ToList();
+            List<StockEF> itemList = stockService.FindAllStocks().OrderBy(x => x.ItemCode).ToList();
             ViewData["itemList"] = itemList;
 
             AdjustmentVoucherEF voucher = new AdjustmentVoucherEF();
@@ -140,7 +142,7 @@ namespace StationeryStore.Controllers
             {
                 detailsList = new List<AdjustmentVoucherDetailsDTO>();
             }
-            if(choice == "Add Item")
+            if (choice == "Add Item")
             {
                 StockEF item = new StockEF();
                 bool isValid = false;
@@ -153,7 +155,7 @@ namespace StationeryStore.Controllers
                         description = v.Description;
                         isValid = true;
                     }
-                }                              
+                }
                 if (isValid)
                 {
                     AdjustmentVoucherDetailsDTO newVoucherDetails = new AdjustmentVoucherDetailsDTO();
@@ -164,18 +166,18 @@ namespace StationeryStore.Controllers
                     detailsList.Add(newVoucherDetails);
                 }
             }
-            if(choice == "Remove" && detailsList.Count > 0)
+            if (choice == "Remove" && detailsList.Count > 0)
             {
-                for(int i=0; i< detailsList.Count; i++)
+                for (int i = 0; i < detailsList.Count; i++)
                 {
-                    if(detailsList[i].Remove == true)
+                    if (detailsList[i].Remove == true)
                     {
                         detailsList.RemoveAt(i);
                         i--;
                     }
                 }
             }
-            if(choice == "Submit")
+            if (choice == "Submit")
             {
                 StaffEF requester = staffService.GetStaff();
                 string newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList);
@@ -189,7 +191,11 @@ namespace StationeryStore.Controllers
                     Debug.Print("Pending appr sent to supervisor email");
                     SendEmailToAuthorityOnRequest(voucher.VoucherId, "Supervisor");
                 }
-                return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId});
+                return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId });
+            }
+            if (choice == "Cancel")
+            {
+                return RedirectToAction("Index", "ManageAdjustmentVoucher", new { page = 1 });
             }
 
             //get prices for each item
@@ -203,15 +209,16 @@ namespace StationeryStore.Controllers
         {
             List<string> recepientEmailAdd = new List<string>();
 
-            if(authorityLevel == "Manager")
+            if (authorityLevel == "Manager")
             {
                 List<StaffEF> managers = staffService.FindStaffByRole(5);
-                foreach(var manager in managers)
+                foreach (var manager in managers)
                 {
                     recepientEmailAdd.Add(manager.Email);
                 }
 
-            }else if(authorityLevel == "Supervisor")
+            }
+            else if (authorityLevel == "Supervisor")
             {
                 List<StaffEF> sups = staffService.FindStaffByRole(4);
                 foreach (var s in sups)
@@ -225,7 +232,7 @@ namespace StationeryStore.Controllers
                 Email.SendEmail(e,
                     "Adjustment Voucher#" + voucherId + " : Pending Review",
                     "Adjustment Voucher" + voucherId + " requires review.");
-            }           
+            }
         }
 
         private void SendEmailToStaffOnDecision(StaffEF staff, AdjustmentVoucherEF voucher)
