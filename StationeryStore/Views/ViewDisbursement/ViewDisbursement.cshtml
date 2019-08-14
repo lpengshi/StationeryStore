@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "View Disbursement";
+    var staff = ViewBag.staff;
     var disbursement = ViewBag.disbursement;
     var disbursementDetails = ViewBag.disbursementDetails;
 }
@@ -63,12 +64,13 @@
                 <tfoot>
                     <tr class="decision">
                         <td class="decision" colspan="6" align="right">
-                            <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>
-                            @{ Html.BeginForm("CreateRequest", "ManageRequest", FormMethod.Post);
-                                if (disbursement.Status == "Disbursed")
+
+                            @{ Html.BeginForm("ViewDisbursement", "ViewDisbursement", FormMethod.Post);
+                                if (disbursement.Status == "Disbursed" && disbursement.CollectionRepId == staff.StaffId )
                                 {
                                     <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
-                                    <button onclick="submit()" name="decision" value="acknowledge" class="decision">Acknowledge Disbursement</button>
+                                    <button onclick="location.href='@Url.Action("Index", "ViewDisbursement")'" value="Back" class="decision">Back</button>  
+                                    <button onclick="submit()" name="decision" value="acknowledge" class="decision">Acknowledge</button>
                                 }
                             }
                         </td>

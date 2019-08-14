@@ -16,23 +16,23 @@
             <strong>Start Month/Year:</strong>
             <asp:DropDownList ID="startMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Month" Value="0" />
             </Items>
             </asp:DropDownList>
             &nbsp;<strong><asp:DropDownList ID="startYear" runat="server" DataSourceID="SqlDataSource1" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Year" Value="0" />
             </Items>
             </asp:DropDownList>
             </strong>&nbsp;&nbsp; <strong>End Month/Year:</strong>
             <asp:DropDownList ID="endMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Month" Value="0" />
             </Items>
             </asp:DropDownList>
 &nbsp;<asp:DropDownList ID="endYear" runat="server" DataSourceID="SqlDataSource1" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Year" Value="0" />
             </Items>            
             </asp:DropDownList>
             &nbsp;&nbsp;

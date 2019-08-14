@@ -473,6 +473,7 @@
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
     <Content Include="Views\ManageSupplier\EditSupplierDetails.cshtml" />
     <Content Include="TemplatesAndGenerators\PurchaseOrderTemplate.dotx" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

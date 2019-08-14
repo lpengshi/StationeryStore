@@ -25,23 +25,23 @@ GROUP BY DATEPART(yyyy, dateadd(S, OrderDate,'1970-01-01'))"></asp:SqlDataSource
             Start Month: </strong>
             <asp:DropDownList ID="startMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Month" Value="0" />
             </Items>
             </asp:DropDownList>
 &nbsp;<asp:DropDownList ID="startYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Year" Value="0" />
             </Items>
             </asp:DropDownList>
             <strong>&nbsp;End Month: </strong>
             <asp:DropDownList ID="endMonth" runat="server" DataSourceID="SqlDataSource2" DataTextField="MonthName" DataValueField="MonthInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Month" Value="0" />
             </Items>
             </asp:DropDownList>
 &nbsp;<asp:DropDownList ID="endYear" runat="server" DataSourceID="SqlDataSource3" DataTextField="YearInt" DataValueField="YearInt" AppendDataBoundItems="true">
             <Items>
-                <asp:ListItem Text="Select" Value="0" />
+                <asp:ListItem Text="Year" Value="0" />
             </Items>            
             </asp:DropDownList>
             &nbsp;&nbsp;
