@@ -704,6 +704,14 @@ namespace StationeryStore.Service
                     disburse.Status = "Cancelled";
                     disburse.CollectionRepId = disburse.Department.DepartmentRepresentativeId;
                     rndEFF.SaveDisbursement(disburse);
+                    // update the request details
+                    List<StationeryRequestDetailsEF> requests = rndEFF.FindAllProcessedRequestDetailsByDepartmentCode("Processed", disburse.DepartmentCode);
+                    foreach(StationeryRequestDetailsEF r in requests)
+                    {
+                        r.FulfilmentStatus = "Outstanding";
+                        r.RetrievedQuantity = null;
+                        rndEFF.SaveRequestDetails(r);
+                    }
                 }
                 else
                 {

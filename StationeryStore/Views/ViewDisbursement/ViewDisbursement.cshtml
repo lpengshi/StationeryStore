@@ -40,6 +40,7 @@
             <table class="listview" id="requestTable">
                 <tr class="listview">
                     <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Total Requested Quantity</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                     <td class="listviewheader">Total Disbursed Quantity</td>
                 </tr>
@@ -51,6 +52,7 @@
                             <tr class="listview">
                                 <td class="evenlistview">@disbursementDetails[i].Stock.Description</td>
                                 <td class="evenlistview">@disbursementDetails[i].RequestQuantity</td>
+                                <td class="evenlistview">@disbursementDetails[i].RetrievedQuantity</td>
                                 <td class="evenlistview">@disbursementDetails[i].DisbursedQuantity</td>
                             </tr>
                         }
@@ -59,6 +61,7 @@
                             <tr class="listview">
                                 <td class="oddlistview">@disbursementDetails[i].Stock.Description</td>
                                 <td class="oddlistview">@disbursementDetails[i].RequestQuantity</td>
+                                <td class="oddlistview">@disbursementDetails[i].RetrievedQuantity</td>
                                 <td class="oddlistview">@disbursementDetails[i].DisbursedQuantity</td>
                             </tr>
                         }
@@ -69,11 +72,16 @@
                         <td class="decision" colspan="6" align="right">
 
                             @{ Html.BeginForm("ViewDisbursement", "ViewDisbursement", FormMethod.Post);
-                                if (disbursement.Status == "Disbursed" && disbursement.CollectionRepId == staff.StaffId )
+                                if (disbursement.Status == "Disbursed" && disbursement.CollectionRepId == staff.StaffId)
                                 {
                                     <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
-                                    <button name="decision" value="Back" class="decision">Back</button>  
+                                    <button name="decision" value="Back" class="decision">Back</button>
                                     <button name="decision" value="acknowledge" class="decision">Acknowledge</button>
+                                }
+                                else
+                                {
+                                    <input type="hidden" name="disbursementId" value="@disbursement.DisbursementId">
+                                    <button name="decision" value="Back" class="decision">Back</button>
                                 }
                             }
                         </td>
@@ -81,6 +89,7 @@
                 </tfoot>
             </table>
         </div>
+        <br/><br/>
 
     </div>
 </div>

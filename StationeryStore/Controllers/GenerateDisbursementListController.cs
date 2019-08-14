@@ -32,7 +32,7 @@ namespace StationeryStore.Controllers
             {
                 if(d.Status == "Retrieved")
                 {
-                    string collectionRepEmail = "janel.leejq@gmail.com"; //d.Staff.Email;
+                    string collectionRepEmail = d.Staff.Email;
                     string subject = "Disbursement #" + d.DisbursementId + " : Ready for Collection";
                     string body = "Disbursement #" + d.DisbursementId + " is ready for collection on " + Timestamp.dateFromTimestamp((long)d.DateDisbursed)
                         + " " + d.Staff.Department.CollectionPoint.CollectionTime + ", at " + d.Staff.Department.CollectionPoint.Location + ".";
