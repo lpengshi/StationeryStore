@@ -696,9 +696,21 @@ namespace StationeryStore.Service
             List<StationeryDisbursementDetailsEF> disbursementDetails = rndEFF.FindDisbursementDetailsByRetrievalId(retrievalId);
             foreach (StationeryDisbursementEF disburse in disbursements)
             {
-                disburse.Status = "Retrieved";
-                disburse.CollectionRepId = disburse.Department.DepartmentRepresentativeId;
-                rndEFF.SaveDisbursement(disburse);
+                //get sum
+                var sum = reqs.Where(x => x.DepartmentCode == disburse.DepartmentCode).Sum(x => x.RetrievedQuantity);
+                if (sum == 0)
+                {
+                    // nothing to disburse
+                    disburse.Status = "Cancelled";
+                    disburse.CollectionRepId = disburse.Department.DepartmentRepresentativeId;
+                    rndEFF.SaveDisbursement(disburse);
+                }
+                else
+                {
+                    disburse.Status = "Retrieved";
+                    disburse.CollectionRepId = disburse.Department.DepartmentRepresentativeId;
+                    rndEFF.SaveDisbursement(disburse);
+                }
             }
 
             // insert retrieved quantity into disbursement details

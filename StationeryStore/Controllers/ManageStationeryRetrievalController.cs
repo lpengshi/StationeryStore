@@ -64,6 +64,7 @@ namespace StationeryStore.Controllers
             StationeryRetrievalEF retrieval = rndService.FindRetrievalById(retrievalId);
             retrieval.Status = "Retrieved";
             rndService.SaveRetrieval(retrieval);
+            
             //get disbursements and save the dates
             rndService.UpdateDisbursementDate(retrievalId, disbursementDate);
 
