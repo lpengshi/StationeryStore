@@ -10,12 +10,15 @@ namespace StationeryStore.Models
     public class AdjustmentVoucherDetailsDTO
     {
         public string ItemCode { get; set; }
-        public string Description { get; set;}
+        public string Description { get; set; }
 
         [Range(-9999, 9999)]
         public int Quantity { get; set; }
 
         public string Reason { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public double Price {get;set;}
         public bool Remove { get; set; }
     }
 }

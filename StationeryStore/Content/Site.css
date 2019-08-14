@@ -251,7 +251,7 @@ li.sidenavdetails {
 .viewlabel {
     table-layout: fixed;
     text-align: left;
-    padding: 0px 0;
+    padding: 0px;
     font-weight: bold;
 }
 
@@ -300,6 +300,29 @@ li.sidenavdetails {
     width: 300px;
 }
 
+.formviewoption, .formviewvalidation {
+    table-layout: fixed;
+    text-align: left;
+    width: 350px;
+}
+
+.formviewbutton {
+    table-layout: fixed;
+    text-align: left;
+    width: 150px;
+    height:50px;
+}
+
+.listviewdate {
+    background-color: #CCCCCC;
+    border: 1.5px solid black;
+    font-weight: bold;
+    padding: 10px;
+    table-layout: fixed;
+    text-align: left;
+    width: 150px;
+}
+
 .listviewuom, .listviewquantity, .listviewremove {
     background-color: #CCCCCC;
     border: 1.5px solid black;
@@ -308,6 +331,17 @@ li.sidenavdetails {
     table-layout: fixed;
     text-align: left;
     width: 100px;
+}
+
+.listviewtitle {
+    font-size:medium;
+    font-weight: bold;
+    table-layout: fixed;
+    text-align: left;
+}
+.listviewtitle2 {
+    table-layout: fixed;
+    text-align: left;
 }
 
 .evenlistview {
@@ -324,12 +358,16 @@ li.sidenavdetails {
     text-align: left;
 }
 
+
+
 td.login {
     padding: 6px;
     font-size: 12px;
     table-layout:fixed;
     width: 150px;
 }
+
+
 
 .title {
     margin-top: 20px;
@@ -359,4 +397,11 @@ textarea {
 .details {
     font-weight: bold;
     text-align: left;
+}
+
+.leftAlignedTextArea{
+    text-align:left;
+    left:inherit;
+    padding-bottom:15px;
+    padding-left:2%;
 }

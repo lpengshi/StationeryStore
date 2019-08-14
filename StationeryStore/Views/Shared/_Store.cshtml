@@ -50,7 +50,7 @@
                 <button class="collapsible">Purchase Order</button>
                 <div class="content">
                     <ul class="sidenavdetails">
-                        <li class="sidenavdetails">@Html.ActionLink("Purchase Order History", "PurchaseOrderHistory", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
+                        <li class="sidenavdetails">@Html.ActionLink("Purchase Order History", "PurchaseOrderHistory", "ManagePurchase", new { page = 1 }, new { @class = "sidenavlink" })</li>
                         <li class="sidenavdetails">@Html.ActionLink("Create Purchase Order", "CreatePurchaseOrder", "ManagePurchase", null, new { @class = "sidenavlink" })</li>
                     </ul>
                 </div>

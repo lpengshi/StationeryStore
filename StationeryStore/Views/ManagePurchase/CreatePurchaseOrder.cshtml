@@ -16,8 +16,9 @@
 <div>@Html.Partial("_Store")</div>
 
 <div class="mainview">
-    <div class="maindetails">
+    <div>
         <h3 class="title">Create Purchase Order</h3>
+        <br />
         <br />
         @using (Html.BeginForm("CreatePurchaseOrder", "ManagePurchase", FormMethod.Post))
         {
@@ -25,12 +26,13 @@
                 <div align ="left">
                     <table class="listview">
                         <tr>
-                            <td>Date:</td>
-                            <td>@currentDate</td>
+                            <td class="listrequestlabel">Date:</td>
+                            <td class="listrequestvalue">@currentDate</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Supplier: </td>
-                            <td>
+                            <td class="listrequestlabel">Supplier: </td>
+                            <td class="formviewoption">
                                 <select name="supplier">
                                     @{ foreach (SupplierEF s in supplierList)
                                         {
@@ -44,35 +46,33 @@
                                             }
                                         }
                                     }
-                                </select>
-                                <button onclick="submit()" class="decision" name="choice" value="setSupplier">Set Supplier</button>
+                                </select>                              
                             </td>
+                            <td class="formviewbutton"><button onclick="submit()" class="decision" name="choice" value="setSupplier">Set Supplier</button></td>
                         </tr>
                         <tr>
-                            <td>Deliver to: </td>
+                            <td class="listrequestlabel">Deliver to: </td>
                             <td>
-                                @Html.EditorFor(m => m.DeliveryAdd)
-                                <br />
-                                @Html.ValidationMessageFor(m => m.DeliveryAdd)
+                                @Html.EditorFor(m => m.DeliveryAdd)                               
                             </td>
+                            <td class="formviewvalidation">@Html.ValidationMessageFor(m => m.DeliveryAdd)</td>
                         </tr>
                         <tr>
-                            <td>Supply items by:</td>
+                            <td class="listrequestlabel">Supply items by:</td>
                             <td>
-                                @Html.EditorFor(m => m.SupplyItemBy)
-                                <br />
-                                @Html.ValidationMessageFor(m => m.SupplyItemBy)
+                                @Html.EditorFor(m => m.SupplyItemBy)                               
                             </td>
+                            <td class="formviewvalidation">@Html.ValidationMessageFor(m => m.SupplyItemBy)</td>
                         </tr>
                         <tr>
-                            <td>Description: </td>
+                            <td class="listrequestlabel">Description: </td>
                             <td>
                                 @Html.EditorFor(m => m.Description)
                             </td>
                         </tr>
                         <tr>
-                            <td>Select Items to order:</td>
-                            <td>
+                            <td class="listrequestlabel">Select Items to order:</td>
+                            <td class="formviewoption">
                                 <select id="items" name="items">
                                     @{ if (supplierItemList != null)
                                         {
@@ -83,23 +83,27 @@
                                             }
                                         }
                                     }
-                                </select>
-                                <input class="decision" type="submit" onclick="submit()" value="AddItem" name="choice" />
+                                </select>                               
                             </td>
+                            <td class="formviewbutton"><input class="decision" type="submit" onclick="submit()" value="Add Item" name="choice" /></td>
                         </tr>
                     </table>
                 </div>
-                <h3>Items selected</h3>
+                <br />
+                <br />
                 <div>
                     <table class="listview">
                         <tr>
-                            <th class="listviewheader">Item SN</th>
-                            <th class="listviewheader">Id</th>
-                            <th class="listviewheader">Description</th>
-                            <th class="listviewheader">UOM</th>
-                            <th class="listviewheader">Price/unit</th>
-                            <th class="listviewheader">Quantity</th>
-                            <th class="listviewheader">Remove</th>
+                            <td class="listviewtitle" colspan="7">Items selected</td>
+                        </tr>
+                        <tr>
+                            <th class="listviewuom">Item SN</th>
+                            <th class="listviewuom">Id</th>
+                            <th class="listviewdescription">Description</th>
+                            <th class="listviewuom">UOM</th>
+                            <th class="listviewuom">Price/unit</th>
+                            <th class="listviewquantity">Quantity</th>
+                            <th class="listviewremove">Remove</th>
                         </tr>
                         @{if (Model != null && Model.SupplierDetailIds != null)
                             {
@@ -131,12 +135,14 @@
                                 }
                             }
                         }
+                        <tr>
+                            <td colspan="7" align="right" height="100px">
+                                <button onclick="warning()" name="choice" value="CreatePO" class="decision">Submit</button>
+                                <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
+                                <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase", new { page=1})'" name="choice" value="Cancel" class="decision">Cancel</button>
+                            </td>
+                        </tr>
                     </table>
-                    <br />
-                    <br />
-                    <button onclick="warning()" name="choice" value="CreatePO" class="decision">Submit</button>
-                    <button onclick="submit()" name="choice" value="Remove" class="decision">Remove Selected Items</button>
-                    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="Cancel" class="decision">Cancel</button>
                 </div>
             </div>
         }

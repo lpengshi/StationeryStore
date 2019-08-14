@@ -1,0 +1,87 @@
+﻿@model List<StationeryStore.Models.SupplierDetailsEF>
+@using StationeryStore.Models;
+@{
+    ViewBag.Title = "Edit Supplier Details";
+
+    List<SupplierDetailsEF> supplierItems = (List<SupplierDetailsEF>)ViewData["supplierItems"];
+    SupplierEF supplier = (SupplierEF)ViewData["supplier"];
+}
+
+<div>@Html.Partial("_Store")</div>
+<div class="mainview">
+    <h3>Edit Supplier Details(@supplier.SupplierCode: @supplier.SupplierName)</h3>
+    <br />
+    <br />
+
+    @using (Html.BeginForm("EditSupplierDetails", "ManageSupplier", FormMethod.Post))
+    {
+        <div>           
+            <table class="listview">
+                <tr>
+                    <td class="listviewtitle2" colspan="2">Select supplier's items to edit:</td>
+                </tr>
+                <tr>
+                    <td class="formviewoption">
+                        <input list="items" name="itemToAddCode" size="50"/>
+                        <datalist id="items">
+                            @{foreach (var item in supplierItems)
+                                {
+                                    string itemDetail = item.ItemCode + "- " + item.Stock.Description;
+                                    <option value="@item.ItemCode">@itemDetail</option>
+                                }
+                            }
+                        </datalist>
+                    </td>
+                    <td class="formviewbutton"><input class="decision" type="submit" value="Add Item" name="choice" /></td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div>
+            <table class="listview">
+                <tr class="oddlistview">
+                    <th class="listviewuom">Item Code</th>
+                    <th class="listviewdescription">Description</th>
+                    <th class="listviewquantity">Unit Price</th>
+                    <th class="listviewuom">Supplier rank</th>
+                    <th></th>
+                </tr>
+
+                @if (Model == null)
+                {
+                    <tr>
+                        <td class="oddlistview" colspan="5">Add items to edit.</td>
+                    </tr>
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td class="oddlistview">@Model[i].ItemCode</td>
+                            <td class="oddlistview">@Model[i].Stock.Description</td>
+                            <td class="oddlistview">@Html.EditorFor(x => Model[i].UnitPrice)</td>
+                            <td class="oddlistview">@Model[i].SupplierRank</td>
+
+                            @Html.HiddenFor(x => x[i].ItemCode, Model[i].ItemCode)
+                            @Html.HiddenFor(x => x[i].UnitPrice, Model[i].UnitPrice)
+                            @Html.HiddenFor(x => x[i].SupplierDetailsId, Model[i].SupplierDetailsId)
+                            @Html.HiddenFor(x => x[i].SupplierCode, Model[i].SupplierCode)
+                            @Html.HiddenFor(x => x[i].SupplierRank, Model[i].SupplierRank)
+                            @Html.HiddenFor(x => x[i].Stock.Description, Model[i].Stock.Description)
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td height="10px"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right"><input class="decision" type="submit" value="Submit" name="choice" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <input type="hidden" name="supplierCode" value="@supplier.SupplierCode">
+    }
+
+</div>

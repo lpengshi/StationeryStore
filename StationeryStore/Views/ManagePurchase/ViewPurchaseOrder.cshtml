@@ -11,59 +11,65 @@
 <h2>ViewPurchaseOrder</h2>
 <div class="mainview">
     <h4>View Purchase Order (@po.Status)</h4>
-    <table>
+    <br />
+    <br />
+    <table class="listview">
         <tr>
-            <td>Purchase Order Id:</td>
-            <td>@po.OrderId (@po.Status)</td>
+            <td class="listrequestlabel">Purchase Order Id:</td>
+            <td class="listrequestvalue">@po.OrderId (@po.Status)</td>
         </tr>
         <tr>
-            <td>Created on:</td>
-            <td>@Timestamp.dateFromTimestamp(po.OrderDate)</td>
+            <td class="listrequestlabel">Created on:</td>
+            <td class="listrequestvalue">@Timestamp.dateFromTimestamp(po.OrderDate)</td>
         </tr>
         <tr>
-            <td>Ordered by:</td>
-            <td>@po.CreatedBy.Name</td>
+            <td class="listrequestlabel">Ordered by:</td>
+            <td class="listrequestvalue">@po.CreatedBy.Name</td>
         </tr>
         <tr>
-            <td>Items received on:</td>
+            <td class="listrequestlabel">Items received on:</td>
             @{
                 if (po.Status == "Delivered")
                 {
-                    <td>@Timestamp.dateFromTimestamp(po.DateDeliveredOn)</td>
+                    <td class="listrequestvalue">@Timestamp.dateFromTimestamp(po.DateDeliveredOn)</td>
                 }
                 else
                 {
-                    <td>N.A</td>
+                    <td class="listrequestvalue">N.A</td>
                 }
             }
         </tr>
         <tr>
-            <td>Items received by:</td>
+            <td class="listrequestlabel">Items received by:</td>
             @{
                 if (po.Status == "Delivered")
                 {
-                    <td>@po.ReceivedBy.Name</td>
+                    <td class="listrequestvalue">@po.ReceivedBy.Name</td>
                 }
                 else
                 {
-                    <td>N.A</td>
+                    <td class="listrequestvalue">N.A</td>
                 }
             }
         </tr>
         <tr>
-            <td>Supplier:</td>
-            <td>@po.SupplierCode</td>
+            <td class="listrequestlabel">Supplier:</td>
+            <td class="listrequestvalue">@po.SupplierCode</td>
         </tr>
     </table>
 
-    <p>Items:</p>
+    <br />
+
     <table class="listview">
         <tr>
-            <th class="listviewheader">Item SN</th>
-            <th class="listviewheader">Item Code</th>
-            <th class="listviewheader">Description</th>
-            <th class="listviewheader">UOM</th>
-            <th class="listviewheader">Order quantity</th>
+            <td colspan="5" class="listviewtitle">Items:</td>
+        </tr>
+        <tr>
+            <th class="listviewuom">Item SN</th>
+            <th class="listviewuom">Item Code</th>
+            <th class="listviewdescription">Description</th>
+            <th class="listviewuom">UOM</th>
+            <th class="listviewquantity">Order quantity</th>
         </tr>
 
         @{ int i = 0;
@@ -81,15 +87,20 @@
             }
 
         }
-    </table>
-    <br />
-    <form action="~/ManagePurchase/ViewPurchaseOrder" method="post">
-        <input type="hidden" name="purchaseOrderId" value="@po.OrderId.ToString()" />
-        @{ if (po.Status == "Pending Delivery")
-            { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
-            }
-        }
-        <input type="submit" name="choice" value="Print Purchase Order" class="decision" />
-    </form>
-    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase")'" name="choice" value="back" class="decision">Back</button>
+        <tr>
+            <td colspan="3"></td>
+            <td height="100px" align="right">
+                <form action="~/ManagePurchase/ViewPurchaseOrder" method="post">
+                    <input type="hidden" name="purchaseOrderId" value="@po.OrderId.ToString()" />
+                    @{ if (po.Status == "Pending Delivery")
+                        { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
+                        }
+                    }
+                    <input type="submit" name="choice" value="Print Purchase Order" class="decision" />
+                   
+                </form>
+            </td>
+            <td><button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase", new {page =1 })'" name="choice" value="back" class="decision">Back</button></td>
+        </tr>
+    </table>  
 </div>
