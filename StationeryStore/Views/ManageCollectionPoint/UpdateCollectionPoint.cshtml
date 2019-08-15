@@ -26,10 +26,8 @@
                     </tr>
                     <tr class="listview">
                         <td class="listviewheader">@Html.LabelFor(x => x.Location)</td>
-                        <td class="oddlistview">
-                            @Html.TextBoxFor(x => x.Location)
-                            <br/>@Html.ValidationMessageFor(x => x.Location)
-                        </td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x.Location)</td>
+                        <td>@Html.HiddenFor(x => x.Location)</td>
                     </tr>
                     <tr class="decision">
                         <td class="decision" colspan="2" align="right">
