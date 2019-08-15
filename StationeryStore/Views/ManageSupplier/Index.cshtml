@@ -15,12 +15,12 @@
     <br />
     @if (staffRole == "Store Manager")
     {
-        <div class="listview">
+        <div align="center">
             <p>  Upload a file to replace all data for supplier details (rank, price):</p>
             <br />
             @using (Html.BeginForm("ImportSupplierDetails", "CSVHandler", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return submitCSV()" }))
             {
-                <table class="listview">
+                <table>
                     <tr>
                         <td colspan="2">@TempData["MessageError"]</td>
                     </tr>
@@ -31,16 +31,16 @@
                 </table>
             }
         </div>
-        <br />
+        <br/>
     }
+        <div align="center">
+            @using (Html.BeginForm("ExportSupplierDetailsToCSV", "CSVHandler", FormMethod.Post))
+            {
+                <input class="decision" type="submit" value="Download Current Supplier Details Data" />
+            }
+        </div>
+    <br/>
 
-    <div class="listview">
-        @using (Html.BeginForm("ExportSupplierDetailsToCSV", "CSVHandler", FormMethod.Post))
-        {
-            <input type="submit" value="Download Current Supplier Details Data" class="decision" />
-        }
-    </div>
-    <br />
     @if (suppliers == null || suppliers.Count == 0)
     {
         <h5>There are no suppliers.</h5>

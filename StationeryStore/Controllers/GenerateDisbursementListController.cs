@@ -30,11 +30,14 @@ namespace StationeryStore.Controllers
             List<StationeryDisbursementEF> disbursements = rndService.FindDisbursementsByRetrievalId(retrievalId);
             foreach(StationeryDisbursementEF d in disbursements)
             {
-                string collectionRepEmail = d.Staff.Email;
-                string subject = "Disbursement #" + d.DisbursementId + " : Ready for Collection";
-                string body = "Disbursement #" + d.DisbursementId + " is ready for collection on " + Timestamp.dateFromTimestamp((long)d.DateDisbursed)
+                if(d.Status == "Retrieved")
+                {
+                    string collectionRepEmail = d.Staff.Email;
+                    string subject = "Disbursement #" + d.DisbursementId + " : Ready for Collection";
+                    string body = "Disbursement #" + d.DisbursementId + " is ready for collection on " + Timestamp.dateFromTimestamp((long)d.DateDisbursed)
                         + " " + d.Staff.Department.CollectionPoint.CollectionTime + ", at " + d.Staff.Department.CollectionPoint.Location + ".";
-                Email.SendEmail(collectionRepEmail, subject, body);
+                    Email.SendEmail(collectionRepEmail, subject, body);
+                }
             }
             
             return RedirectToAction("ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 });

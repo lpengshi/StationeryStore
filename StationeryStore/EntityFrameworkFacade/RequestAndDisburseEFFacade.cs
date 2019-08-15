@@ -272,6 +272,14 @@ namespace StationeryStore.EntityFrameworkFacade
                 .ToList<StationeryRequestDetailsEF>();
         }
 
+        public List<StationeryRequestDetailsEF> FindAllProcessedRequestDetailsByDepartmentCode(string status, string departmentCode)
+        {
+            return context.StationeryRequestDetails
+                .Where(a => a.FulfilmentStatus == status
+                && a.Request.Staff.DepartmentCode == departmentCode)
+                .ToList<StationeryRequestDetailsEF>();
+        }
+
         public void SaveRequestTemplateDetails(List<RequestTemplateDetailsEF> requestTemplateList)
         {
             foreach (var item in requestTemplateList)

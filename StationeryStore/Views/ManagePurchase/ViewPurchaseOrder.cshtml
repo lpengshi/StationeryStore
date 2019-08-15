@@ -62,9 +62,6 @@
 
     <table class="listview">
         <tr>
-            <td colspan="5" class="listviewtitle">Items:</td>
-        </tr>
-        <tr>
             <th class="listviewuom">Item SN</th>
             <th class="listviewuom">Item Code</th>
             <th class="listviewdescription">Description</th>
@@ -87,9 +84,8 @@
             }
 
         }
-        <tr>
-            <td colspan="3"></td>
-            <td height="100px" align="right">
+        <tr class="decision">
+            <td class="decision" colspan="5" align="right">
                 <form action="~/ManagePurchase/ViewPurchaseOrder" method="post">
                     <input type="hidden" name="purchaseOrderId" value="@po.OrderId.ToString()" />
                     @{ if (po.Status == "Pending Delivery")
@@ -97,10 +93,9 @@
                         }
                     }
                     <input type="submit" name="choice" value="Print Purchase Order" class="decision" />
-                   
+                    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase", new {page =1 })'" name="choice" value="back" class="decision">Back</button>
                 </form>
             </td>
-            <td><button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase", new {page =1 })'" name="choice" value="back" class="decision">Back</button></td>
-        </tr>
+        </tr>  
     </table>  
 </div>

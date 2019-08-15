@@ -72,7 +72,7 @@ namespace StationeryStore.Controllers
             string collectionRepEmail = staffService.FindStaffById(collectionRepId).Email;
             string subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement";
             string body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
-                "<a href='http://localhost:56415/ManageStationeryDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
+                "<a href='http://localhost/StationeryStore/ViewDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
                 "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s).";
             Email.SendEmail(collectionRepEmail, subject, body);
 

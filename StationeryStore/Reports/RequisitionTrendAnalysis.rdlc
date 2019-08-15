@@ -97,12 +97,12 @@
                           <GroupExpression>=Fields!Category.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
-                      <Label>=Fields!Category.Value</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Category.Value</Value>
                         </SortExpression>
                       </SortExpressions>
+                      <Label>=Fields!Category.Value</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartCategoryHierarchy>
@@ -114,12 +114,12 @@
                           <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                         </GroupExpressions>
                       </Group>
-                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!Date.Value</Value>
                         </SortExpression>
                       </SortExpressions>
+                      <Label>=MonthName(Month(Fields!Date.Value))</Label>
                     </ChartMember>
                   </ChartMembers>
                 </ChartSeriesHierarchy>
@@ -540,9 +540,6 @@
                     <TablixColumn>
                       <Width>3.008cm</Width>
                     </TablixColumn>
-                    <TablixColumn>
-                      <Width>2.5cm</Width>
-                    </TablixColumn>
                   </TablixColumns>
                   <TablixRows>
                     <TablixRow>
@@ -557,7 +554,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=IIF(Fields!TotalQty.Value IS NOTHING, 0, Sum(Fields!TotalQty.Value))</Value>
+                                      <Value>=Sum(Fields!TotalQty.Value)+0</Value>
                                       <Style>
                                         <FontSize>12pt</FontSize>
                                       </Style>
@@ -569,43 +566,6 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>TotalQty1</rd:DefaultName>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                                <VerticalAlign>Middle</VerticalAlign>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <rd:Selected>true</rd:Selected>
-                          </CellContents>
-                        </TablixCell>
-                        <TablixCell>
-                          <CellContents>
-                            <Textbox Name="Textbox3">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Sum(Fields!TotalQty.Value)/CountDistinct(Month(Fields!Date.Value))</Value>
-                                      <Style>
-                                        <FontSize>12pt</FontSize>
-                                        <FontWeight>Bold</FontWeight>
-                                        <Format>0;(0)</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Center</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox3</rd:DefaultName>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -716,46 +676,6 @@
                         </TablixMember>
                       </TablixMembers>
                     </TablixMember>
-                    <TablixMember>
-                      <TablixHeader>
-                        <Size>1.2cm</Size>
-                        <CellContents>
-                          <Textbox Name="Textbox1">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value>Average</Value>
-                                    <Style>
-                                      <FontSize>12pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
-                                      <TextDecoration>Underline</TextDecoration>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style>
-                                  <TextAlign>Center</TextAlign>
-                                </Style>
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox1</rd:DefaultName>
-                            <Style>
-                              <Border>
-                                <Style>Solid</Style>
-                              </Border>
-                              <BackgroundColor>LightBlue</BackgroundColor>
-                              <VerticalAlign>Middle</VerticalAlign>
-                              <PaddingLeft>2pt</PaddingLeft>
-                              <PaddingRight>2pt</PaddingRight>
-                              <PaddingTop>2pt</PaddingTop>
-                              <PaddingBottom>2pt</PaddingBottom>
-                            </Style>
-                          </Textbox>
-                        </CellContents>
-                      </TablixHeader>
-                    </TablixMember>
                   </TablixMembers>
                 </TablixColumnHierarchy>
                 <TablixRowHierarchy>
@@ -814,7 +734,7 @@
                 <DataSetName>DataSet1</DataSetName>
                 <Top>9.88272cm</Top>
                 <Height>1.8cm</Height>
-                <Width>8.67475cm</Width>
+                <Width>6.17475cm</Width>
                 <ZIndex>2</ZIndex>
                 <Visibility>
                   <Hidden>=CountRows() = 0</Hidden>
@@ -895,12 +815,12 @@
                                         <GroupExpression>=Fields!Category.Value</GroupExpression>
                                       </GroupExpressions>
                                     </Group>
-                                    <Label>=Fields!Category.Value</Label>
                                     <SortExpressions>
                                       <SortExpression>
                                         <Value>=Fields!Category.Value</Value>
                                       </SortExpression>
                                     </SortExpressions>
+                                    <Label>=Fields!Category.Value</Label>
                                   </ChartMember>
                                 </ChartMembers>
                               </ChartCategoryHierarchy>
@@ -912,12 +832,12 @@
                                         <GroupExpression>=Month(Fields!Date.Value)</GroupExpression>
                                       </GroupExpressions>
                                     </Group>
-                                    <Label>=MonthName(Month(Fields!Date.Value))</Label>
                                     <SortExpressions>
                                       <SortExpression>
                                         <Value>=Fields!Date.Value</Value>
                                       </SortExpression>
                                     </SortExpressions>
+                                    <Label>=MonthName(Month(Fields!Date.Value))</Label>
                                   </ChartMember>
                                 </ChartMembers>
                               </ChartSeriesHierarchy>
@@ -1338,9 +1258,6 @@
                                   <TablixColumn>
                                     <Width>2.87042cm</Width>
                                   </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>2.5cm</Width>
-                                  </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
@@ -1355,7 +1272,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=IIF(Fields!TotalQty.Value IS NOTHING, 0, Sum(Fields!TotalQty.Value))</Value>
+                                                    <Value>=Sum(Fields!TotalQty.Value) + 0</Value>
                                                     <Style>
                                                       <FontSize>12pt</FontSize>
                                                       <FontWeight>Normal</FontWeight>
@@ -1368,42 +1285,6 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>TotalQty</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>Solid</Style>
-                                              </Border>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>2pt</PaddingTop>
-                                              <PaddingBottom>2pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox6">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Sum(Fields!TotalQty.Value)/CountDistinct(Month(Fields!Date.Value))</Value>
-                                                    <Style>
-                                                      <FontSize>12pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                      <Format>0;(0)</Format>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Center</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox6</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -1513,45 +1394,6 @@
                                       </TablixMember>
                                     </TablixMembers>
                                   </TablixMember>
-                                  <TablixMember>
-                                    <TablixHeader>
-                                      <Size>1.2cm</Size>
-                                      <CellContents>
-                                        <Textbox Name="Textbox4">
-                                          <CanGrow>true</CanGrow>
-                                          <KeepTogether>true</KeepTogether>
-                                          <Paragraphs>
-                                            <Paragraph>
-                                              <TextRuns>
-                                                <TextRun>
-                                                  <Value>Average</Value>
-                                                  <Style>
-                                                    <FontSize>12pt</FontSize>
-                                                    <FontWeight>Bold</FontWeight>
-                                                  </Style>
-                                                </TextRun>
-                                              </TextRuns>
-                                              <Style>
-                                                <TextAlign>Center</TextAlign>
-                                              </Style>
-                                            </Paragraph>
-                                          </Paragraphs>
-                                          <rd:DefaultName>Textbox4</rd:DefaultName>
-                                          <Style>
-                                            <Border>
-                                              <Style>Solid</Style>
-                                            </Border>
-                                            <BackgroundColor>LightBlue</BackgroundColor>
-                                            <VerticalAlign>Middle</VerticalAlign>
-                                            <PaddingLeft>2pt</PaddingLeft>
-                                            <PaddingRight>2pt</PaddingRight>
-                                            <PaddingTop>2pt</PaddingTop>
-                                            <PaddingBottom>2pt</PaddingBottom>
-                                          </Style>
-                                        </Textbox>
-                                      </CellContents>
-                                    </TablixHeader>
-                                  </TablixMember>
                                 </TablixMembers>
                               </TablixColumnHierarchy>
                               <TablixRowHierarchy>
@@ -1611,7 +1453,7 @@
                               <Top>9.664cm</Top>
                               <Left>0.37253cm</Left>
                               <Height>1.8cm</Height>
-                              <Width>8.37842cm</Width>
+                              <Width>5.87842cm</Width>
                               <ZIndex>2</ZIndex>
                               <Style>
                                 <Border>

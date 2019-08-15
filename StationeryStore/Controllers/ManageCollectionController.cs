@@ -23,6 +23,9 @@ namespace StationeryStore.Controllers
             if (update == "success")
             {
                 ViewBag.note = "Department collection details has been updated";
+            } else if (update == "unchanged")
+            {
+                ViewBag.note = "No changes were made to the collection details";
             }
 
             StaffEF staff = staffService.GetStaff();
@@ -43,6 +46,17 @@ namespace StationeryStore.Controllers
         [HttpPost]
         public ActionResult Index(ManageCollectionDTO manageCollectionDTO)
         {
+            StaffEF staff = staffService.GetStaff();
+            DepartmentEF department = staff.Department;
+
+            if (manageCollectionDTO.DepartmentRepId == department.DepartmentRepresentativeId && manageCollectionDTO.CollectionPointId == department.CollectionPointId)
+            {
+                return RedirectToAction("Index", new { update = "unchanged" });
+            } else if (manageCollectionDTO.CollectionPointId == department.CollectionPointId && manageCollectionDTO.DepartmentRepId == null)
+            {
+                return RedirectToAction("Index", new { update = "unchanged" });
+            }
+
             deptService.UpdateDepartmentCollection(manageCollectionDTO);
 
             return RedirectToAction("Index", new { update = "success"});

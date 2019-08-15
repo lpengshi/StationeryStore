@@ -40,7 +40,7 @@ namespace StationeryStore.Controllers
                 rndService.UpdateRequestDetails(detail);
             }
 
-            return RedirectToAction("ViewRetrieval", "ManageStationeryRetrieval", new { retrievalId = retrieval.RetrievalId });
+            return RedirectToAction("ViewRetrievalHistory", "ManageStationeryRetrieval", new { page = 1 });
         }
     }
 }

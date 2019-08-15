@@ -29,10 +29,13 @@
                     <td class="listrequestlabel">Department</td>
                     <td class="listrequestvalue">@disbursement.Department.DepartmentName</td>
                 </tr>
-                <tr class="listview">
-                    <td class="listrequestlabel">Store Clerk</td>
-                    <td class="listrequestvalue">@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
-                </tr>
+                @if(disbursement.Status != "Cancelled")
+                {
+                    <tr class="listview">
+                        <td class="listrequestlabel">Store Clerk</td>
+                     <td class="listrequestvalue">@storeClerk.Name<input type="hidden" name="storeClerkId" value="@storeClerk.StaffId" /></td>
+                    </tr>
+                }
                 @if (disbursement.Status == "Retrieved")
                 {
                     <tr class="listview">
@@ -55,7 +58,7 @@
                         </td>
                     </tr>
                 }
-                else
+                else if(disbursement.Status != "Cancelled")
                 {
                     <tr class="listview">
                         <td class="listrequestlabel">Collected By</td>
@@ -68,6 +71,7 @@
                 <tr class="listview">
                     <td class="listviewuom">Item Code</td>
                     <td class="listviewheader">Item Description</td>
+                    <td class="listviewheader">Total Requested Quantity</td>
                     <td class="listviewheader">Total Retrieved Quantity</td>
                     <td class="listviewheader">Total Disbursed Quantity</td>
                 </tr>
@@ -76,6 +80,7 @@
                     <tr class="listview">
                         <td class="oddlistview">@Html.DisplayFor(x => x[i].ItemCode)</td>
                         <td class="oddlistview">@Model[i].Stock.Description</td>
+                        <td class="oddlistview">@Html.DisplayFor(x => x[i].RequestQuantity)</td>
                         <td class="oddlistview">@Html.DisplayFor(x => x[i].RetrievedQuantity)</td>
                         @if (disbursement.Status == "Retrieved")
                         {
@@ -99,7 +104,7 @@
                 @if (disbursement.Status == "Retrieved")
                 {
                     <tr class="decision">
-                        <td class="decision" colspan="4" align="right">
+                        <td class="decision" colspan="5" align="right">
                             <input type="submit" class="decision" name="decision" value="Cancel" />
                             <input type="submit" class="decision" name="decision" value="Save" onclick="return confirm('Confirm disbursed quantities?')" />
                         </td>
@@ -108,7 +113,7 @@
                 else
                 {
                     <tr class="decision">
-                        <td class="decision" colspan="4" align="right">
+                        <td class="decision" colspan="5" align="right">
                             <input type="button" class="decision" value="Back" onclick="location.href='@Url.Action("ViewDisbursementHistory", "ManageStationeryDisbursement", new { page = 1 })'" />
                         </td>
                     </tr>
