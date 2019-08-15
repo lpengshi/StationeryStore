@@ -35,7 +35,7 @@
                 @{ if (voucher.ApproverId != null)
                     {
                         <tr>
-                            <td class="listrequestlabel">Approved By:</td>
+                            <td class="listrequestlabel">Decision By:</td>
                             <td class="listrequestvalue">@voucher.Approver.Name</td>
                         </tr>
                     }
@@ -52,7 +52,7 @@
                     <th class="listviewdescription">Item Description</th>
                     <th class="listviewquantity">Quantity</th>
                     <th class="listviewdate">Unit Price</th>
-                    <th class="listviewdate">Total Cost</th>
+                    <th class="listviewdate">Subtotal</th>
                     <th class="listviewdescription">Reason</th>
 
                 </tr>
@@ -76,7 +76,7 @@
                 </tr>
             </table>
             <br />
-            if (voucher.Status == "Pending Approval")
+            if (voucher.Status == "Pending Approval" || voucher.Status == "Pending Manager Approval")
             {
                 <input type="hidden" name="voucherId" value="@voucher.VoucherId" />
                 if (staffRole == "Store Clerk" && staffId == voucher.RequesterId)

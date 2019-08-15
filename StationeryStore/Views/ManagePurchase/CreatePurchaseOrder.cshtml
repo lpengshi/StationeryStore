@@ -102,7 +102,7 @@
                             <th class="listviewdescription">Description</th>
                             <th class="listviewuom">UOM</th>
                             <th class="listviewuom">Price/unit</th>
-                            <th class="listviewquantity">Quantity</th>
+                            <th class="listviewuom">Quantity</th>
                             <th class="listviewremove">Remove</th>
                         </tr>
                         @{if (Model != null && Model.SupplierDetailIds != null)
@@ -115,7 +115,7 @@
                                         <td class="oddlistview">@Model.Icodes[i]</td>
                                         <td class="oddlistview">@Model.Descs[i]</td>
                                         <td class="oddlistview">@Model.Uoms[i]</td>
-                                        <td class="oddlistview">@Model.Prices[i]</td>
+                                        <td class="oddlistview">@string.Format("{0:C}", Model.Prices[i])</td>
                                         <td class="oddlistview">
                                             @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { min = 1, max = 99999 } })
                                             <br />@Html.ValidationMessageFor(m => m.Quantities[i])
