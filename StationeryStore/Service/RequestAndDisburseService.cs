@@ -66,7 +66,7 @@ namespace StationeryStore.Service
             if (disbursement.StoreClerk.Email != null)
             {
                 string subject = "Acknowledgement for Disbursement#" + disbursement.DisbursementId;
-                string body = disbursement.Staff.Name + "has acknowledged disbursement#" + disbursement.DisbursementId + ".";
+                string body = disbursement.Staff.Name + " has acknowledged disbursement#" + disbursement.DisbursementId + ".";
                 Email.SendEmail(disbursement.StoreClerk.Email, subject, body);
             }
             rndEFF.SaveDisbursement(disbursement);
