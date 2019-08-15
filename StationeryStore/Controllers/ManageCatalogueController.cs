@@ -116,16 +116,6 @@ namespace StationeryStore.Controllers
                 return RedirectToAction("ViewCatalogueItem", new { catalogueId = item.CatalogueId });
             }
 
-            if (decision == "Predict Reorder Level")
-            {
-                // get prediction from service
-                int prediction = 1;
-                // set it and throw it back to the update catalogue view
-                ModelState.Remove("ReorderLevel");
-                item.ReorderLevel = prediction;
-                return View(item);
-            }
-
             if (decision == "Predict Reorder Quantity")
             {
                 // get prediction from service

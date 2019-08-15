@@ -15,7 +15,7 @@
     <br />
     @if (staffRole == "Store Manager")
     {
-        <div class="leftAlignedTextArea">
+        <div align="center">
             <p>  Upload a file to replace all data for supplier details (rank, price):</p>
             <br />
             @using (Html.BeginForm("ImportSupplierDetails", "CSVHandler", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit= "return submitCSV()" }))
@@ -31,13 +31,15 @@
                 </table>
             }
         </div>
+        <br/>
     }
-        <div class="leftAlignedTextArea">
+        <div align="center">
             @using (Html.BeginForm("ExportSupplierDetailsToCSV", "CSVHandler", FormMethod.Post))
             {
-                <input type="submit" value="Download Current Supplier Details Data" />
+                <input class="decision" type="submit" value="Download Current Supplier Details Data" />
             }
         </div>
+    <br/>
 
     @if (suppliers == null || suppliers.Count == 0)
     {
