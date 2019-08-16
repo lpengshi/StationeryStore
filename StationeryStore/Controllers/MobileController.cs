@@ -13,6 +13,20 @@ namespace StationeryStore.Controllers
     {
         RequestAndDisburseService rndService = new RequestAndDisburseService();
         StockService stockService = new StockService();
+        StaffService staffService = new StaffService();
+
+        //validate user login
+        public JsonResult GetLogin(LoginDTO loginDTO)
+        {
+            StaffEF staff = null;
+            if (loginDTO != null)
+            {
+                staff = staffService.FindStaffByUsername(loginDTO.Username);
+            }
+
+            return Json(staff, JsonRequestBehavior.AllowGet);
+        }
+
 
         // Send retrieval details to android
         public JsonResult GetRetrieval()
