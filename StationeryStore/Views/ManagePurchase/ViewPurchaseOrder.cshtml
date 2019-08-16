@@ -92,8 +92,9 @@
                         { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
                         }
                     }
-                    <input type="submit" name="choice" value="Print Purchase Order" class="decision" />
-                    <button onclick="location.href='@Url.Action("PurchaseOrderHistory", "ManagePurchase", new {page =1 })'" name="choice" value="back" class="decision">Back</button>
+                    <input type="button" class="decision" value="Print Purchase Order" onclick="location.href='../WebForms/PurchaseOrderForm.aspx?orderId=' + @po.OrderId" />
+                    <input type="button" class="decision" value="Back" onclick="location.href='../ManagePurchase/PurchaseOrderHistory?page=1'" />
+                    
                 </form>
             </td>
         </tr>  

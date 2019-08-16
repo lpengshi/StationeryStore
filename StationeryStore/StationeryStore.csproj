@@ -193,6 +193,11 @@
     <Compile Include="Controllers\ViewLowStockController.cs" />
     <Compile Include="Controllers\ViewOutstandingRequestsController.cs" />
     <Compile Include="Controllers\ViewRequestHistoryController.cs" />
+    <Compile Include="DataSets\PurchaseOrderDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchaseOrderDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="EntityFrameworkFacade\DepartmentEFFacade.cs" />
     <Compile Include="EntityFrameworkFacade\PurchaseEFFacade.cs" />
     <Compile Include="EntityFrameworkFacade\RequestAndDisburseEFFacade.cs" />
@@ -313,6 +318,13 @@
     <Compile Include="WebForms\RequisitionTrendAnalysis.aspx.designer.cs">
       <DependentUpon>RequisitionTrendAnalysis.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebForms\PurchaseOrderForm.aspx.cs">
+      <DependentUpon>PurchaseOrderForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\PurchaseOrderForm.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderForm.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -336,6 +348,7 @@
       <DependentUpon>CatalogueDataSet.xsd</DependentUpon>
     </Content>
     <Content Include="WebForms\RequisitionTrendAnalysis.aspx" />
+    <Content Include="WebForms\PurchaseOrderForm.aspx" />
     <None Include="DataSets\CatalogueDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>CatalogueDataSet.Designer.cs</LastGenOutput>
@@ -354,6 +367,17 @@
     </Content>
     <Content Include="DataSets\ReorderDataSet.xsc">
       <DependentUpon>ReorderDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSets\PurchaseOrderDataSet.xsc">
+      <DependentUpon>PurchaseOrderDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\PurchaseOrderDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PurchaseOrderDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSets\PurchaseOrderDataSet.xss">
+      <DependentUpon>PurchaseOrderDataSet.xsd</DependentUpon>
     </Content>
     <None Include="DataSets\ReorderDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -504,6 +528,7 @@
     <EmbeddedResource Include="Reports\InventoryStatusReport.rdlc" />
     <EmbeddedResource Include="Reports\OrderTrendAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\PrintCatalogue.rdlc" />
+    <EmbeddedResource Include="Reports\PurchaseOrderForm.rdlc" />
     <EmbeddedResource Include="Reports\ReorderReport.rdlc" />
     <EmbeddedResource Include="Reports\RequisitionTrendAnalysis.rdlc" />
   </ItemGroup>

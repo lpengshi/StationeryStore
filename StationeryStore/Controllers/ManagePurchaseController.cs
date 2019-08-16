@@ -209,10 +209,6 @@ namespace StationeryStore.Controllers
                 stockService.LogTransactionsForDeliveryOrder(po.OrderId);
                 return RedirectToAction("PurchaseOrderHistory", "ManagePurchase");
             }
-            if (choice == "Print Purchase Order")
-            {
-                PurchaseOrderPrinter(po.OrderId);
-            }
 
             return View();
         }
