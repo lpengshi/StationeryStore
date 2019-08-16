@@ -42,8 +42,7 @@ namespace StationeryStore.Controllers
 
 
             int pageSize = 8;
-            List<AdjustmentVoucherEF> details = adjVouchers
-                .OrderBy(x => x.DateIssued)
+            List<AdjustmentVoucherEF> details = adjVouchers               
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList<AdjustmentVoucherEF>();
