@@ -18,7 +18,7 @@
         <div align="center">
             <p>  Upload a file to replace all data for supplier details (rank, price):</p>
             <br />
-            @using (Html.BeginForm("ImportSupplierDetails", "CSVHandler", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit= "return submitCSV()" }))
+            @using (Html.BeginForm("ImportSupplierDetails", "CSVHandler", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return submitCSV()" }))
             {
                 <table>
                     <tr>

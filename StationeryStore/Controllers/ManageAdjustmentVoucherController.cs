@@ -75,7 +75,7 @@ namespace StationeryStore.Controllers
             ViewData["staffRole"] = staff.Role.Description;
             ViewData["staffId"] = staff.StaffId;
 
-            if (choice != null && voucher.Status == "Pending Approval")
+            if (choice != null && (voucher.Status == "Pending Approval" || voucher.Status == "Pending Manager Approval"))
             {
 
                 if (choice == "Edit")
@@ -180,14 +180,16 @@ namespace StationeryStore.Controllers
             if (choice == "Submit")
             {
                 StaffEF requester = staffService.GetStaff();
-                string newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList);
+                string newId = "";
                 if (stockService.VoucherExceedsSetValue(detailsList))
                 {
+                    newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Manager");
                     Debug.Print("Pending appr sent to manager email");
                     SendEmailToAuthorityOnRequest(voucher.VoucherId, "Manager");
                 }
-                else
+                else if(!stockService.VoucherExceedsSetValue(detailsList))
                 {
+                    newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Supervisor");
                     Debug.Print("Pending appr sent to supervisor email");
                     SendEmailToAuthorityOnRequest(voucher.VoucherId, "Supervisor");
                 }
@@ -230,8 +232,8 @@ namespace StationeryStore.Controllers
             foreach (string e in recepientEmailAdd)
             {
                 Email.SendEmail(e,
-                    "Adjustment Voucher#" + voucherId + " : Pending Review",
-                    "Adjustment Voucher" + voucherId + " requires review.");
+                    "Adjustment Voucher #" + voucherId + " : Pending Review",
+                    "Adjustment Voucher #" + voucherId + " requires review.");
             }
         }
 
@@ -239,8 +241,8 @@ namespace StationeryStore.Controllers
         {
             string email = staff.Email;
             Email.SendEmail(email,
-                    "Adjustment Voucher#" + voucher.VoucherId + " : has been " + voucher.Status.ToLower() + ".",
-                    "Adjustment Voucher#" + voucher.VoucherId + " has been " + voucher.Status.ToLower() + "by " + voucher.Approver.Name + ".");
+                    "Adjustment Voucher #" + voucher.VoucherId + " : has been " + voucher.Status.ToLower() + ".",
+                    "Adjustment Voucher #" + voucher.VoucherId + " has been " + voucher.Status.ToLower() + " by " + voucher.Approver.Name + ".");
         }
     }
 }

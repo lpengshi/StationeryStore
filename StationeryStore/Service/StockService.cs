@@ -211,15 +211,15 @@ namespace StationeryStore.Service
             }
             if(status == "Reject")
             {
-                voucher.Status = "Rejected";               
+                voucher.Status = "Rejected";
+                voucher.ApproverId = decisionMaker.StaffId;
                 stockEFF.UpdateAdjustmentVoucher(voucher);
             }
             return false;
         }
 
-        public string SaveAdjustmentVoucherAndDetails(StaffEF requester, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList)
-        {
-            //check if when make adj voucher the voucher id remains null!!!!
+        public string SaveAdjustmentVoucherAndDetails(StaffEF requester, AdjustmentVoucherEF voucher, List<AdjustmentVoucherDetailsDTO> detailsList, string approvalLevel)
+        {           
             var existing = stockEFF.FindAdjustmentVoucherById(voucher.VoucherId);
             if (existing == null)
             {
@@ -232,7 +232,15 @@ namespace StationeryStore.Service
                 voucher.DateIssued = unixTimestamp;
                 voucher.RequesterId = requester.StaffId;
 
-                voucher.Status = "Pending Approval";
+                if(approvalLevel == "Manager")
+                {
+                    voucher.Status = "Pending Manager Approval";
+
+                }
+                else if(approvalLevel == "Supervisor")
+                {
+                    voucher.Status = "Pending Approval";
+                }
                 stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
                 //return stockEFF.AddNewAdjustmentVoucherAndDetails(voucher, detailsList);
             }

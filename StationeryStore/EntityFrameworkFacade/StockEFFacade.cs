@@ -131,11 +131,11 @@ namespace StationeryStore.EntityFrameworkFacade
         public List<AdjustmentVoucherEF> FindAllAdjustmentVouchers()
         {
             List<AdjustmentVoucherEF> finalList = new List<AdjustmentVoucherEF>();
-            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status == "Pending Approval").OrderByDescending(x => x.VoucherId).ToList())
+            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status == "Pending Approval" || x.Status == "Pending Manager Approval").OrderByDescending(x => x.VoucherId).ToList())
             {
                 finalList.Add(v);
             }
-            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status != "Pending Approval").OrderByDescending(x => x.VoucherId).ToList())
+            foreach (var v in context.AdjustmentVouchers.Where(x => x.Status != "Pending Approval" && x.Status != "Pending Manager Approval").OrderByDescending(x => x.VoucherId).ToList())
             {
                 finalList.Add(v);
             }

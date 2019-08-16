@@ -2,6 +2,7 @@
 @using StationeryStore.Models
 @using StationeryStore.Util
 
+
 @{
     ViewBag.Title = "CreateAdjustmentVoucher";
     List<StockEF> itemList = (List<StockEF>)ViewData["itemList"];
@@ -10,7 +11,7 @@
 
 <div>@Html.Partial("_Store")</div>
 
-<div class="maindetails">    
+<div class="maindetails">
     <div class="mainview">
         <h3>Create Adjustment Voucher</h3>
         <br />
@@ -31,8 +32,8 @@
                 </table>
                 <input type="hidden" name="voucherId" value="@voucher.VoucherId" />
             }
-                       
-            <input list="items" name="itemToAdd" size="40" class="listview"/>
+
+            <input list="items" name="itemToAdd" size="40" class="listview" />
             <datalist id="items">
                 @{foreach (var item in itemList)
                     {
@@ -108,7 +109,7 @@
     var prices = [];
 
     function changeQty(i) {
-        
+
         alert(i);
     }
 </script>
