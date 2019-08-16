@@ -9,5 +9,7 @@ namespace StationeryStore.Models
     {
         public int StaffId { get; set; }
         public string Name { get; set; }
+
+        public string Role { get; set; }
     }
 }

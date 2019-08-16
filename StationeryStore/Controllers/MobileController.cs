@@ -25,9 +25,14 @@ namespace StationeryStore.Controllers
                 staff = staffService.FindStaffByUsername(loginDTO.Username);
             }
 
-            return Json(staff, JsonRequestBehavior.AllowGet);
+            MobileStaffDTO mobileStaff = new MobileStaffDTO
+            {
+                StaffId = staff.StaffId,
+                Name = staff.Name,
+                Role = staff.Role.Description,
+            };
+            return Json(mobileStaff, JsonRequestBehavior.AllowGet);
         }
-
 
         // Send retrieval details to android
         public JsonResult GetRetrieval()
