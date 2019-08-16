@@ -46,13 +46,6 @@ namespace StationeryStore.EntityFrameworkFacade
             return stockItem;
         }
 
-
-        public List<StockEF> FindAllStockByCategory(string category)
-        {
-            var stockList = context.Stocks.Where(a => a.Category == category).ToList();
-            return stockList;
-        }
-
         public List<CatalogueItemEF> FindAllCatalogueItems()
         {
             var catalogueList = context.CatalogueItems.ToList();
@@ -131,11 +124,6 @@ namespace StationeryStore.EntityFrameworkFacade
         public CatalogueItemEF FindCatalogueItemById(int catalogueId)
         {
             return context.CatalogueItems.Find(catalogueId);
-        }
-
-        public CatalogueItemEF FindCatalogueItemByItemCode(string itemCode)
-        {
-            return context.CatalogueItems.Where(x => x.ItemCode == itemCode).SingleOrDefault();
         }
 
         //ADJUSTMENT VOUCHER

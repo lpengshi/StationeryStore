@@ -10,26 +10,9 @@ namespace StationeryStore.EntityFrameworkFacade
     {
         StoreContext context = new StoreContext();
 
-        public List<DepartmentEF> FindAllDepartments()
-        {
-            return context.Departments.ToList();
-        }
-
         public DepartmentEF FindDepartmentByCode(string code)
         {
             return context.Departments.Find(code);
-        }
-
-        public void AddToCollectionPoint(CollectionPointEF collectionPoint)
-        {
-            context.CollectionPoints.Add(collectionPoint);
-            context.SaveChanges();
-        }
-
-        public void RemoveFromCollectionPoint(CollectionPointEF collectionPoint)
-        {
-            context.CollectionPoints.Remove(collectionPoint);
-            context.SaveChanges();
         }
 
         public List<CollectionPointEF> FindAllCollectionPoints()

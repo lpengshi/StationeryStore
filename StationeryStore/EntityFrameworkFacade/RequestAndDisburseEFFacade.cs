@@ -11,31 +11,6 @@ namespace StationeryStore.EntityFrameworkFacade
     {
         StoreContext context = new StoreContext();
 
-        public void SaveRequest(StationeryRequestEF request)
-        {
-            var existingRequest = context.StationeryRequests.Find(request.RequestId);
-            if (existingRequest == null)
-            {
-                context.StationeryRequests.Add(request);
-            }
-            else
-            {
-                context.Entry(existingRequest).CurrentValues.SetValues(request);
-            }           
-            context.SaveChanges();
-        }
-
-        public List<StationeryRequestEF> FindAllStationeryRequest()
-        {
-            return context.StationeryRequests.ToList();
-        }
-
-        public void AddToRequestDetails(StationeryRequestDetailsEF requestDetails)
-        {
-            context.StationeryRequestDetails.Add(requestDetails);
-            context.SaveChanges();
-        }
-
         public List<StationeryDisbursementEF> FindDisbursementByDepartmentCode(string departmentCode)
         {
            return context.StationeryDisbursements
@@ -316,12 +291,6 @@ namespace StationeryStore.EntityFrameworkFacade
             }
         }
 
-        public void RemoveFromRetrieval(StationeryRetrievalEF retrieval)
-        {
-            context.StationeryRetrievals.Remove(retrieval);
-            context.SaveChanges();
-        }
-
         public List<StationeryRetrievalEF> FindAllRetrieval()
         {
             return context.StationeryRetrievals.ToList();
@@ -390,11 +359,6 @@ namespace StationeryStore.EntityFrameworkFacade
                 context.Entry(existingDisbursementDetails).CurrentValues.SetValues(details);
                 context.SaveChanges();
             }
-        }
-
-        public List<StationeryDisbursementDetailsEF> FindAllDisbursementDetails()
-        {
-            return context.StationeryDisbursementDetails.ToList();
         }
 
         public List<StationeryDisbursementDetailsEF> FindDisbursementDetailsByDisbursementId(int disbursementId)

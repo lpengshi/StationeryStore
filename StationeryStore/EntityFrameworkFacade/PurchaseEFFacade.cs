@@ -42,29 +42,14 @@ namespace StationeryStore.EntityFrameworkFacade
             context.SaveChanges();
         }
 
-        public List<PurchaseOrderDetailsEF> FindAllPurchaseOrderDetails()
-        {
-            return context.PurchaseOrderDetails.ToList();
-        }
-
         public List<PurchaseOrderDetailsEF> FindPurchaseOrderDetailsByOrderId(int orderId)
         {
             return context.PurchaseOrderDetails.Where(a => a.OrderId == orderId).ToList<PurchaseOrderDetailsEF>();
         }
 
-        public List<PurchaseOrderDetailsEF> FindPurchaseOrderDetailsByItemCode(string itemCode)
-        {
-            return context.PurchaseOrderDetails.Where(a => a.ItemCode == itemCode).ToList<PurchaseOrderDetailsEF>();
-        }
-
         public int FindLastPOId()
         {
             return context.PurchaseOrders.Count();
-        }
-
-        public int FindLastPODetId()
-        {
-            return context.PurchaseOrderDetails.Count();
         }
 
         public bool AddToSupplier(SupplierEF supplier)
@@ -89,12 +74,6 @@ namespace StationeryStore.EntityFrameworkFacade
             }
         }
 
-        public void RemoveFromSupplier(SupplierEF supplier)
-        {
-            context.Suppliers.Remove(supplier);
-            context.SaveChanges();
-        }
-
         public List<SupplierEF> FindAllSuppliers()
         {
             return context.Suppliers.ToList();
@@ -113,12 +92,6 @@ namespace StationeryStore.EntityFrameworkFacade
         public void AddToSupplierDetails(SupplierDetailsEF supplierDetails)
         {
             context.SupplierDetails.Add(supplierDetails);
-            context.SaveChanges();
-        }
-
-        public void RemoveFromSupplierDetails(SupplierDetailsEF supplierDetails)
-        {
-            context.SupplierDetails.Remove(supplierDetails);
             context.SaveChanges();
         }
 
