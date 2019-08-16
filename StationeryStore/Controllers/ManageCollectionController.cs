@@ -28,6 +28,7 @@ namespace StationeryStore.Controllers
                 ViewBag.note = "No changes were made to the collection details";
             }
 
+            // Retrieve list of department staff and collection points
             StaffEF staff = staffService.GetStaff();
             ViewBag.staff = staff;
             ViewBag.department = staff.Department;
@@ -35,7 +36,7 @@ namespace StationeryStore.Controllers
             List<CollectionPointEF> collectionPoints = deptService.FindAllCollectionPoints();
 
             ManageCollectionDTO collectDTO = new ManageCollectionDTO();
-
+            // Display current department rep and collection point
             collectDTO.Department = staff.Department.DepartmentCode;
             collectDTO.CollectionPoints = collectionPoints;
             ViewBag.deptStaff = deptStaff;
@@ -56,7 +57,7 @@ namespace StationeryStore.Controllers
             {
                 return RedirectToAction("Index", new { update = "unchanged" });
             }
-
+            // Update collection point or department rep if changes are made
             deptService.UpdateDepartmentCollection(manageCollectionDTO);
 
             return RedirectToAction("Index", new { update = "success"});

@@ -13,9 +13,8 @@ namespace StationeryStore.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewData["note"] = "Please enter your Username and Password";
-
-
+            // Initial access
+            ViewData["note"] = "Please enter your Username and Password"
 
             return View();
         }
@@ -33,14 +32,16 @@ namespace StationeryStore.Controllers
                 return View();
             }
             else {
+                // Create sessionId
                 string sessionId = staffService.CreateSession(staff);
                 Session["sessionId"] = sessionId;
                 Session["staff"] = staff;
                 if (staff.Department != null)
                 {
+                    // Clear delegation if after delegation end date
                     deptService.CheckDelegation(staff.Department);
                 }
-
+                // Redirect staff based on role
                 if (staff.Role.Description == "Store Clerk" || staff.Role.Description == "Store Supervisor")
                 {
                     return RedirectToAction("ViewLowStock", "ViewLowStock", new { page = 1 });

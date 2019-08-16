@@ -14,6 +14,7 @@ namespace StationeryStore.Controllers
     {
         StaffService staffService = new StaffService();
 
+        // CLear session details and redirect to login
         public ActionResult Index()
         {
             StaffEF staff = staffService.GetStaff();

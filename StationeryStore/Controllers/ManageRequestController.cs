@@ -36,7 +36,7 @@ namespace StationeryStore.Controllers
             List<CatalogueItemEF> catalogueList = stockService.ListCatalogueItems();
             ViewBag.catalogueList = catalogueList;
             RequestListDTO requestListDTO = null;
-            //past existing request details if editing previous request
+            //pass existing request details if editing previous request
             if (TempData["requestListDTO"] != null)
             {
                 requestListDTO = (RequestListDTO)TempData["requestListDTO"];
