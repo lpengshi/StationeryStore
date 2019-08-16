@@ -280,7 +280,6 @@
     <Compile Include="Service\StockService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Controllers\CSVHandlerController.cs" />
-    <Compile Include="TemplatesAndGenerators\PurchaseOrderGenerator.cs" />
     <Compile Include="Util\Email.cs" />
     <Compile Include="Util\Timestamp.cs" />
     <Compile Include="WebForms\InventoryStatusReportForm.aspx.cs">
@@ -491,7 +490,6 @@
     <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ManageRequestTemplate.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
-
     <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
@@ -504,12 +502,10 @@
     <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
     <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
     <Content Include="Views\ManageSupplier\EditSupplierDetails.cshtml" />
-    <Content Include="TemplatesAndGenerators\PurchaseOrderTemplate.dotx" />
     <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="TemplatesAndGenerators\out\" />
     <Folder Include="Views\GenerateDisbursementList\" />
     <Folder Include="Views\GenerateRetrievalList\" />
     <Folder Include="Views\Logout\" />

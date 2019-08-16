@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using StationeryStore.Filters;
 using StationeryStore.Models;
 using StationeryStore.Service;
-using StationeryStore.TemplatesAndGenerators;
 using StationeryStore.Util;
 using DocumentFormat.OpenXml;
 using System.IO;
@@ -211,26 +210,6 @@ namespace StationeryStore.Controllers
             }
 
             return View();
-        }
-
-        //PRINTER SERVICE
-        [HttpPost]
-        public ActionResult PurchaseOrderPrinter(int purchaseOrderId)
-        {
-            try
-            {
-                PurchaseOrderEF po = purchaseService.FindPOById(purchaseOrderId);
-                List<PurchaseOrderDetailsEF> poDetailsList = purchaseService.FindPODetailsByOrderId(po.OrderId);
-                PurchaseOrderGenerator generator = new PurchaseOrderGenerator();
-                generator.PurchaseOrder(po, poDetailsList);
-                byte[] document = System.IO.File.ReadAllBytes("~/TemplatesAndGenerators/out/purchaseOrder.docx");
-                return File(document, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", $"PurchaseOrder{po.OrderId}.docx");
-            }
-            catch(Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-                return RedirectToAction("ViewPurchaseOrder", "ManagePurchase", new { purchaseOrderId = purchaseOrderId });
-            }
         }
     }
 }
