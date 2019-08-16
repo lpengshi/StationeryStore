@@ -343,7 +343,14 @@ namespace StationeryStore.EntityFrameworkFacade
 
         public List<StationeryDisbursementEF> FindDisbursementByStatus(string status)
         {
-            return context.StationeryDisbursements.Where(a => a.Status == "Retrieved").ToList();
+            return context.StationeryDisbursements.Where(a => a.Status == status).ToList();
+        }
+
+        public StationeryDisbursementEF StationFindDisbursementByStatusAndStaffId(int staffId, string status)
+        {
+            return context.StationeryDisbursements
+                    .Where(a => a.CollectionRepId == staffId && a.Status == status).First();
+
         }
 
         public void AddToDisbursementDetails(StationeryDisbursementDetailsEF details)

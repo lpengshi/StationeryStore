@@ -253,9 +253,13 @@ namespace StationeryStore.Service
         {
             List<StationeryRequestEF> pendingList = rndEFF.FindRequestsByStaffIdAndStatus(staffId, status);
             List<RequestDTO> requestDTOList = ConvertToRequestDTO(pendingList);
-          
 
             return requestDTOList;
+        }
+
+        public StationeryDisbursementEF FindDisbursementByStatusAndStaffId(int staffId, string status)
+        {
+            return rndEFF.StationFindDisbursementByStatusAndStaffId(staffId, status);
         }
 
         public List<RequestDTO> FindRequestsByStaff(int staffId)

@@ -231,8 +231,13 @@
     <Compile Include="Models\LowStockDTO.cs" />
     <Compile Include="Models\ManageCollectionDTO.cs" />
     <Compile Include="Models\ManageDelegationDTO.cs" />
+    <Compile Include="Models\MobileActiveDepartmentDTO.cs" />
+    <Compile Include="Models\MobileActiveDepartmentListDTO.cs" />
     <Compile Include="Models\MobileDisbursementDTO.cs" />
+    <Compile Include="Models\MobileDisbursementItemDTO.cs" />
     <Compile Include="Models\MobileRetrievalItemDTO.cs" />
+    <Compile Include="Models\MobileStaffDTO.cs" />
+    <Compile Include="Models\MobileStationeryDisbursementDetaillsDTO.cs" />
     <Compile Include="Models\PredictReorderQtyDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
