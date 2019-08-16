@@ -53,20 +53,17 @@
                 <tr class="listview">
                     <td class="listviewdate">Supplier Code</td>
                     <td class="listviewdescription">Supplier Name</td>
-                    <td class="listviewdate">Tender Quotation Form</td>
                 </tr>
                 @foreach (var s in suppliers)
                 {
                     <tr class="listview">
                         <td class="oddlistview"><a href="@Url.Action("ViewSupplier", "ManageSupplier", new {supplierCode = s.SupplierCode} )">@s.SupplierCode</a></td>
                         <td class="oddlistview">@s.SupplierName</td>
-                        <td class="oddlistview"><a href="#">Download</a></td>
                     </tr>
                 }
             </table>
         </div>
         <br />
-
     }
 
 </div>
