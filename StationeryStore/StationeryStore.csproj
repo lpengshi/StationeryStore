@@ -491,6 +491,10 @@
     <Content Include="Views\GenerateReport\GenerateInventoryStatusReport.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ManageRequestTemplate.cshtml" />
     <Content Include="Views\ManageRequestTemplate\ViewRequestTemplate.cshtml" />
+
+    <Content Include="Views\ManageAdjustmentVoucher\Index.cshtml" />
+    <Content Include="Views\ManageAdjustmentVoucher\CreateAdjustmentVoucher.cshtml" />
+    <Content Include="Views\ManageAdjustmentVoucher\ViewAdjustmentDetails.cshtml" />
     <Content Include="Views\ViewDisbursement\ViewDisbursement.cshtml" />
     <Content Include="Views\GenerateReport\GenerateOrderTrendAnalysis.cshtml" />
     <Content Include="Views\GenerateReport\GenerateRequestTrendAnalysis.cshtml" />
@@ -525,15 +529,15 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Reports\InventoryStatusReport.rdlc" />
     <EmbeddedResource Include="Reports\OrderTrendAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\PrintCatalogue.rdlc" />
     <EmbeddedResource Include="Reports\PurchaseOrderForm.rdlc" />
     <EmbeddedResource Include="Reports\ReorderReport.rdlc" />
     <EmbeddedResource Include="Reports\RequisitionTrendAnalysis.rdlc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
