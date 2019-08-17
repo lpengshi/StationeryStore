@@ -33,332 +33,332 @@ namespace StationeryStore.Controllers
             };
             return Json(mobileStaff, JsonRequestBehavior.AllowGet);
         }
-            // Send retrieval details to android
-            public JsonResult GetRetrieval()
+        // Send retrieval details to android
+        public JsonResult GetRetrieval()
+        {
+            // find retrieval where status = Processed
+            StationeryRetrievalEF retrieval = rndService.FindRetrievalByStatus("Processing");
+
+            // get the retrieval details
+            List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrieval.RetrievalId);
+            // send the retrieval list over to android app
+            MobileRetrievalItemDTO mRetrieval = new MobileRetrievalItemDTO()
             {
-                // find retrieval where status = Processed
-                StationeryRetrievalEF retrieval = rndService.FindRetrievalByStatus("Processing");
+                RetrievalId = retrieval.RetrievalId,
+                DateDisbursed = DateTimeOffset.UtcNow.AddDays(3),
+                RetrievalItems = details
+            };
 
-                // get the retrieval details
-                List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrieval.RetrievalId);
-                // send the retrieval list over to android app
-                MobileRetrievalItemDTO mRetrieval = new MobileRetrievalItemDTO()
-                {
-                    RetrievalId = retrieval.RetrievalId,
-                    DateDisbursed = DateTimeOffset.UtcNow.AddDays(3),
-                    RetrievalItems = details
-                };
+            return Json(mRetrieval, JsonRequestBehavior.AllowGet);
+        }
 
-                return Json(mRetrieval, JsonRequestBehavior.AllowGet);
-            }
-
-            // Receive retrieval details from android
-            public JsonResult SetRetrieval(MobileRetrievalItemDTO mRetrieval)
+        // Receive retrieval details from android
+        public JsonResult SetRetrieval(MobileRetrievalItemDTO mRetrieval)
+        {
+            if (mRetrieval != null)
             {
-                if (mRetrieval != null)
+                //Debug logger
+                Debug.WriteLine(mRetrieval.RetrievalId.ToString() + mRetrieval.DateDisbursed.ToString());
+                if (mRetrieval.RetrievalItems != null)
                 {
-                    //Debug logger
-                    Debug.WriteLine(mRetrieval.RetrievalId.ToString() + mRetrieval.DateDisbursed.ToString());
-                    if (mRetrieval.RetrievalItems != null)
+                    foreach (var i in mRetrieval.RetrievalItems)
                     {
-                        foreach (var i in mRetrieval.RetrievalItems)
+                        String x = i.ItemCode + " " + i.RetrievedQty + " " + i.ItemDescription + " " + i.Bin + " " + i.TotalOutstandingQty;
+                        Debug.WriteLine(x);
+                        if (i.RetrievedQty.ToString() == "")
                         {
-                            String x = i.ItemCode + " " + i.RetrievedQty + " " + i.ItemDescription + " " + i.Bin + " " + i.TotalOutstandingQty;
-                            Debug.WriteLine(x);
-                            if (i.RetrievedQty.ToString() == "")
-                            {
-                                return Json(new { status = "fail" });
-                            }
+                            return Json(new { status = "fail" });
                         }
                     }
-                    //END of logger
-
-                    // save it to the database
-                    // update individual request's fulfilled quantity and retrieved quantity in current retrieval
-                    rndService.UpdateRequestAfterRetrieval(mRetrieval.RetrievalItems, mRetrieval.RetrievalId);
-
-                    // update retrieval status from processing to retrieved
-                    StationeryRetrievalEF retrieval = rndService.FindRetrievalById(mRetrieval.RetrievalId);
-                    retrieval.Status = "Retrieved";
-                    rndService.SaveRetrieval(retrieval);
-
-                    // get disbursements and save the dates
-                    rndService.UpdateDisbursementDate(mRetrieval.RetrievalId, mRetrieval.DateDisbursed);
-
-                    // update disbursement list
-                    rndService.UpdateRetrievedQuantities(mRetrieval.RetrievalId);
-
-                    // and log stock transaction (deduction for department) (StockService)
-                    stockService.LogTransactionsForRetrieval(mRetrieval.RetrievalId);
-                    return Json(new { status = "ok" });
                 }
-                return Json(new { status = "Retreival Obtained" });
+                //END of logger
+
+                // save it to the database
+                // update individual request's fulfilled quantity and retrieved quantity in current retrieval
+                rndService.UpdateRequestAfterRetrieval(mRetrieval.RetrievalItems, mRetrieval.RetrievalId);
+
+                // update retrieval status from processing to retrieved
+                StationeryRetrievalEF retrieval = rndService.FindRetrievalById(mRetrieval.RetrievalId);
+                retrieval.Status = "Retrieved";
+                rndService.SaveRetrieval(retrieval);
+
+                // get disbursements and save the dates
+                rndService.UpdateDisbursementDate(mRetrieval.RetrievalId, mRetrieval.DateDisbursed);
+
+                // update disbursement list
+                rndService.UpdateRetrievedQuantities(mRetrieval.RetrievalId);
+
+                // and log stock transaction (deduction for department) (StockService)
+                stockService.LogTransactionsForRetrieval(mRetrieval.RetrievalId);
+                return Json(new { status = "ok" });
             }
+            return Json(new { status = "Retreival Obtained" });
+        }
 
-            //NEW KK
-            // Get Department with active disbursements
-            public JsonResult GetActiveDepartments()
+ 
+        // Get Department with active disbursements
+        public JsonResult GetActiveDepartments()
+        {
+            List<StationeryDisbursementEF> activeDisbursements = rndService.FindDisbursementsByStatus("Retrieved");
+            List<MobileActiveDepartmentDTO> activeDepartments = new List<MobileActiveDepartmentDTO>();
+            foreach (var item in activeDisbursements)
             {
-                List<StationeryDisbursementEF> activeDisbursements = rndService.FindDisbursementsByStatus("Retrieved");
-                List<MobileActiveDepartmentDTO> activeDepartments = new List<MobileActiveDepartmentDTO>();
-                foreach (var item in activeDisbursements)
-                {
-                    activeDepartments.Add(
-                        new MobileActiveDepartmentDTO
-                        {
-                            DisbursementId = item.DisbursementId,
-                            DepartmentCode = item.DepartmentCode,
-                            DepartmentName = item.Department.DepartmentName
-
-                        }
-                    );
-                }
-
-                MobileDisbursementItemDTO disbursementInfo = new MobileDisbursementItemDTO
-                {
-                    ActiveDepartments = activeDepartments
-                };
-
-                return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
-            }
-
-            //NEW KK
-            // Send disbursement details to android
-            public JsonResult GetDepartmentDisbursement(int disbursementId)
-            {
-
-                //Get Departments with active disbursements
-                List<StationeryDisbursementEF> activeDisbursements = rndService.FindDisbursementsByStatus("Retrieved");
-                List<MobileActiveDepartmentDTO> activeDepartments = new List<MobileActiveDepartmentDTO>();
-                foreach (var item in activeDisbursements)
-                {
-                    activeDepartments.Add(
-                        new MobileActiveDepartmentDTO
-                        {
-                            DisbursementId = item.DisbursementId,
-                            DepartmentCode = item.DepartmentCode,
-                            DepartmentName = item.Department.DepartmentName
-
-                        }
-                    );
-                }
-
-                //Get items in the disbursement for the department
-                //StationeryDisbursementDetailsEF stationeryDisbursement = rndService.FindDisbursementByDepartmentCode(departmentId);
-                List<StationeryDisbursementDetailsEF> details = rndService.FindDisbursementDetailsByDisbursementId(disbursementId);
-                List<MobileStationeryDisbursementDetailsDTO> detailsDTO = new List<MobileStationeryDisbursementDetailsDTO>();
-                foreach (var item in details)
-                {
-                    detailsDTO.Add(new MobileStationeryDisbursementDetailsDTO
-                    {
-                        DisbursementDetailsId = item.DisbursementDetailsId,
-                        DisbursementId = item.DisbursementId,
-                        ItemCode = item.ItemCode,
-                        Stock = item.Stock,
-                        RequestQuantity = item.RequestQuantity,
-                        RetrievedQuantity = item.RetrievedQuantity,
-                        DisbursedQuantity = item.DisbursedQuantity
-                    }
-                    );
-                }
-
-                // list of staff in that department
-                StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
-                List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(disbursement.DepartmentCode);
-                List<MobileStaffDTO> deptStaffDTO = new List<MobileStaffDTO>();
-                foreach (var staff in deptStaff)
-                {
-                    deptStaffDTO.Add(new MobileStaffDTO
-                    {
-                        Name = staff.Name,
-                        StaffId = staff.StaffId
-                    }
-                    );
-                }
-                //StaffEF storeClerk = staffService.GetStaff();
-
-                // Create a DTO for disbursement which includes storeClerkId/Name and EmployeeId/Name
-                MobileDisbursementItemDTO mobileDisbursementItem = new MobileDisbursementItemDTO
-                {
-                    ActiveDepartments = activeDepartments,
-                    DisbursementDetails = detailsDTO,
-                    DisbursementId = disbursementId,
-                    DepartmentStaff = deptStaffDTO,
-                };
-
-                // send a list of disbursements 
-                return Json(mobileDisbursementItem, JsonRequestBehavior.AllowGet);
-            }
-
-            //Get disbursement details from android
-            public JsonResult SetDisbursement(MobileDisbursementItemDTO mobileDisbursementItem)
-            {
-                List<StationeryDisbursementDetailsEF> details = new List<StationeryDisbursementDetailsEF>();
-                foreach (var item in mobileDisbursementItem.DisbursementDetails)
-                {
-                    details.Add(new StationeryDisbursementDetailsEF
+                activeDepartments.Add(
+                    new MobileActiveDepartmentDTO
                     {
                         DisbursementId = item.DisbursementId,
-                        DisbursementDetailsId = item.DisbursementDetailsId,
-                        ItemCode = item.ItemCode,
-                        StationeryDisbursement = rndService.FindDisbursementById(item.DisbursementId),
-                        Stock = item.Stock,
-                        RequestQuantity = item.RequestQuantity,
-                        DisbursedQuantity = item.DisbursedQuantity,
-                        RetrievedQuantity = item.RetrievedQuantity
+                        DepartmentCode = item.DepartmentCode,
+                        DepartmentName = item.Department.DepartmentName
 
-                    });
-                }
-
-                int disbursementId = mobileDisbursementItem.DisbursementId;
-                int collectionRepId = mobileDisbursementItem.CollectionRepId;
-                int storeClerkId = mobileDisbursementItem.ClerkId;
-
-                // update disbursement details' Disbursed Quantity and disbursement status to disbursed
-                rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId, storeClerkId);
-
-                // update request details
-                rndService.UpdateRequestAfterDisbursement(details, disbursementId);
-
-                // log any stock transaction (damaged goods) - compare retrievedQty with disbursedqty
-                stockService.LogTransactionsForActualDisbursement(disbursementId);
-
-                // email collection rep for acknowledgement of disbursement
-                string collectionRepEmail = staffService.FindStaffById(collectionRepId).Email;
-                string subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement";
-                string body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
-                    "<a href='http://localhost/StationeryStore/ViewDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
-                    "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s).";
-                Email.SendEmail(collectionRepEmail, subject, body);
-
-                return Json(new { status = "Received Disburement" });
+                    }
+                );
             }
 
-            public JsonResult ViewDisbursement(int staffId)
+            MobileDisbursementItemDTO disbursementInfo = new MobileDisbursementItemDTO
             {
-                StationeryDisbursementEF stationeryDisbursement = rndService.FindDisbursementByStatusAndStaffId(staffId, "Disbursed");
-                List<StationeryDisbursementDetailsEF> stationeryDisbursementDetails = rndService.FindDisbursementDetailsByDisbursementId(stationeryDisbursement.DisbursementId);
-                List<MobileStationeryDisbursementDetailsDTO> detailsDTO = new List<MobileStationeryDisbursementDetailsDTO>();
-                foreach (var item in stationeryDisbursementDetails)
-                {
-                    detailsDTO.Add(new MobileStationeryDisbursementDetailsDTO
+                ActiveDepartments = activeDepartments
+            };
+
+            return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
+        }
+
+        //NEW KK
+        // Send disbursement details to android
+        public JsonResult GetDepartmentDisbursement(int disbursementId)
+        {
+
+            //Get Departments with active disbursements
+            List<StationeryDisbursementEF> activeDisbursements = rndService.FindDisbursementsByStatus("Retrieved");
+            List<MobileActiveDepartmentDTO> activeDepartments = new List<MobileActiveDepartmentDTO>();
+            foreach (var item in activeDisbursements)
+            {
+                activeDepartments.Add(
+                    new MobileActiveDepartmentDTO
                     {
-                        DisbursementDetailsId = item.DisbursementDetailsId,
                         DisbursementId = item.DisbursementId,
-                        ItemCode = item.ItemCode,
-                        Stock = item.Stock,
-                        RequestQuantity = item.RequestQuantity,
-                        RetrievedQuantity = item.RetrievedQuantity,
-                        DisbursedQuantity = item.DisbursedQuantity
+                        DepartmentCode = item.DepartmentCode,
+                        DepartmentName = item.Department.DepartmentName
+
                     }
-                    );
-                }
-
-                MobileDisbursementItemDTO disbursementInfo = new MobileDisbursementItemDTO
-                {
-                    DisbursementDetails = detailsDTO,
-                    DisbursementId = stationeryDisbursement.DisbursementId,
-                    ClerkId = stationeryDisbursement.StoreClerk.StaffId
-
-                };
-
-
-                return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
-
+                );
             }
 
-            public JsonResult AcknowledgeDisbursement(int disbursementId)
+            //Get items in the disbursement for the department
+            //StationeryDisbursementDetailsEF stationeryDisbursement = rndService.FindDisbursementByDepartmentCode(departmentId);
+            List<StationeryDisbursementDetailsEF> details = rndService.FindDisbursementDetailsByDisbursementId(disbursementId);
+            List<MobileStationeryDisbursementDetailsDTO> detailsDTO = new List<MobileStationeryDisbursementDetailsDTO>();
+            foreach (var item in details)
             {
-                StaffEF staff = staffService.GetStaff();
-                ViewBag.staff = staff;
-                StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
-                rndService.UpdateDisbursementStatus(disbursement);
-
-                return Json(new { status = "Delivery Acknowledged" });
-            }
-
-            public JsonResult GetRequests(int staffId)
-            {
-                //Find the staff by their Id
-                StaffEF staff = staffService.FindStaffById(staffId);
-
-                // Pass all submitted request from the department
-                List<StationeryRequestEF> pendingList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "Submitted");
-                MobileStationeryRequestListDTO requestListDTO = new MobileStationeryRequestListDTO();
-
-                foreach (var item in pendingList)
+                detailsDTO.Add(new MobileStationeryDisbursementDetailsDTO
                 {
-                    requestListDTO.StationeryRequests.Add(new MobileStationeryRequestDTO
-                    {
-                        RequestId = item.RequestId,
-                        StaffId = item.Staff.StaffId,
-                        StaffName = item.Staff.Name,
-                        DecisionById = item.DecisionBy.StaffId,
-                        DecisionByName = item.DecisionBy.Name,
-                        RequestDate = item.RequestDate,
-                        DecisionDate = (long)item.DecisionDate,
-                        Comment = item.Comment,
-                        Status = item.Status,
-                        Decision = ""
-
-                    });
+                    DisbursementDetailsId = item.DisbursementDetailsId,
+                    DisbursementId = item.DisbursementId,
+                    ItemCode = item.ItemCode,
+                    Stock = item.Stock,
+                    RequestQuantity = item.RequestQuantity,
+                    RetrievedQuantity = item.RetrievedQuantity,
+                    DisbursedQuantity = item.DisbursedQuantity
                 }
-
-                return Json(requestListDTO, JsonRequestBehavior.AllowGet);
+                );
             }
 
-            public JsonResult GetRequestDetails(MobileStationeryRequestDTO Request)
+            // list of staff in that department
+            StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
+            List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(disbursement.DepartmentCode);
+            List<MobileStaffDTO> deptStaffDTO = new List<MobileStaffDTO>();
+            foreach (var staff in deptStaff)
             {
-                string requestId = Request.RequestId;
-                int staffId = Request.DecisionById;
-
-                //Find the staff by their Id
-                StaffEF staff = staffService.FindStaffById(staffId);
-
-                // See request details
-                StationeryRequestEF request = rndService.FindRequestById(requestId);
-
-                if (request.Staff.DepartmentCode != staff.DepartmentCode)
+                deptStaffDTO.Add(new MobileStaffDTO
                 {
-                    return Json(new { status = "Department Mismatch" });
+                    Name = staff.Name,
+                    StaffId = staff.StaffId
                 }
-
-                List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
-                MobileStationeryRequestDetailsListDTO requestDetailsDTO = new MobileStationeryRequestDetailsListDTO();
-                foreach (var item in requestDetails)
-                {
-                    requestDetailsDTO.RequestDetails.Add(new MobileStationeryRequestDetailsDTO
-                    {
-                        RequestDetailsId = item.RequestDetailsId,
-                        RequestId = item.RequestId,
-                        ItemCode = item.ItemCode,
-                        ItemDescription = item.Stock.Description,
-                        RequestQuantity = item.RequestQuantity
-                    }
-                    );
-                }
-
-                return Json(requestDetails, JsonRequestBehavior.AllowGet);
+                );
             }
+            //StaffEF storeClerk = staffService.GetStaff();
 
-            public JsonResult ApproveRequest(MobileStationeryRequestDTO Request)
+            // Create a DTO for disbursement which includes storeClerkId/Name and EmployeeId/Name
+            MobileDisbursementItemDTO mobileDisbursementItem = new MobileDisbursementItemDTO
             {
+                ActiveDepartments = activeDepartments,
+                DisbursementDetails = detailsDTO,
+                DisbursementId = disbursementId,
+                DepartmentStaff = deptStaffDTO,
+            };
 
-                string requestId = Request.RequestId;
-                string comment = Request.Comment;
-                string decision = Request.Decision;
-                int staffId = Request.DecisionById;
+            // send a list of disbursements 
+            return Json(mobileDisbursementItem, JsonRequestBehavior.AllowGet);
+        }
 
-                //Find the staff by their Id
-                StaffEF staff = staffService.FindStaffById(staffId);
+        //Get disbursement details from android
+        public JsonResult SetDisbursement(MobileDisbursementItemDTO mobileDisbursementItem)
+        {
+            List<StationeryDisbursementDetailsEF> details = new List<StationeryDisbursementDetailsEF>();
+            foreach (var item in mobileDisbursementItem.DisbursementDetails)
+            {
+                details.Add(new StationeryDisbursementDetailsEF
+                {
+                    DisbursementId = item.DisbursementId,
+                    DisbursementDetailsId = item.DisbursementDetailsId,
+                    ItemCode = item.ItemCode,
+                    StationeryDisbursement = rndService.FindDisbursementById(item.DisbursementId),
+                    Stock = item.Stock,
+                    RequestQuantity = item.RequestQuantity,
+                    DisbursedQuantity = item.DisbursedQuantity,
+                    RetrievedQuantity = item.RetrievedQuantity
 
-                StationeryRequestEF request = rndService.FindRequestById(requestId);
-                List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
-                // Update approval/rejection and comments to request
-                rndService.UpdateRequestDecision(staff, request, comment, decision);
-
-                return Json(new { status = "Decision Updated" });
+                });
             }
+
+            int disbursementId = mobileDisbursementItem.DisbursementId;
+            int collectionRepId = mobileDisbursementItem.CollectionRepId;
+            int storeClerkId = mobileDisbursementItem.ClerkId;
+
+            // update disbursement details' Disbursed Quantity and disbursement status to disbursed
+            rndService.UpdateDisbursedQuantities(details, disbursementId, collectionRepId, storeClerkId);
+
+            // update request details
+            rndService.UpdateRequestAfterDisbursement(details, disbursementId);
+
+            // log any stock transaction (damaged goods) - compare retrievedQty with disbursedqty
+            stockService.LogTransactionsForActualDisbursement(disbursementId);
+
+            // email collection rep for acknowledgement of disbursement
+            string collectionRepEmail = staffService.FindStaffById(collectionRepId).Email;
+            string subject = "Disbursement #" + disbursementId + " : Request for Acknowledgement";
+            string body = "Disbursement #" + disbursementId + " has been disbursed. Please click " +
+                "<a href='http://localhost/StationeryStore/ViewDisbursement/ViewDisbursement/?disbursementId=" + disbursementId + "'>" +
+                "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s).";
+            Email.SendEmail(collectionRepEmail, subject, body);
+
+            return Json(new { status = "Received Disburement" });
+        }
+
+        public JsonResult ViewDisbursement(int staffId)
+        {
+            StationeryDisbursementEF stationeryDisbursement = rndService.FindDisbursementByStatusAndStaffId(staffId, "Disbursed");
+            List<StationeryDisbursementDetailsEF> stationeryDisbursementDetails = rndService.FindDisbursementDetailsByDisbursementId(stationeryDisbursement.DisbursementId);
+            List<MobileStationeryDisbursementDetailsDTO> detailsDTO = new List<MobileStationeryDisbursementDetailsDTO>();
+            foreach (var item in stationeryDisbursementDetails)
+            {
+                detailsDTO.Add(new MobileStationeryDisbursementDetailsDTO
+                {
+                    DisbursementDetailsId = item.DisbursementDetailsId,
+                    DisbursementId = item.DisbursementId,
+                    ItemCode = item.ItemCode,
+                    Stock = item.Stock,
+                    RequestQuantity = item.RequestQuantity,
+                    RetrievedQuantity = item.RetrievedQuantity,
+                    DisbursedQuantity = item.DisbursedQuantity
+                }
+                );
+            }
+
+            MobileDisbursementItemDTO disbursementInfo = new MobileDisbursementItemDTO
+            {
+                DisbursementDetails = detailsDTO,
+                DisbursementId = stationeryDisbursement.DisbursementId,
+                ClerkId = stationeryDisbursement.StoreClerk.StaffId
+
+            };
+
+
+            return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
 
         }
+
+        public JsonResult AcknowledgeDisbursement(int disbursementId)
+        {
+            StaffEF staff = staffService.GetStaff();
+            ViewBag.staff = staff;
+            StationeryDisbursementEF disbursement = rndService.FindDisbursementById(disbursementId);
+            rndService.UpdateDisbursementStatus(disbursement);
+
+            return Json(new { status = "Delivery Acknowledged" });
+        }
+
+        public JsonResult GetRequests(int staffId)
+        {
+            //Find the staff by their Id
+            StaffEF staff = staffService.FindStaffById(staffId);
+
+            // Pass all submitted request from the department
+            List<StationeryRequestEF> pendingList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "Submitted");
+            MobileStationeryRequestListDTO requestListDTO = new MobileStationeryRequestListDTO();
+
+            foreach (var item in pendingList)
+            {
+                requestListDTO.StationeryRequests.Add(new MobileStationeryRequestDTO
+                {
+                    RequestId = item.RequestId,
+                    StaffId = item.Staff.StaffId,
+                    StaffName = item.Staff.Name,
+                    DecisionById = item.DecisionBy.StaffId,
+                    DecisionByName = item.DecisionBy.Name,
+                    RequestDate = item.RequestDate,
+                    DecisionDate = (long)item.DecisionDate,
+                    Comment = item.Comment,
+                    Status = item.Status,
+                    Decision = ""
+
+                });
+            }
+
+            return Json(requestListDTO, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRequestDetails(MobileStationeryRequestDTO Request)
+        {
+            string requestId = Request.RequestId;
+            int staffId = Request.DecisionById;
+
+            //Find the staff by their Id
+            StaffEF staff = staffService.FindStaffById(staffId);
+
+            // See request details
+            StationeryRequestEF request = rndService.FindRequestById(requestId);
+
+            if (request.Staff.DepartmentCode != staff.DepartmentCode)
+            {
+                return Json(new { status = "Department Mismatch" });
+            }
+
+            List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
+            MobileStationeryRequestDetailsListDTO requestDetailsDTO = new MobileStationeryRequestDetailsListDTO();
+            foreach (var item in requestDetails)
+            {
+                requestDetailsDTO.RequestDetails.Add(new MobileStationeryRequestDetailsDTO
+                {
+                    RequestDetailsId = item.RequestDetailsId,
+                    RequestId = item.RequestId,
+                    ItemCode = item.ItemCode,
+                    ItemDescription = item.Stock.Description,
+                    RequestQuantity = item.RequestQuantity
+                }
+                );
+            }
+
+            return Json(requestDetails, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ApproveRequest(MobileStationeryRequestDTO Request)
+        {
+
+            string requestId = Request.RequestId;
+            string comment = Request.Comment;
+            string decision = Request.Decision;
+            int staffId = Request.DecisionById;
+
+            //Find the staff by their Id
+            StaffEF staff = staffService.FindStaffById(staffId);
+
+            StationeryRequestEF request = rndService.FindRequestById(requestId);
+            List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
+            // Update approval/rejection and comments to request
+            rndService.UpdateRequestDecision(staff, request, comment, decision);
+
+            return Json(new { status = "Decision Updated" });
+        }
+
     }
+}
