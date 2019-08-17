@@ -7,11 +7,9 @@
 }
 
 <div>@Html.Partial("_Store")</div>
-
-<h2>ViewPurchaseOrder</h2>
 <div class="mainview">
-    <h4>View Purchase Order (@po.Status)</h4>
     <br />
+    <h4>View Purchase Order (@po.Status)</h4>
     <br />
     <table class="listview">
         <tr>
@@ -94,11 +92,12 @@
                     }
                     <input type="button" class="decision" value="Print Purchase Order" onclick="location.href='../WebForms/PurchaseOrderForm.aspx?orderId=' + @po.OrderId" />
                     <input type="button" class="decision" value="Back" onclick="location.href='../ManagePurchase/PurchaseOrderHistory?page=1'" />
-                    
+
                 </form>
             </td>
-        </tr>  
-    </table>  
+        </tr>
+    </table>
+    <br /> <br /> <br />
 </div>
 
 <script>

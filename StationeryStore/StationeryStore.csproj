@@ -562,7 +562,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56415</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://127.0.0.1:56415/</IISUrl>
+          <IISUrl>http://127.0.0.1:52200/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
