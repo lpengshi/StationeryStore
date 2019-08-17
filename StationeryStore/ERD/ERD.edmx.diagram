@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6af7621a964848f5a9f211ea54318158" Name="Diagram1" ZoomLevel="53">
+      <Diagram DiagramId="6af7621a964848f5a9f211ea54318158" Name="Diagram1" ZoomLevel="53" DisplayType="false">
         <EntityTypeShape EntityType="StationeryStoreModel.AdjustmentVoucher" Width="2" PointX="20.375" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.AdjustmentVoucherDetails" Width="2.125" PointX="20.375" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.CatalogueItem" Width="1.625" PointX="16.625" PointY="19.75" IsExpanded="true" />
@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="StationeryStoreModel.RequestTemplateDetails" Width="2" PointX="23" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.Role" Width="1.5" PointX="22.375" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.Staff" Width="2" PointX="20.125" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StationeryStoreModel.StationeryDisbursement" Width="2.25" PointX="25.125" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.StationeryDisbursement" Width="2.25" PointX="25.125" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.StationeryDisbursementDetails" Width="2.375" PointX="26" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.StationeryRequest" Width="2" PointX="17.375" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.StationeryRequestDetails" Width="2.125" PointX="17.5" PointY="12.75" IsExpanded="true" />
@@ -24,7 +24,7 @@
         <EntityTypeShape EntityType="StationeryStoreModel.Stock" Width="2.375" PointX="18.875" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.StockTransactionDetails" Width="2" PointX="22.125" PointY="19.375" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryStoreModel.Supplier" Width="1.875" PointX="13.125" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="StationeryStoreModel.SupplierDetails" Width="1.625" PointX="16" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryStoreModel.SupplierDetails" Width="1.625" PointX="16" PointY="16.5" IsExpanded="true" />
         <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucher_dbo_Staff_ApproverId" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucher_dbo_Staff_RequesterId" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryStoreModel.FK_dbo_AdjustmentVoucherDetails_dbo_AdjustmentVoucher_VoucherId" ManuallyRouted="false" />
