@@ -14,7 +14,7 @@ namespace StationeryStore.Controllers
         public ActionResult Index()
         {
             // Initial access
-            ViewData["note"] = "Please enter your Username and Password"
+            ViewData["note"] = "Please enter your Username and Password";
 
             return View();
         }
