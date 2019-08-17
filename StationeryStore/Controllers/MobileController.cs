@@ -38,17 +38,20 @@ namespace StationeryStore.Controllers
         {
             // find retrieval where status = Processed
             StationeryRetrievalEF retrieval = rndService.FindRetrievalByStatus("Processing");
-
-            // get the retrieval details
-            List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrieval.RetrievalId);
-            // send the retrieval list over to android app
-            MobileRetrievalItemDTO mRetrieval = new MobileRetrievalItemDTO()
+            MobileRetrievalItemDTO mRetrieval = null;
+            if (retrieval != null)
             {
-                RetrievalId = retrieval.RetrievalId,
-                DateDisbursed = DateTimeOffset.UtcNow.AddDays(3),
-                RetrievalItems = details
-            };
+                // get the retrieval details 
 
+                List<RetrievalItemDTO> details = rndService.ViewRetrievalListById(retrieval.RetrievalId);
+                // send the retrieval list over to android app
+                mRetrieval = new MobileRetrievalItemDTO()
+                {
+                    RetrievalId = retrieval.RetrievalId,
+                    RetrievalItems = details
+                };
+            }
+            
             return Json(mRetrieval, JsonRequestBehavior.AllowGet);
         }
 
@@ -83,7 +86,13 @@ namespace StationeryStore.Controllers
                 rndService.SaveRetrieval(retrieval);
 
                 // get disbursements and save the dates
-                rndService.UpdateDisbursementDate(mRetrieval.RetrievalId, mRetrieval.DateDisbursed);
+                string[] date = mRetrieval.DateDisbursed.Split('/');
+                int year = int.Parse(date[2]);
+                int month = int.Parse(date[1]);
+                int day = int.Parse(date[0]);
+                DateTimeOffset disbursedDate = new DateTimeOffset(year, month, day, 12, 0, 0,
+                                 new TimeSpan(8, 0, 0));
+                rndService.UpdateDisbursementDate(mRetrieval.RetrievalId, disbursedDate);
 
                 // update disbursement list
                 rndService.UpdateRetrievedQuantities(mRetrieval.RetrievalId);
