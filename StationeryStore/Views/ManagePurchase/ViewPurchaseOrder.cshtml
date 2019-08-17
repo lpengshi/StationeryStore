@@ -89,7 +89,7 @@
                 <form action="~/ManagePurchase/ViewPurchaseOrder" method="post">
                     <input type="hidden" name="purchaseOrderId" value="@po.OrderId.ToString()" />
                     @{ if (po.Status == "Pending Delivery")
-                        { <input type="submit" onclick="return confirm('Confirm delivery of goods?')" name="choice" value="Confirm Delivery" class="decision" />
+                        { <input type="submit" onclick="return confirmDelivery()" name="choice" value="Confirm Delivery" class="decision" />
                         }
                     }
                     <input type="button" class="decision" value="Print Purchase Order" onclick="location.href='../WebForms/PurchaseOrderForm.aspx?orderId=' + @po.OrderId" />
@@ -100,3 +100,9 @@
         </tr>  
     </table>  
 </div>
+
+<script>
+    function confirmDelivery() {
+        return (confirm('Confirm delivery of goods?'));
+    }
+</script>
