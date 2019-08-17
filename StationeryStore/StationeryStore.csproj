@@ -238,6 +238,10 @@
     <Compile Include="Models\MobileRetrievalItemDTO.cs" />
     <Compile Include="Models\MobileStaffDTO.cs" />
     <Compile Include="Models\MobileStationeryDisbursementDetaillsDTO.cs" />
+    <Compile Include="Models\MobileStationeryRequestDetailsDTO.cs" />
+    <Compile Include="Models\MobileStationeryRequestDetailsListDTO.cs" />
+    <Compile Include="Models\MobileStationeryRequestDTO.cs" />
+    <Compile Include="Models\MobileStationeryRequestListDTO.cs" />
     <Compile Include="Models\PredictReorderQtyDTO.cs" />
     <Compile Include="Models\PurchaseOrderDetailsEF.cs" />
     <Compile Include="Models\PurchaseOrderEF.cs" />
