@@ -309,8 +309,10 @@ namespace StationeryStore.Controllers
 
             // Pass all submitted request from the department
             List<StationeryRequestEF> pendingList = rndService.FindRequestByDepartmentAndStatus(staff.Department, "Submitted");
-            MobileStationeryRequestListDTO requestListDTO = new MobileStationeryRequestListDTO();
-
+            MobileStationeryRequestListDTO requestListDTO = new MobileStationeryRequestListDTO()
+            {
+                StationeryRequests = new List<MobileStationeryRequestDTO>()
+            };
             foreach (var item in pendingList)
             {
                 requestListDTO.StationeryRequests.Add(new MobileStationeryRequestDTO
@@ -349,7 +351,10 @@ namespace StationeryStore.Controllers
             }
 
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
-            MobileStationeryRequestDetailsListDTO requestDetailsDTO = new MobileStationeryRequestDetailsListDTO();
+            MobileStationeryRequestDetailsListDTO requestDetailsDTO = new MobileStationeryRequestDetailsListDTO()
+            {
+                RequestDetails = new List<MobileStationeryRequestDetailsDTO>()
+            };
             foreach (var item in requestDetails)
             {
                 requestDetailsDTO.RequestDetails.Add(new MobileStationeryRequestDetailsDTO
