@@ -320,14 +320,8 @@ namespace StationeryStore.Controllers
                     RequestId = item.RequestId,
                     StaffId = item.Staff.StaffId,
                     StaffName = item.Staff.Name,
-                    DecisionById = item.DecisionBy.StaffId,
-                    DecisionByName = item.DecisionBy.Name,
                     RequestDate = item.RequestDate,
-                    DecisionDate = (long)item.DecisionDate,
-                    Comment = item.Comment,
-                    Status = item.Status,
-                    Decision = ""
-
+                    Status = item.Status,    
                 });
             }
 
@@ -337,18 +331,9 @@ namespace StationeryStore.Controllers
         public JsonResult GetRequestDetails(MobileStationeryRequestDTO Request)
         {
             string requestId = Request.RequestId;
-            int staffId = Request.DecisionById;
-
-            //Find the staff by their Id
-            StaffEF staff = staffService.FindStaffById(staffId);
 
             // See request details
             StationeryRequestEF request = rndService.FindRequestById(requestId);
-
-            if (request.Staff.DepartmentCode != staff.DepartmentCode)
-            {
-                return Json(new { status = "Department Mismatch" });
-            }
 
             List<StationeryRequestDetailsEF> requestDetails = rndService.FindRequestDetailsByRequestId(requestId);
             MobileStationeryRequestDetailsListDTO requestDetailsDTO = new MobileStationeryRequestDetailsListDTO()
