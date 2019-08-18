@@ -51,7 +51,7 @@ namespace StationeryStore.Controllers
                     RetrievalItems = details
                 };
             }
-            
+
             return Json(mRetrieval, JsonRequestBehavior.AllowGet);
         }
 
@@ -60,21 +60,6 @@ namespace StationeryStore.Controllers
         {
             if (mRetrieval != null)
             {
-                //Debug logger
-                Debug.WriteLine(mRetrieval.RetrievalId.ToString() + mRetrieval.DateDisbursed.ToString());
-                if (mRetrieval.RetrievalItems != null)
-                {
-                    foreach (var i in mRetrieval.RetrievalItems)
-                    {
-                        String x = i.ItemCode + " " + i.RetrievedQty + " " + i.ItemDescription + " " + i.Bin + " " + i.TotalOutstandingQty;
-                        Debug.WriteLine(x);
-                        if (i.RetrievedQty.ToString() == "")
-                        {
-                            return Json(new { status = "fail" });
-                        }
-                    }
-                }
-                //END of logger
 
                 // save it to the database
                 // update individual request's fulfilled quantity and retrieved quantity in current retrieval
@@ -104,7 +89,7 @@ namespace StationeryStore.Controllers
             return Json(new { status = "Retreival Obtained" });
         }
 
- 
+
         // Get Department with active disbursements
         public JsonResult GetActiveDepartments()
         {
@@ -131,7 +116,6 @@ namespace StationeryStore.Controllers
             return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
         }
 
-        //NEW KK
         // Send disbursement details to android
         public JsonResult GetDepartmentDisbursement(int disbursementId)
         {
@@ -184,7 +168,6 @@ namespace StationeryStore.Controllers
                 }
                 );
             }
-            //StaffEF storeClerk = staffService.GetStaff();
 
             // Create a DTO for disbursement which includes storeClerkId/Name and EmployeeId/Name
             MobileDisbursementItemDTO mobileDisbursementItem = new MobileDisbursementItemDTO
@@ -347,7 +330,7 @@ namespace StationeryStore.Controllers
                 );
             }
 
-            return Json(requestDetails, JsonRequestBehavior.AllowGet);
+            return Json(requestDetailsDTO, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ApproveRequest(MobileStationeryRequestDTO Request)
