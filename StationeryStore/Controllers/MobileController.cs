@@ -93,6 +93,7 @@ namespace StationeryStore.Controllers
         // Get Department with active disbursements
         public JsonResult GetActiveDepartments()
         {
+            MobileDisbursementItemDTO disbursementInfo = null;
             List<StationeryDisbursementEF> activeDisbursements = rndService.FindDisbursementsByStatus("Retrieved");
             List<MobileActiveDepartmentDTO> activeDepartments = new List<MobileActiveDepartmentDTO>();
             foreach (var item in activeDisbursements)
@@ -107,12 +108,44 @@ namespace StationeryStore.Controllers
                     }
                 );
             }
-
-            MobileDisbursementItemDTO disbursementInfo = new MobileDisbursementItemDTO
+            if (activeDepartments.Count > 0)
             {
-                ActiveDepartments = activeDepartments
-            };
+                List<StationeryDisbursementDetailsEF> details = rndService.FindDisbursementDetailsByDisbursementId(activeDepartments[0].DisbursementId);
+                List<MobileStationeryDisbursementDetailsDTO> detailsDTO = new List<MobileStationeryDisbursementDetailsDTO>();
+                foreach (var item in details)
+                {
+                    detailsDTO.Add(new MobileStationeryDisbursementDetailsDTO
+                    {
+                        DisbursementDetailsId = item.DisbursementDetailsId,
+                        DisbursementId = item.DisbursementId,
+                        ItemCode = item.ItemCode,
+                        Stock = item.Stock,
+                        RequestQuantity = item.RequestQuantity,
+                        RetrievedQuantity = item.RetrievedQuantity,
+                        DisbursedQuantity = item.DisbursedQuantity
+                    }
+                    );
+                }
 
+                List<StaffEF> deptStaff = staffService.FindAllEmployeeByDepartmentCode(activeDepartments[0].DepartmentCode);
+                List<MobileStaffDTO> deptStaffDTO = new List<MobileStaffDTO>();
+                foreach (var staff in deptStaff)
+                {
+                    deptStaffDTO.Add(new MobileStaffDTO
+                    {
+                        Name = staff.Name,
+                        StaffId = staff.StaffId
+                    }
+                    );
+                }
+                disbursementInfo = new MobileDisbursementItemDTO
+                {
+                    ActiveDepartments = activeDepartments,
+                    DepartmentStaff = deptStaffDTO,
+                    DisbursementDetails = detailsDTO,
+                };
+            }
+           
             return Json(disbursementInfo, JsonRequestBehavior.AllowGet);
         }
 
@@ -223,7 +256,7 @@ namespace StationeryStore.Controllers
                 "here</a> to view the details of the disbursement and acknowledge receipt of stationery item(s).";
             Email.SendEmail(collectionRepEmail, subject, body);
 
-            return Json(new { status = "Received Disburement" });
+            return Json(new { status = "Received Disbursement" });
         }
 
         public JsonResult ViewDisbursement(int staffId)
