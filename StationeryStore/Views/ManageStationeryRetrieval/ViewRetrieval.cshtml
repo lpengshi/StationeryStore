@@ -2,10 +2,13 @@
 
 @using StationeryStore.Models
 @using StationeryStore.Util
+@using StationeryStore.Service
 
 @model List<StationeryStore.Models.RetrievalItemDTO>
 @{
     StationeryRetrievalEF retrieval = (StationeryRetrievalEF)ViewData["retrieval"];
+    List<StockEF> stockList = (List<StockEF>)ViewData["stockList"];
+    StockService stockService = new StockService();
 }
 <div>@Html.Partial("_Store")</div>
 
@@ -51,8 +54,14 @@
                         <td class="oddlistview">@Html.DisplayFor(x => x[i].TotalOutstandingQty)</td>
                         @if (retrieval.Status != "Retrieved")
                         {
+                            int maxNo = Model[i].TotalOutstandingQty;
+                            StockEF stock = stockService.FindStockByItemCode(Model[i].ItemCode);
+                            if(Model[i].TotalOutstandingQty > stock.QuantityOnHand)
+                            {
+                                maxNo = stock.QuantityOnHand;
+                            }
                             <td class="oddlistview">
-                                @Html.EditorFor(x => x[i].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].TotalOutstandingQty } })
+                                @Html.EditorFor(x => x[i].RetrievedQty, new { htmlAttributes = new { min = 0, max = maxNo } })
                                 @Html.ValidationMessageFor(x => x[i].RetrievedQty)
                             </td>
                         }
