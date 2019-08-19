@@ -180,19 +180,29 @@ namespace StationeryStore.Controllers
             {
                 StaffEF requester = staffService.GetStaff();
                 string newId = "";
-                if (stockService.VoucherExceedsSetValue(detailsList))
+                List<AdjustmentVoucherDetailsDTO> QOHValid = stockService.checkQuantityOnHand(detailsList);            
+
+                if (QOHValid.Count == 0)
                 {
-                    newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Manager");
-                    Debug.Print("Pending appr sent to manager email");
-                    SendEmailToAuthorityOnRequest(voucher.VoucherId, "Manager");
+                    if (stockService.VoucherExceedsSetValue(detailsList))
+                    {
+                        newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Manager");
+                        Debug.Print("Pending appr sent to manager email");
+                        SendEmailToAuthorityOnRequest(voucher.VoucherId, "Manager");
+                    }
+                    else if (!stockService.VoucherExceedsSetValue(detailsList))
+                    {
+                        newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Supervisor");
+                        Debug.Print("Pending appr sent to supervisor email");
+                        SendEmailToAuthorityOnRequest(voucher.VoucherId, "Supervisor");
+                    }
+                    return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId });
                 }
-                else if(!stockService.VoucherExceedsSetValue(detailsList))
+                else
                 {
-                    newId = stockService.SaveAdjustmentVoucherAndDetails(requester, voucher, detailsList, "Supervisor");
-                    Debug.Print("Pending appr sent to supervisor email");
-                    SendEmailToAuthorityOnRequest(voucher.VoucherId, "Supervisor");
+                    ViewData["invalidItems"] = QOHValid;
                 }
-                return RedirectToAction("ViewAdjustmentDetails", "ManageAdjustmentVoucher", new { voucherId = newId });
+                
             }
             if (choice == "Cancel")
             {

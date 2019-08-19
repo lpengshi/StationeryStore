@@ -294,7 +294,9 @@ namespace StationeryStore.Service
             {
                 //Averaging stock cost across suppliers.
                 List<SupplierDetailsEF> items = purchaseEFF.FindSupplierDetailsByItemCode(d.ItemCode);
-                d.Price = items.Average(x => x.UnitPrice);           
+                d.Price = items.Average(x => x.UnitPrice);
+                
+
             }
             return detailsList;
         }
@@ -316,6 +318,19 @@ namespace StationeryStore.Service
                 dtoList.Add(newItem);
             }
             return dtoList;
+        }
+
+        public List<AdjustmentVoucherDetailsDTO> checkQuantityOnHand(List<AdjustmentVoucherDetailsDTO> detailsList)
+        {
+            List<AdjustmentVoucherDetailsDTO> invalidItems = new List<AdjustmentVoucherDetailsDTO>();
+            foreach(var v in detailsList)
+            {
+                int quantityOnHand = stockEFF.FindStockByItemCode(v.ItemCode).QuantityOnHand;
+                if ((quantityOnHand + v.Quantity) < 0)
+                    invalidItems.Add(v);
+            }
+
+            return invalidItems;
         }
     }
 }
