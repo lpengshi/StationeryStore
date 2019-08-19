@@ -7,6 +7,8 @@
     ViewBag.Title = "CreateAdjustmentVoucher";
     List<StockEF> itemList = (List<StockEF>)ViewData["itemList"];
     AdjustmentVoucherEF voucher = (AdjustmentVoucherEF)ViewData["voucher"];
+    List<AdjustmentVoucherDetailsDTO> validator = (List<AdjustmentVoucherDetailsDTO>)ViewData["invalidItems"];
+
 }
 
 <div>@Html.Partial("_Store")</div>
@@ -18,9 +20,10 @@
         <br />
         @using (Html.BeginForm("CreateAdjustmentVoucher", "ManageAdjustmentVoucher", FormMethod.Post))
         {
+
             if (voucher != null && voucher.VoucherId != null)
             {
-                <table>
+                <table>                   
                     <tr>
                         <td class="listrequestlabel">Voucher Id:</td>
                         <td class="listrequestvalue">@voucher.VoucherId</td>
@@ -46,6 +49,18 @@
             <br />
             <br />
             <table class="listview">
+                @if (validator != null && validator.Count > 0)
+                {
+                    string invalidList = "";
+                    foreach (var v in validator)
+                    {
+                        invalidList = invalidList + " " + v.Description + ",";
+                    }                    
+                    <tr>
+                        <td colspan="8" style="color:red; background-color:white; text-align: center;">Insufficient quantity on hand to adjust: @invalidList.TrimEnd(',')</td>
+                    </tr>
+                    <tr><td height="10"></td></tr>
+                }
                 <tr>
                     <th class="listviewuom">S/N</th>
                     <th class="listviewuom">Item Code</th>
