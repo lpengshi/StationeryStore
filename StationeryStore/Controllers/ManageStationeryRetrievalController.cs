@@ -17,6 +17,7 @@ namespace StationeryStore.Controllers
         // GET: ManageStationeryRetrieval
 
         RequestAndDisburseService rndService = new RequestAndDisburseService();
+        StockService stockService = new StockService();
         
         
         // Displays the retrieval list history
