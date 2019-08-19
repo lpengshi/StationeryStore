@@ -122,7 +122,8 @@ namespace StationeryStore.Controllers
                         Stock = item.Stock,
                         RequestQuantity = item.RequestQuantity,
                         RetrievedQuantity = item.RetrievedQuantity,
-                        DisbursedQuantity = item.DisbursedQuantity
+                        DisbursedQuantity = item.DisbursedQuantity,
+                        
                     }
                     );
                 }
@@ -143,6 +144,7 @@ namespace StationeryStore.Controllers
                     ActiveDepartments = activeDepartments,
                     DepartmentStaff = deptStaffDTO,
                     DisbursementDetails = detailsDTO,
+                    CollectionRepId = (int)activeDisbursements[0].CollectionRepId
                 };
             }
            
@@ -209,6 +211,7 @@ namespace StationeryStore.Controllers
                 DisbursementDetails = detailsDTO,
                 DisbursementId = disbursementId,
                 DepartmentStaff = deptStaffDTO,
+                CollectionRepId = (int)disbursement.CollectionRepId
             };
 
             // send a list of disbursements 
